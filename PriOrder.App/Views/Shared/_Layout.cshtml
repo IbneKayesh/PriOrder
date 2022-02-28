@@ -65,8 +65,11 @@
         <a href="@Url.Action("Cart")" class="nav-link">
             <i class="icon material-icons md-shopping_cart"></i><span class="text">My cart</span>
         </a>
-        <a href="05.page-listing-a.html" class="nav-link">
-            <i class="icon material-icons md-favorite"></i><span class="text">Saved</span>
+        <a href="@Url.Action("Favorite")" class="nav-link">
+            <i class="icon material-icons md-favorite"></i><span class="text">Favorite</span>
+        </a>
+        <a href="@Url.Action("Messages")" class="nav-link">
+            <i class="icon material-icons md-chat"></i><span class="text">Messages</span>
         </a>
     </nav> <!-- nav-bottom -->
 
@@ -85,16 +88,16 @@
         <article class="offcanvas-body">
             <nav class="nav-sidebar mt-2">
                 <a href="@Url.Action("Categories")"> <i class="material-icons md-apps"></i> Category</a>
-                <a href="#1"> <i class="material-icons md-local_offer"></i> New offers</a>
+                <a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> New Products</a>
+                <a href="@Url.Action("MyOrders")"> <i class="material-icons md-local_shipping"></i> My Orders</a>
                 <a href="#2"> <i class="material-icons md-store"></i> Wholsesalers </a>
                 <hr>
-                <a href="#3"> <i class="material-icons md-info"></i> About us</a>
                 <a href="@Url.Action("Messages")"> <i class="material-icons md-chat"></i> Messages</a>
-                <a href="#4"> <i class="material-icons md-local_police"></i> Services </a>
+                <a href="@Url.Action("Support")"> <i class="material-icons md-question_answer"></i>Help &amp; Support</a>
+                <a href="#3"> <i class="material-icons md-info"></i> About us</a>
                 <hr>
                 <a href="@Url.Action("MyProfile")"> <i class="material-icons md-account_circle"></i> Profile </a>
-                <a href="#5"> <i class="material-icons md-settings"></i> Settings</a>
-                <a href="#6"> <i class="material-icons md-local_shipping"></i> My orders</a>
+                
                 <hr>
                 <a href="@Url.Action("Logout")"> <i class="material-icons md-log_out"></i> Logout</a>
             </nav>
