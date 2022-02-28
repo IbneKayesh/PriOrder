@@ -58,5 +58,9 @@ namespace PriOrder.App.Controllers
         {
             return View();
         }
+        public ActionResult OrderConfirm()
+        {
+            return View();
+        }
     }
 }
