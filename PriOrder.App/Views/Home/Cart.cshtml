@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Cart";
+}
+<section class="p-3">
+    <article class="item-cart">
+        <figure class="itemside mb-3">
+            <div class="aside"><img src="images/items/1.jpg" class="rounded border img-md"></div>
+            <figcaption class="info">
+                <a href="#" class="title text-truncate">Great product name</a>
+                <small class="text-muted">
+                    Color: red, Capacity: 32 GB   <br>
+                    $34.00 /per item
+                </small>
+            </figcaption>
+        </figure>
+        <div class="row align-items-center">
+            <div class="col-auto"> <a href="#" class="btn btn-sm btn-outline-danger"> Remove </a> </div>
+            <div class="col">
+                <div class="input-group input-group-sm input-spinner">
+                    <button class="btn btn-light" type="button"> <i class="material-icons md-minus"></i> </button>
+                    <input type="text" class="form-control" value="1">
+                    <button class="btn btn-light" type="button"> <i class="material-icons md-plus"></i> </button>
+                </div> <!-- input-group.// -->
+            </div>
+            <div class="col"> <var class="float-end price">2x = $120.00</var></div>
+        </div>
+    </article> <!-- item-cart.// -->
+</section>
+
+<hr class="divider">
+
+
+<section class="padding-around">
+
+    <dl class="dlist-align">
+        <dt class="text-muted"><strong>Total price:</strong></dt>
+        <dd class="text-end">$69.97</dd>
+    </dl>
+    <dl class="dlist-align">
+        <dt class="text-muted"><strong>Balance:</strong></dt>
+        <dd class="text-end">$10.00</dd>
+    </dl>
+    <dl class="dlist-align">
+        <dt class="text-muted"><strong>New Balance:</strong></dt>
+        <dd class="text-end"><strong>$59.97</strong></dd>
+    </dl>
+    <br>
+    <a href="#" class="btn btn-success w-100 mb-2"> Confirm </a>
+    <a href="@Url.Action("Index")" class="btn btn-outline-primary w-100">  Back to shop </a>
+    <br> <br>
+</section>

@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PriOrder.App.Models.CATEGORIES>
+@{
+    ViewBag.Title = "Categories";
+}
+<section class="pb-3 pt-1 bg-primary">
+    <h3 class="title-lg text-white">Categories</h3>
+    <form class="px-3">
+        <input type="text" placeholder="Search" class="form-control border-0 text-white bg-primary-light">
+    </form>
+</section>
+<section class="p-3">
+    <ul class="row">
+        @foreach (var item in Model)
+        {
+            <li class="col-4">
+                <a href="@Url.Action("FilterByCategory", new { id = item.ID })" class="item-category-grid">
+                    <span class="icon-wrap">
+                        <img class="icon" height="32" src="@item.CATEGORY_IMAGE" alt="">
+                        <span class="small">@item.ITEMS_COUNT items</span>
+                    </span>
+                    <h6 class="title-lg"> @item.CATEGORY_NAME</h6>
+                </a>
+            </li>
+        }
+    </ul>
+</section>

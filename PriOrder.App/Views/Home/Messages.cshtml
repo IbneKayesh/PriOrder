@@ -1,0 +1,18 @@
+﻿@model IEnumerable<PriOrder.App.Models.MESSAGES>
+@{
+    ViewBag.Title = "Messages";
+}
+
+@foreach (var item in Model)
+{
+    <article class="card-banner rounded bg-light mb-2">
+        <div class="p-3" style="width:95%">
+            @if (!item.IS_READ)
+            {
+                <span class="float-end badge bg-warning">New</span>
+            }
+            <span class="text-secondary">@item.MESSAGES_DATE_TIME</span>
+            <p>@item.MESSAGES_BODY</p>
+        </div>
+    </article>
+}
