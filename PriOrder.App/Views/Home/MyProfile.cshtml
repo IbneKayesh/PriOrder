@@ -16,21 +16,21 @@
 <section class="p-3">
     <ul class="row">
         <li class="col-4">
-            <a href="#" class="item-category-grid">
+            <a href="@Url.Action("MyOrders")" class="item-category-grid">
                 <span class="icon-wrap"> <i class="icon material-icons md-shopping_basket"></i>  </span>
                 <small class="text"> Orders </small>
             </a>
         </li>
         <li class="col-4">
-            <a href="#" class="item-category-grid">
-                <span class="icon-wrap"> <i class="icon material-icons md-favorite"></i>  </span>
-                <small class="text"> Wishlist</small>
+            <a href="@Url.Action("Banks")" class="item-category-grid">
+                <span class="icon-wrap"> <i class="icon material-icons md-home_work"></i>  </span>
+                <small class="text"> Banks</small>
             </a>
         </li>
         <li class="col-4">
-            <a href="#" class="item-category-grid">
+            <a href="@Url.Action("Statements")" class="item-category-grid">
                 <span class="icon-wrap"> <i class="icon material-icons md-account_balance_wallet"></i>  </span>
-                <small class="text"> Payment </small>
+                <small class="text"> Statements </small>
             </a>
         </li>
     </ul>
@@ -41,41 +41,37 @@
 <section>
     <h5 class="title-section pb-2">Orders</h5>
     <nav class="nav-list">
-        <a class="btn-list" href="#">
+        <a class="btn-list" href="@Url.Action("MyOrders")">
             <span class="float-end badge bg-warning">3</span>
             <span class="text">On proccess</span>
         </a>
-        <a class="btn-list" href="#">
+        <a class="btn-list" href="@Url.Action("MyOrders")">
             <span class="float-end badge bg-success">1</span>
             <span class="text">Shipped</span>
         </a>
-        <a class="btn-list" href="#">
+        <a class="btn-list" href="@Url.Action("MyOrders")">
             <span class="float-end badge bg-secondary">0</span>
             <small class="title"></small>
-            <span class="text">Unpaid</span>
+            <span class="text">Undelivered</span>
         </a>
     </nav>
 </section>
 <hr class="divider">
 <section>
     <h5 class="title-section pb-2">Account</h5>
-
     <nav class="nav-list">
-        <a class="btn-list" href="#">
+        <a class="btn-list" href="@Url.Action("Messages")">
             <i class="icon-control material-icons md-keyboard_arrow_right"></i>
-            <span class="text">Settings</span>
+            <span class="text">Messages</span>
         </a>
-        <a class="btn-list" href="#">
+        <a class="btn-list" href="@Url.Action("Support")">
             <i class="icon-control material-icons md-keyboard_arrow_right"></i>
             <span class="text">Support</span>
         </a>
-        <div class="btn-list">
-            <div class="float-end form-check form-switch">
-                <input class="form-check-input" type="checkbox" id="check_notify1">
-                <label class="form-check-label" for="check_notify1"></label>
-            </div>
-            <span class="text">Notifications</span>
-        </div>
+        <a class="btn-list" href="@Url.Action("ChangePassword")">
+            <i class="icon-control material-icons md-keyboard_arrow_right"></i>
+            <span class="text">Change Password</span>
+        </a>
     </nav>
 </section>
 

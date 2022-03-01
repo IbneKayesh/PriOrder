@@ -63,12 +63,14 @@
             <i class="icon material-icons md-apps"></i><span class="text">Category</span>
         </a>
         <a href="@Url.Action("Cart")" class="nav-link">
-            <i class="icon material-icons md-shopping_cart"></i><span class="text">My cart</span>
+            <span class="float-end badge bg-warning">1</span>
+            <i class="icon material-icons md-shopping_cart"></i><span class="text">Cart</span>
         </a>
         <a href="@Url.Action("Favorite")" class="nav-link">
             <i class="icon material-icons md-favorite"></i><span class="text">Favorite</span>
         </a>
         <a href="@Url.Action("Messages")" class="nav-link">
+            <span class="float-end badge bg-warning">2</span>
             <i class="icon material-icons md-chat"></i><span class="text">Messages</span>
         </a>
     </nav> <!-- nav-bottom -->
@@ -88,16 +90,16 @@
         <article class="offcanvas-body">
             <nav class="nav-sidebar mt-2">
                 <a href="@Url.Action("Categories")"> <i class="material-icons md-apps"></i> Category</a>
-                <a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> New Products</a>
+                <a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> Products</a>
                 <a href="@Url.Action("MyOrders")"> <i class="material-icons md-local_shipping"></i> My Orders</a>
-                <a href="#2"> <i class="material-icons md-store"></i> Wholsesalers </a>
+                <a href="@Url.Action("Damages")"> <i class="material-icons md-store"></i> Damages </a>
                 <hr>
                 <a href="@Url.Action("Messages")"> <i class="material-icons md-chat"></i> Messages</a>
                 <a href="@Url.Action("Support")"> <i class="material-icons md-question_answer"></i>Help &amp; Support</a>
                 <a href="#3"> <i class="material-icons md-info"></i> About us</a>
                 <hr>
                 <a href="@Url.Action("MyProfile")"> <i class="material-icons md-account_circle"></i> Profile </a>
-                
+                <a href="@Url.Action("ChangePassword")"> <i class="material-icons md-lock"></i> Change Password</a>
                 <hr>
                 <a href="@Url.Action("Logout")"> <i class="material-icons md-log_out"></i> Logout</a>
             </nav>
@@ -115,6 +117,9 @@
     <!-- PWA -->
     @*<script src="js/pwa.js"></script>*@
 
+
+    @RenderSection("scripts", required: false)
+
     <script>
         $(document).ready(function () {
             var url = window.location;
@@ -124,6 +129,18 @@
             $('nav.nav-sidebar a').filter(function () {
                 return this.href == url;
             }).addClass('bg-gradient-blue');
+        });
+    </script>
+    <script>
+        $('.minus').click(function () {
+            quantityField = $(this).next();
+            if (quantityField.val() != 0) {
+                quantityField.val(parseInt(quantityField.val(), 10) - 1);
+            }
+        });
+        $('.plus').click(function () {
+            quantityField = $(this).prev();
+            quantityField.val(parseInt(quantityField.val(), 10) + 1);
         });
     </script>
 </body>

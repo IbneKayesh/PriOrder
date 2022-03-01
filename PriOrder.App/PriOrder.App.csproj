@@ -153,6 +153,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CATEGORIES.cs" />
+    <Compile Include="Models\PRODUCTS.cs" />
     <Compile Include="Models\SUPPORT_MESSAGES.cs" />
     <Compile Include="Models\MESSAGES.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -275,6 +276,11 @@
     <Content Include="Views\Home\Favorite.cshtml" />
     <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
+    <Content Include="Views\Home\Statements.cshtml" />
+    <Content Include="Views\Home\Banks.cshtml" />
+    <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Home\Damages.cshtml" />
+    <Content Include="Views\Home\ProductView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

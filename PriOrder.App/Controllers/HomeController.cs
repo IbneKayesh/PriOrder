@@ -43,7 +43,12 @@ namespace PriOrder.App.Controllers
         }
         public ActionResult Products(int? id)
         {
-            return View();
+            List<PRODUCTS> objList = new List<PRODUCTS>();
+            objList.Add(new PRODUCTS { CODE = 1236, PRODUCT_NAME = "Product 1", PRODUCT_IMAGE = "/Assets/images/items/1.jpg", PRODUCT_RATE = 56.4M });
+            objList.Add(new PRODUCTS { CODE = 4567, PRODUCT_NAME = "Product 2", PRODUCT_IMAGE = "/Assets/images/items/2.jpg", PRODUCT_RATE = 59.1M });
+            objList.Add(new PRODUCTS { CODE = 9874, PRODUCT_NAME = "Product 3", PRODUCT_IMAGE = "/Assets/images/items/3.jpg", PRODUCT_RATE = 41.0M });
+            objList.Add(new PRODUCTS { CODE = 6543, PRODUCT_NAME = "Product 4", PRODUCT_IMAGE = "/Assets/images/items/4.jpg", PRODUCT_RATE = 18.0M });
+            return View(objList);
         }
         public ActionResult Messages()
         {
@@ -76,6 +81,28 @@ namespace PriOrder.App.Controllers
             return View();
         }
         public ActionResult MyOrders()
+        {
+            return View();
+        }
+
+        public ActionResult Statements()
+        {
+            return View();
+        }
+        public ActionResult Banks()
+        {
+            return View();
+        }
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+        public ActionResult Damages()
+        {
+            return View();
+        }
+
+        public ActionResult ProductView()
         {
             return View();
         }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<PriOrder.App.Models.PRODUCTS>
+@{
     ViewBag.Title = "Products";
 }
 
@@ -101,138 +102,34 @@
     </form>
 
     <ul class="row">
-        <li class="col-12 col-sm-12 col-md-6">
-            <article class="product-list mb-2">
-                <div>
-                    <a href="#" class="img-wrap"> <img src="~/Assets/images/items/1.jpg"> </a>
-                </div>
-                <div class="info-wrap">
-                    <p class="title"> Great product name </p>
-                    <div class="price mb-2">$23.00 </div>
+        @foreach (var item in Model)
+        {
+            <li class="col-12 col-sm-12 col-md-6">
+                <article class="product-list mb-2">
                     <div>
-                        <a href="#" class="btn btn-sm btn-light"> Add to cart  </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light">
+                        <a href="#" class="img-wrap"> <img src="@item.PRODUCT_IMAGE"> </a>
+                    </div>
+                    <div class="info-wrap">
+                        <a href="@Url.Action("Favorite")" class="btn btn-icon btn-sm btn-light float-end">
                             <i class="material-icons md-favorite_border"></i>
                         </a>
+                        <p class="title"> @item.CODE </p>
+                        <p class="title"> @item.PRODUCT_NAME </p>
+                        <div class="price mb-2">@item.PRODUCT_RATE </div>
+                        <div>
+                            <div class="input-group input-group-sm">
+                                <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
+                                <input type="number" class="form-control" value="1">
+                                <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
+                                @*<button class="btn btn-light" type="button"> <i class="material-icons md-shopping_cart"></i> </button>*@
+                                <a class="btn btn-light" href="@Url.Action("Cart")"><i class="material-icons md-shopping_cart"></i> </a>
+                            </div> <!-- input-group.// -->
+                        </div>
+
                     </div>
-
-                </div>
-            </article> <!-- product-list end// -->
-        </li> <!-- col.// -->
-
-        <li class="col-12 col-sm-12 col-md-6">
-            <article class="product-list mb-2">
-                <div>
-                    <a href="#" class="img-wrap"> <img src="~/Assets/images/items/2.jpg"> </a>
-                </div>
-                <div class="info-wrap">
-                    <p class="title"> Amazing product heading </p>
-                    <div class="price mb-2">$99.50 </div>
-                    <div>
-                        <a href="#" class="btn btn-sm btn-light"> Add to cart  </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light">
-                            <i class="material-icons md-favorite_border"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </article> <!-- product-list end// -->
-        </li> <!-- col.// -->
-
-        <li class="col-12 col-sm-12 col-md-6">
-            <article class="product-list mb-2">
-                <div>
-                    <a href="#" class="img-wrap"> <img src="~/Assets/images/items/3.jpg"> </a>
-                </div>
-                <div class="info-wrap">
-                    <p class="title"> Great product name </p>
-                    <div class="price mb-2">$7.90 </div>
-                    <div>
-                        <a href="#" class="btn btn-sm btn-light"> Add to cart  </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light">
-                            <i class="material-icons md-favorite_border"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </article> <!-- product-list end// -->
-        </li> <!-- col.// -->
-
-        <li class="col-12 col-sm-12 col-md-6">
-            <article class="product-list mb-2">
-                <div>
-                    <a href="#" class="img-wrap"> <img src="~/Assets/images/items/4.jpg"> </a>
-                </div>
-                <div class="info-wrap">
-                    <p class="title"> Amazing item name </p>
-                    <div class="price mb-2">$13.50 </div>
-                    <div>
-                        <a href="#" class="btn btn-sm btn-light"> Add to cart  </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light">
-                            <i class="material-icons md-favorite_border"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </article> <!-- product-list end// -->
-        </li> <!-- col.// -->
-
-        <li class="col-12 col-sm-12 col-md-6">
-            <article class="product-list mb-2">
-                <div>
-                    <a href="#" class="img-wrap"> <img src="~/Assets/images/items/5.jpg"> </a>
-                </div>
-                <div class="info-wrap">
-                    <p class="title"> Great product goes here </p>
-                    <div class="price mb-2">$12.00 </div>
-                    <div>
-                        <a href="#" class="btn btn-sm btn-light"> Add to cart  </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light">
-                            <i class="material-icons md-favorite_border"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </article> <!-- product-list end// -->
-        </li> <!-- col.// -->
-
-        <li class="col-12 col-sm-12 col-md-6">
-            <article class="product-list mb-2">
-                <div>
-                    <a href="#" class="img-wrap"> <img src="~/Assets/images/items/6.jpg"> </a>
-                </div>
-                <div class="info-wrap">
-                    <p class="title"> Best product name </p>
-                    <div class="price mb-2">$23.00 </div>
-                    <div>
-                        <a href="#" class="btn btn-sm btn-light"> Add to cart  </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light">
-                            <i class="material-icons md-favorite_border"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </article> <!-- product-list end// -->
-        </li> <!-- col.// -->
-
-        <li class="col-12 col-sm-12 col-md-6">
-            <article class="product-list mb-2">
-                <div>
-                    <a href="#" class="img-wrap"> <img src="~/Assets/images/items/item.jpg"> </a>
-                </div>
-                <div class="info-wrap">
-                    <p class="title"> Great product name </p>
-                    <div class="price mb-2">$23.00 </div>
-                    <div>
-                        <a href="#" class="btn btn-sm btn-light"> Add to cart  </a>
-                        <a href="#" class="btn btn-icon btn-sm btn-light">
-                            <i class="material-icons md-favorite_border"></i>
-                        </a>
-                    </div>
-
-                </div>
-            </article> <!-- product-list end// -->
-        </li> <!-- col.// -->
+                </article> <!-- product-list end// -->
+            </li> <!-- col.// -->
+        }
     </ul> <!-- row.// -->
 
 </section>
