@@ -33,22 +33,11 @@ namespace PriOrder.App.Controllers
 
         public ActionResult Categories()
         {
-            List<CATEGORIES> objList = new List<CATEGORIES>();
-            objList.Add(new CATEGORIES { ID = 1, CATEGORY_NAME = "Electronic items", CATEGORY_IMAGE = "/Assets/images/icons/category-blue/cpu.svg", ITEMS_COUNT = 440 });
-            objList.Add(new CATEGORIES { ID = 2, CATEGORY_NAME = "Home equipments", CATEGORY_IMAGE = "/Assets/images/icons/category-blue/homeitem.svg", ITEMS_COUNT = 346 });
-            objList.Add(new CATEGORIES { ID = 3, CATEGORY_NAME = "Toys and kids", CATEGORY_IMAGE = "/Assets/images/icons/category-blue/toy.svg", ITEMS_COUNT = 145 });
-            objList.Add(new CATEGORIES { ID = 4, CATEGORY_NAME = "Accessories", CATEGORY_IMAGE = "/Assets/images/icons/category-blue/watch.svg", ITEMS_COUNT = 650 });
-            objList.Add(new CATEGORIES { ID = 5, CATEGORY_NAME = "Jewelleries", CATEGORY_IMAGE = "/Assets/images/icons/category-blue/diamond.svg", ITEMS_COUNT = 90 });
-            return View(objList);
+            return View(new CATEGORIES().getCategories());
         }
         public ActionResult Products(int? id)
         {
-            List<PRODUCTS> objList = new List<PRODUCTS>();
-            objList.Add(new PRODUCTS { CODE = 1236, PRODUCT_NAME = "Product 1", PRODUCT_IMAGE = "/Assets/images/items/1.jpg", PRODUCT_RATE = 56.4M });
-            objList.Add(new PRODUCTS { CODE = 4567, PRODUCT_NAME = "Product 2", PRODUCT_IMAGE = "/Assets/images/items/2.jpg", PRODUCT_RATE = 59.1M });
-            objList.Add(new PRODUCTS { CODE = 9874, PRODUCT_NAME = "Product 3", PRODUCT_IMAGE = "/Assets/images/items/3.jpg", PRODUCT_RATE = 41.0M });
-            objList.Add(new PRODUCTS { CODE = 6543, PRODUCT_NAME = "Product 4", PRODUCT_IMAGE = "/Assets/images/items/4.jpg", PRODUCT_RATE = 18.0M });
-            return View(objList);
+            return View(new ITEMS_MASTER().getItems());
         }
         public ActionResult Messages()
         {

@@ -153,7 +153,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CATEGORIES.cs" />
-    <Compile Include="Models\PRODUCTS.cs" />
+    <Compile Include="Models\DISTRIBUTORS.cs" />
+    <Compile Include="Models\ITEMS_GROUP.cs" />
+    <Compile Include="Models\ITEM_CLASS.cs" />
+    <Compile Include="Models\ITEMS_MASTER.cs" />
     <Compile Include="Models\SUPPORT_MESSAGES.cs" />
     <Compile Include="Models\MESSAGES.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
