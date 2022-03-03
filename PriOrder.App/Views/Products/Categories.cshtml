@@ -1,16 +1,19 @@
-﻿@model IEnumerable<PriOrder.App.Models.CATEGORIES>
+﻿@model IEnumerable<PriOrder.App.Models.WO_ITEM_CATEGORY>
 @{
     ViewBag.Title = "Categories";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+
 <section class="p-3">
     <ul class="row">
         @foreach (var item in Model)
         {
             <li class="col-4">
-                <a href="@Url.Action("Products", new { id = item.ID })" class="item-category-grid">
+                <a href="@Url.Action("ProductClass","Products", new { id = item.CATEGORY_ID })" class="item-category-grid">
                     <span class="icon-wrap">
                         <img class="icon" height="32" src="@item.CATEGORY_IMAGE" alt="">
-                        <span class="small">@item.ITEMS_COUNT items</span>
+                        <span class="small">@item.ITEM_CLASS_COUNT Class [@item.ITEM_COUNT items]</span>
                     </span>
                     <h6 class="title-lg"> @item.CATEGORY_NAME</h6>
                 </a>

@@ -7,8 +7,12 @@
     <figure class="icontext align-items-center mr-4" style="max-width: 300px;">
         <img class="icon icon-md rounded-circle" src="~/Assets/images/avatars/1.jpg">
         <figcaption class="text text-white">
-            <p class="h5 title mb-1">Mr. Kayesh</p>
-            <p class="text-white-50 lh-sm">+8801769696354 <br> Dhaka, Bangladesh</p>
+            @if (Session["userId"] != null)
+            {
+                <p class="h5 title mb-1">@Session["userId"]</p>
+                <p>@Session["userName"]</p>
+                <p class="text-white-50 lh-sm">@Session["userGroup"]<br>@Session["userMobile"]</p>
+            }
         </figcaption>
     </figure>
 </section>

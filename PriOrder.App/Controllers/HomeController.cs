@@ -28,22 +28,31 @@ namespace PriOrder.App.Controllers
         public ActionResult Login()
         {
             ViewBag.Title = "Login";
-            return View();
+            USER_LOGIN obj = new USER_LOGIN();
+            obj.USER_ID = "837075";
+            obj.USER_PASSWORD = "25802";
+            return View(obj);
         }
-        
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Login(USER_LOGIN obj)
         {
-            Tuple<DataTable, string> _tpl = Table.Filter(LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD));
+            Tuple<List<USER_LOGIN_INFO>, string> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD);
             if (_tpl.Item2 == AppKeys.PostSuccess)
             {
-
+                Session["userLoginInf"] = _tpl.Item1.FirstOrDefault();
+                Session["userId"] = _tpl.Item1.FirstOrDefault().DIST_ID;
+                Session["userName"] = _tpl.Item1.FirstOrDefault().DIST_NAME;
+                Session["userGroup"] = _tpl.Item1.FirstOrDefault().DIST_GROUP;
+                Session["userMobile"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
+                return RedirectToAction(nameof(Index));
             }
             else
             {
-
+                ViewBag.ErrorMessages = "User Id/Password is incorrect";
+                return View(obj);
             }
-            return View();
         }
 
 
@@ -55,10 +64,7 @@ namespace PriOrder.App.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        public ActionResult Categories()
-        {
-            return View(new CATEGORIES().getCategories());
-        }
+
         public ActionResult Products(int? id)
         {
             return View(new ITEMS_MASTER().getItems());

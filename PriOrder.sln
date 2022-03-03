@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aio.Db.ConnectionString", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aio.Utility.Data", "Aio.Utility.Data\Aio.Utility.Data.csproj", "{BAB6C789-70DF-4188-804C-257810A15183}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aio.Db.OracleEF", "Aio.Db.OracleEF\Aio.Db.OracleEF.csproj", "{90F8505D-B834-4FD4-B755-ABBEB265CAF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{BAB6C789-70DF-4188-804C-257810A15183}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BAB6C789-70DF-4188-804C-257810A15183}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BAB6C789-70DF-4188-804C-257810A15183}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F8505D-B834-4FD4-B755-ABBEB265CAF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F8505D-B834-4FD4-B755-ABBEB265CAF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F8505D-B834-4FD4-B755-ABBEB265CAF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F8505D-B834-4FD4-B755-ABBEB265CAF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

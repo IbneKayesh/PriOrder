@@ -1,0 +1,39 @@
+﻿@model  PriOrder.App.ModelsView.CLASS_CATEGORY
+@{
+    ViewBag.Title = "Class";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<section class="pb-3 pt-1 bg-primary">
+    <h4 class="title-lg text-white">Categories</h4>
+    <div class="px-3 scroll-horizontal">
+        @foreach (var item in Model.CATEGORIES)
+        {
+            <div class="item-xs">
+                <a href="@Url.Action("ProductClass", "Products", new { id = item.CATEGORY_ID })" class="item-category-sm">
+                <div class="icon-wrap bg-primary-light shadow-sm">
+                <img class="icon" src="@item.CATEGORY_IMAGE" alt="">
+                </div>
+                <small class="title text-white"> @item.CATEGORY_NAME </small>
+                </a>
+            </div>
+        }
+    </div> <!-- scroll-horizontal.// -->
+</section>
+
+<section>
+    <ul class="p-3 list-menu">
+        @foreach (var item in Model.CLASS)
+        {
+            <li class="nav-item">
+                <a href="@Url.Action("Products","Products", new { id=item.ITEM_CLASS_ID})" class="icontext">
+                    <span class="icon icon-sm rounded"> <img src="@item.ITEM_CLASS_IMAGE" alt=""> </span>
+                    <div class="text"> <h6 class="title">@item.ITEM_CLASS_NAME</h6> <span class="text-muted">@item.ITEMS_COUNT items</span></div>
+                </a>
+            </li>
+
+        }
+    </ul>
+</section>

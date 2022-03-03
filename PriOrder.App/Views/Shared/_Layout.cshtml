@@ -42,7 +42,7 @@
 
         <h5 class="title-header">@ViewBag.Title</h5>
 
-        <a href="@Url.Action("Logout")" class="btn-header">
+        <a href="@Url.Action("Logout","Home")" class="btn-header">
             <i class="material-icons md-log_out"></i>
         </a>
 
@@ -59,7 +59,7 @@
         <a href="@Url.Action("Index")" class="nav-link">
             <i class="icon material-icons md-home"></i><span class="text">Home</span>
         </a>
-        <a href="@Url.Action("Categories")" class="nav-link">
+        <a href="@Url.Action("Categories","Products")" class="nav-link">
             <i class="icon material-icons md-apps"></i><span class="text">Category</span>
         </a>
         <a href="@Url.Action("Cart")" class="nav-link">
@@ -79,17 +79,18 @@
     <aside class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas_left_123">
         <header class="p-3 border-bottom bg-light">
             <button type="button" class="float-end btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            <a href="@Url.Action("MyProfile")" class="icontext">
+            <a href="@Url.Action("MyProfile","Home")" class="icontext">
                 <img src="~/Assets/images/avatars/1.jpg" class="icon avatar-sm" alt="">
                 <div class="text">
-                    <h6 class="mb-0">Hi Kayesh</h6>
+                    @if (Session["userId"] != null)
+                    { <h6 class="mb-0">@Session["userId"]</h6>}
                     <small>View profile</small>
                 </div>
             </a>
         </header>
         <article class="offcanvas-body">
             <nav class="nav-sidebar mt-2">
-                <a href="@Url.Action("Categories")"> <i class="material-icons md-apps"></i> Category</a>
+                <a href="@Url.Action("Categories","Products")"> <i class="material-icons md-apps"></i> Category</a>
                 <a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> Products</a>
                 <a href="@Url.Action("MyOrders")"> <i class="material-icons md-local_shipping"></i> My Orders</a>
                 <a href="@Url.Action("Damages")"> <i class="material-icons md-store"></i> Damages </a>
@@ -98,7 +99,7 @@
                 <a href="@Url.Action("Support")"> <i class="material-icons md-question_answer"></i>Help &amp; Support</a>
                 <a href="#3"> <i class="material-icons md-info"></i> About us</a>
                 <hr>
-                <a href="@Url.Action("MyProfile")"> <i class="material-icons md-account_circle"></i> Profile </a>
+                <a href="@Url.Action("MyProfile","Home")"> <i class="material-icons md-account_circle"></i> Profile </a>
                 <a href="@Url.Action("ChangePassword")"> <i class="material-icons md-lock"></i> Change Password</a>
                 <hr>
                 <a href="@Url.Action("Logout")"> <i class="material-icons md-log_out"></i> Logout</a>
