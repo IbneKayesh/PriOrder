@@ -15,5 +15,8 @@ namespace PriOrder.App.ModelsView
 
         [Display(Name = "Mobile")]
         public string DIST_MOBILE { get; set; }
+
+        [Display(Name = "Balance")]
+        public string DIST_BALANCE { get; set; }
     }
 }

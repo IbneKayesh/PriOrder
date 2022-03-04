@@ -4,6 +4,11 @@
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-delay="10000">
+    <div role="alert" aria-live="assertive" aria-atomic="true">
+        <p id="Message"></p>
+    </div>
+</div>
 
 <p class="text-center mx-3">
     <a href="@ViewBag.BackPages" class="btn w-100 btn-light">
@@ -21,21 +26,19 @@
                         <a href="#" class="img-wrap"> <img src="@item.ITMA_IMGE"> </a>
                     </div>
                     <div class="info-wrap">
-                        <a href="@Url.Action("Favorite")" class="btn btn-icon btn-sm btn-light float-end">
+                        <a href="#" class="btn btn-icon btn-sm btn-light float-end favorite-item">
                             <i class="material-icons md-favorite_border"></i>
                         </a>
+                        <input class="item-code" type="hidden" value="@item.ITMA_ITID" />
                         <p class="title"> @item.ITMA_ITID </p>
                         <p class="title"> @item.ITMA_NAME </p>
                         <div class="price mb-2">@item.ITMA_PRIC BDT - @item.ITMA_STOCK</div>
-                        <div>
-                            <div class="input-group input-group-sm">
-                                <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
-                                <input type="number" name="@item.ITMA_PRIC" class="form-control" value="1">
-                                <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
-                                @*<button class="btn btn-light" type="button"> <i class="material-icons md-shopping_cart"></i> </button>*@
-                                <a class="btn btn-light" href="@Url.Action("AddCart", "Products", new { id = @item.ITMA_ITID,qt=@item.ITMA_PRIC })"><i class="material-icons md-shopping_cart"></i> </a>
-                            </div> <!-- input-group.// -->
-                        </div>
+                        <div class="input-group input-group-sm">
+                            <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
+                            <input type="number" name="quantity" class="form-control" value="1" min="1">
+                            <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
+                            <button class="btn btn-light add_to_cart" type="button"> <i class="material-icons md-shopping_cart"></i> </button>
+                        </div> <!-- input-group.// -->
                     </div>
                 </article> <!-- product-list end// -->
                 <p class="divider"></p>
@@ -52,6 +55,29 @@
 
 @section scripts{
 
+    <script>
+        $(document).on('click', '.add_to_cart', function (e) {
+            e.preventDefault();
+            var itemcode = $(this).parent().parent().children("input.item-code").val();
+            var quantity = $(this).parent().children("input:first").val();
+            if (quantity != '' && itemcode !='') {
+                // Perform the ajax post
+                $.post("AddToCart", { "id": itemcode, "qt": quantity },
+                    function (data) {
+                        // Successful requests get here           
+                        $('.toast').toast()
+                        $('#Message').text(data.ALERT_MESSAGES);
+                    });
+            }
+            
+        });
 
+        $(document).on('click', '.favorite-item', function (e) {
+            e.preventDefault();
+            $(this).children('i.material-icons').toggleClass('md-favorite_border md-favorite');
+        });
 
+        //var xxx = $(this).parent().find('input:first').val();
+        //console.log("Code:" + $(this).parent().parent().parent().find("input.item-code").attr('id'));
+    </script>
 }

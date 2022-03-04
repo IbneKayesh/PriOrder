@@ -1,0 +1,38 @@
+﻿@model  PriOrder.App.Models.WO_ITEM_CATEGORY
+@{
+    ViewBag.Title = "Category";
+    Layout = "~/Areas/BackOffice/Views/Shared/_Layout.cshtml";
+}
+<section class="p-3">
+    <form method="post">
+        <div class="mb-3">
+            <div class="icontext">
+                <div class="icon">
+                    <img id="cat-images" src="@Model.CATEGORY_IMAGE" class="avatar-lg">
+                </div>
+                <div class="text">
+                    <label for="formFile" class="form-label">Change image</label>
+                    <input class="form-control" type="file" id="formFile" onchange="viewImage(this);" accept="image/gif, image/jpeg, image/png">
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">@Model.CATEGORY_ID</label>
+            <input type="text" required="" class="form-control" value="@Model.CATEGORY_NAME" readonly>
+        </div>
+        <button type="submit" class="btn btn-primary w-100"> Update  </button>
+    </form>
+</section>
+@section scripts{
+    <script>
+        function viewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#cat-images').attr('src', e.target.result).width(80).height(80);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

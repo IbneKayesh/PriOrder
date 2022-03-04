@@ -148,11 +148,16 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Areas\BackOffice\BackOfficeAreaRegistration.cs" />
+    <Compile Include="Areas\BackOffice\Controllers\SetupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="DataModels\ApplData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="ModelsView\ALERT_BOX.cs" />
     <Compile Include="ModelsView\CLASS_CATEGORY.cs" />
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
@@ -164,11 +169,16 @@
     <Compile Include="Models\ITEMS_MASTER.cs" />
     <Compile Include="Models\SUPPORT_MESSAGES.cs" />
     <Compile Include="Models\MESSAGES.cs" />
+    <Compile Include="Models\WO_ORDER_CART.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\BackOffice\Views\Setup\Categories.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Setup\Category.cshtml" />
+    <None Include="Areas\BackOffice\Views\_ViewStart.cshtml" />
     <Content Include="Assets\css\bootstrap.css" />
     <Content Include="Assets\css\ui.css" />
     <Content Include="Assets\fonts\material-icon\css\round.css" />
@@ -251,6 +261,8 @@
     <Content Include="Assets\fonts\material-icon\font\MaterialIcons-Round.ttf" />
     <Content Include="Assets\fonts\material-icon\font\MaterialIcons-Round.woff" />
     <Content Include="Assets\fonts\material-icon\font\MaterialIcons-Round.woff2" />
+    <Content Include="Areas\BackOffice\Views\web.config" />
+    <Content Include="Areas\BackOffice\Views\Shared\_Layout.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -279,10 +291,9 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Home\Messages.cshtml" />
-    <Content Include="Views\Home\Cart.cshtml" />
     <Content Include="Views\Home\Support.cshtml" />
     <Content Include="Views\Home\OrderSuccess.cshtml" />
-    <Content Include="Views\Home\Favorite.cshtml" />
+    <Content Include="Views\Products\Favorite.cshtml" />
     <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
     <Content Include="Views\Home\Statements.cshtml" />
@@ -293,6 +304,7 @@
     <Content Include="Views\Products\Categories.cshtml" />
     <Content Include="Views\Products\ProductClass.cshtml" />
     <Content Include="Views\Products\Products.cshtml" />
+    <Content Include="Views\Orders\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

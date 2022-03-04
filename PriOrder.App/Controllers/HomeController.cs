@@ -46,6 +46,7 @@ namespace PriOrder.App.Controllers
                 Session["userName"] = _tpl.Item1.FirstOrDefault().DIST_NAME;
                 Session["userGroup"] = _tpl.Item1.FirstOrDefault().DIST_GROUP;
                 Session["userMobile"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
+                Session["userBalnace"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -86,19 +87,12 @@ namespace PriOrder.App.Controllers
             objList.Add(new SUPPORT_MESSAGES { ID = 1, MESSAGES_DATE_TIME = "01-January-2022 09:45:18 AM", MESSAGES_BODY = "Thank you", IS_READ = false });
             return View(objList);
         }
-
-        public ActionResult Cart()
-        {
-            return View();
-        }
+        
         public ActionResult OrderSuccess()
         {
             return View();
         }
-        public ActionResult Favorite()
-        {
-            return View();
-        }
+       
         public ActionResult MyOrders()
         {
             return View();

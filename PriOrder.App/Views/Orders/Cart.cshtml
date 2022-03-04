@@ -1,0 +1,156 @@
+﻿@model IEnumerable<PriOrder.App.Models.WO_ORDER_CART>
+
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var TotalSum = 0M;
+    var CurrBalanace = 5000M;
+    if (Session["userBalnace"] != null)
+    {
+        CurrBalanace = Convert.ToDecimal(Session["userBalnace"]);
+    }
+}
+
+<section class="p-3 cart-items">
+    @Html.AntiForgeryToken()
+    @foreach (var item in Model)
+    {
+        <article class="item-cart">
+            <figure class="itemside mb-3">
+                <div class="aside"><img src="~/Assets/images/items/1.jpg" class="rounded border img-md"></div>
+                <figcaption class="info">
+                    <a href="#" class="title text-truncate">@item.ITMA_NAME</a>
+                    <input type="hidden" class="item-rate" value="@item.ITMA_PRIC" />
+                    <input type="hidden" class="item-code" value="@item.ITMA_ITID" />
+                    <input type="hidden" class="item-note" value="@item.NOTE_ID" />
+                    <small class="text-muted">
+                        @item.ITMA_ITID - @item.NOTE_ID - @item.NOTE_TEXT<br>
+                        @item.ITMA_PRIC / per unit
+                    </small>
+                </figcaption>
+            </figure>
+            <div class="row align-items-center">
+                <div class="col-auto"> <a href="#" class="btn btn-sm btn-outline-danger delete-item"><i class="material-icons md-delete"></i></a> </div>
+                <div class="col">
+                    <div class="input-group input-group-sm">
+                        <button class="btn btn-light minus-cart" type="button"> <i class="material-icons md-minus"></i> </button>
+                        <input type="number" class="form-control quantity-cart" value="@item.ITEM_QTY">
+                        <button class="btn btn-light plus-cart" type="button"> <i class="material-icons md-plus"></i> </button>
+                    </div> <!-- input-group.// -->
+                </div>
+                <div class="col sub-total-col"> <var class="float-end price">x @item.ITMA_PRIC =<span class="sub-total">@{  var st = item.ITMA_PRIC * item.ITEM_QTY; TotalSum += st; } @st</span></var></div>
+            </div>
+        </article> <!-- item-cart.// -->
+                    <hr />
+                    }
+</section>
+<hr class="divider">
+@{ var newBalance = CurrBalanace - TotalSum;}
+<section class="padding-around">
+    <dl class="dlist-align">
+        <dt class="text-muted"><strong>Total price:</strong></dt>
+        <dd class="text-end" id="total-sum-amount"><strong>@TotalSum</strong></dd>
+    </dl>
+    <dl class="dlist-align">
+        <dt class="text-muted"><strong>Balance:</strong></dt>
+        <dd class="text-end" id="total-sum-balance">@CurrBalanace</dd>
+    </dl>
+    <dl class="dlist-align">
+        <dt class="text-muted"><strong>New Balance:</strong></dt>
+        <dd class="text-end" id="total-sum-new-balance"><strong>@newBalance</strong></dd>
+    </dl>
+    <br>
+    <button class="btn btn-success w-100 mb-2" type="button" id="btnConfirm"> Confirm </button>
+    <a href="@Url.Action("Categories")" class="btn btn-outline-primary w-100">  Back to shop</a>
+    <br> <br>
+</section>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $('.minus-cart').click(function (e) {
+                e.preventDefault();
+                quantityField = $(this).next();
+                if (quantityField.val() != 0) {
+                    quantityField.val(parseInt(quantityField.val(), 10) - 1);
+                };
+                calculate_subTotal($(this));
+            });
+            $('.plus-cart').click(function (e) {
+                e.preventDefault();
+                quantityField = $(this).prev();
+                quantityField.val(parseInt(quantityField.val(), 10) + 1);
+                calculate_subTotal($(this));
+            });
+            $('.quantity-cart').on("keyup change", function (e) {
+                calculate_subTotal($(this));
+            })
+            $(".delete-item").click(function (e) {
+                e.preventDefault();
+                $(this).parent('div.col-auto').parent('div.align-items-center').parent('article.item-cart').remove();
+                getCartSum();
+            });
+        });
+        function calculate_subTotal(thisObj) {
+            var rate = thisObj.parent('div.input-group').parent('div.col').parent('div.row')
+                .siblings('figure.itemside').children('figcaption.info').find("input.item-rate").val();
+
+            var subTotal = parseInt(quantityField.val()) * parseFloat(rate);
+
+            thisObj.parent('div.input-group').parent('div.col').siblings('div.col').children('var.float-end')
+                .children("span.sub-total").text(subTotal.toFixed(2));
+
+            getCartSum();
+        };
+        function getCartSum() {
+            var totalPrices = 0;
+            $('section.cart-items').children('article.item-cart').each(function () {
+                var subTotal = $(this).children('div.align-items-center').children('div.sub-total-col')
+                .children('var.float-end').children("span.sub-total").text();
+                totalPrices += parseFloat(subTotal);
+            });
+            $('section.padding-around').find('#total-sum-amount strong').text(totalPrices.toFixed(2));
+
+            var oldBalance = $('section.padding-around').find('#total-sum-balance').text();
+            var newBalance = parseFloat(oldBalance) - parseFloat(totalPrices);
+            $('section.padding-around').find('#total-sum-new-balance strong').text(newBalance.toFixed(2));
+        }
+
+        $("#btnConfirm").click(function (e) {
+            e.preventDefault();
+            var ItemsArr = [];
+            ItemsArr.length = 0;
+            $('section.cart-items').children('article.item-cart').each(function () {
+                ItemsArr.push({
+                    "ITMA_ITID": $(this).children('figure.itemside').children('figcaption.info').find("input.item-code").val(),
+                    "ITEM_QTY": $(this).children('div.align-items-center').children('div.col').children('div.input-group').find("input.quantity-cart").val(),
+                    "ITMA_PRIC": $(this).children('figure.itemside').children('figcaption.info').find("input.item-rate").val(),
+                    "NOTE_ID": $(this).children('figure.itemside').children('figcaption.info').find("input.item-note").val(),
+                    "NOTE_TEXT": "note text"
+                });
+            });
+            console.log(ItemsArr);
+            $.ajax({
+                type: "POST",
+                url: "SubmitCart",
+                data: { objList: ItemsArr },
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("RequestVerificationToken",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                success: function (response) {
+                    Swal.fire("messages", response);
+                },
+                failure: function (response) {
+                    Swal.fire("messages", response.responseText);
+                },
+                error: function (response) {
+                    Swal.fire("messages", response.responseText);
+                }
+            });
+        })
+    </script>
+
+}

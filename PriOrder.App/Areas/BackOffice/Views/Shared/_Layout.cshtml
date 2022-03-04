@@ -59,16 +59,10 @@
         <a href="@Url.Action("Index")" class="nav-link">
             <i class="icon material-icons md-home"></i><span class="text">Home</span>
         </a>
-        <a href="@Url.Action("Categories","Products")" class="nav-link">
+        <a href="@Url.Action("Categories","Setup")" class="nav-link">
             <i class="icon material-icons md-apps"></i><span class="text">Category</span>
         </a>
-        <a href="@Url.Action("Cart","Orders")" class="nav-link">
-            <span class="float-end badge bg-warning">1</span>
-            <i class="icon material-icons md-shopping_cart"></i><span class="text">Cart</span>
-        </a>
-        <a href="@Url.Action("Favorite","Products")" class="nav-link">
-            <i class="icon material-icons md-favorite"></i><span class="text">Favorite</span>
-        </a>
+       
         <a href="@Url.Action("Messages")" class="nav-link">
             <span class="float-end badge bg-warning">2</span>
             <i class="icon material-icons md-chat"></i><span class="text">Messages</span>
@@ -79,12 +73,12 @@
     <aside class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas_left_123">
         <header class="p-3 border-bottom bg-light">
             <button type="button" class="float-end btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            <a href="@Url.Action("MyProfile","Home")" class="icontext">
+            <a href="#" class="icontext">
                 <img src="~/Assets/images/avatars/1.jpg" class="icon avatar-sm" alt="">
                 <div class="text">
                     @if (Session["userId"] != null)
                     { <h6 class="mb-0">@Session["userId"]</h6>}
-                    <small>View profile</small>
+                    <small>Profile</small>
                 </div>
             </a>
         </header>
@@ -92,8 +86,6 @@
             <nav class="nav-sidebar mt-2">
                 <a href="@Url.Action("Categories","Products")"> <i class="material-icons md-apps"></i> Category</a>
                 <a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> Products</a>
-                <a href="@Url.Action("MyOrders")"> <i class="material-icons md-local_shipping"></i> My Orders</a>
-                <a href="@Url.Action("Damages")"> <i class="material-icons md-store"></i> Damages </a>
                 <hr>
                 <a href="@Url.Action("Messages")"> <i class="material-icons md-chat"></i> Messages</a>
                 <a href="@Url.Action("Support")"> <i class="material-icons md-question_answer"></i>Help &amp; Support</a>
@@ -130,18 +122,6 @@
             $('nav.nav-sidebar a').filter(function () {
                 return this.href == url;
             }).addClass('bg-gradient-blue');
-        });
-    </script>
-    <script>
-        $('.minus').click(function () {
-            quantityField = $(this).next();
-            if (quantityField.val() != 0) {
-                quantityField.val(parseInt(quantityField.val(), 10) - 1);
-            }
-        });
-        $('.plus').click(function () {
-            quantityField = $(this).prev();
-            quantityField.val(parseInt(quantityField.val(), 10) + 1);
         });
     </script>
 </body>
