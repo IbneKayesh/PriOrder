@@ -12,7 +12,7 @@
             <li class="col-4">
                 <a href="@Url.Action("ProductClass","Products", new { id = item.CATEGORY_ID })" class="item-category-grid">
                     <span class="icon-wrap">
-                        <img class="icon" height="32" src="@item.CATEGORY_IMAGE" alt="">
+                        <img class="icon" height="32" src="~/Images/Category/@item.CATEGORY_ID-.jpg" alt="">
                         <span class="small">@item.ITEM_CLASS_COUNT Class [@item.ITEM_COUNT items]</span>
                     </span>
                     <h6 class="title-lg"> @item.CATEGORY_NAME</h6>

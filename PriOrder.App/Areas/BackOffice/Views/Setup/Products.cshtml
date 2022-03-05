@@ -1,0 +1,43 @@
+﻿@model IEnumerable<PriOrder.App.Models.T_ITMA>
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Areas/BackOffice/Views/Shared/_Layout.cshtml";
+}
+
+<p class="text-center mx-3">
+    <a href="@Url.Action("ProductClass","Setup" , new { id=Model?.FirstOrDefault().ITMA_CLASS})" class="btn w-100 btn-light">
+        <i class="material-icons md-arrow_back"></i>
+        Class
+    </a>
+</p>
+
+<section>
+    <div class="p-3">
+        <ul class="row">
+            @foreach (var item in Model)
+            {
+                <li class="col-12 col-sm-12 col-md-6">
+                    <article class="product-list mb-2">
+                        <div>
+                            <a href="@Url.Action("Product","Setup", new { id = item.ITMA_ITID })" class="img-wrap"> <img src="~/Images/Products/@item.ITMA_ITID-.jpg"> </a>
+                        </div>
+                        <div class="info-wrap">
+                            <p class="title"> @item.ITMA_NAME </p>
+                            <div>
+                                <a href="@Url.Action("Product","Setup", new { id = item.ITMA_ITID })" class="btn btn-sm btn-light"> Change Picture  </a>
+                            </div>
+                        </div>
+                    </article>
+                </li> <!-- col.// -->
+            }
+        </ul> <!-- row.// -->
+    </div>
+</section>
+
+
+<p class="text-center mx-3">
+    <a href="@Url.Action("ProductClass","Setup" , new { id=Model?.FirstOrDefault().ITMA_CLASS})" class="btn w-100 btn-light">
+        <i class="material-icons md-arrow_back"></i>
+        Class
+    </a>
+</p>

@@ -178,6 +178,10 @@
   <ItemGroup>
     <Content Include="Areas\BackOffice\Views\Setup\Categories.cshtml" />
     <Content Include="Areas\BackOffice\Views\Setup\Category.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Setup\ProductClass.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Setup\Class.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Setup\Products.cshtml" />
+    <Content Include="Areas\BackOffice\Views\Setup\Product.cshtml" />
     <None Include="Areas\BackOffice\Views\_ViewStart.cshtml" />
     <Content Include="Assets\css\bootstrap.css" />
     <Content Include="Assets\css\ui.css" />
@@ -308,6 +312,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Category\" />
+    <Folder Include="Images\ItemClass\" />
+    <Folder Include="Images\Products\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
