@@ -18,15 +18,16 @@ namespace Aio.Db.Client.Entrance
         {
             return DatabaseOracle.ExecuteQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _parameters: _parameters);
         }
-        public static string PostSqlList(List<string> sqlList, string _con = "")
+        public static ENQResult PostSqlList(List<string> sqlList, string _con = "")
         {
             return DatabaseOracle.ExecuteNonQueryList(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command_list: sqlList);
         }
-        public static string PostSql(string sql, string _con = "")
+        public static ENQResult PostSql(string sql, string _con = "")
         {
             return DatabaseOracle.ExecuteNonQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql);
         }
-        public static Tuple<string, string> PostSqlOut(string sql, string _out, string _con = "")
+        // public static Tuple<string, string> PostSqlOut(string sql, string _out, string _con = "")
+        public static ENQResult PostSqlOut(string sql, string _out, string _con = "")
         {
             return DatabaseOracle.ExecuteNonQueryOut(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _outId: _out);
         }

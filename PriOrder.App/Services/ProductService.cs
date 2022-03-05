@@ -1,10 +1,8 @@
 ﻿using Aio.Db.Client.Entrance;
+using Aio.Model;
 using PriOrder.App.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace PriOrder.App.Services
 {
@@ -56,7 +54,7 @@ namespace PriOrder.App.Services
             return new Tuple<List<T_ITMA>, string>(objList, "AioSuccess");
         }
 
-        public static string AddToCart(string distId, string itemId, string qty, string noteId, string noteText)
+        public static ENQResult AddToCart(string distId, string itemId, string qty, string noteId, string noteText)
         {
             string sql = $@"insert into wo_order_cart(dsma_dsid,itma_itid,item_qty,note_id,note_text)values('{distId}','{itemId}',{qty},'{noteId}','{noteText}')";
             return DatabaseOracleClient.PostSql(sql);

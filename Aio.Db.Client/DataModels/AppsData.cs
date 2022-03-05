@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Aio.Db.Client.DataModels
+﻿namespace Aio.Db.Client.DataModels
 {
     public static class AppsData
     {

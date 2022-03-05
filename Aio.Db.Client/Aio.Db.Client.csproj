@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Aio.Db.Client</RootNamespace>
     <AssemblyName>Aio.Db.Client</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +31,30 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aio.Db.ConnectionString, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Aio.Db.ConnectionString.dll</HintPath>
+    </Reference>
+    <Reference Include="Aio.Db.Oracle, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Aio.Db.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Aio.Db.OracleEF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Aio.Db.OracleEF.dll</HintPath>
+    </Reference>
+    <Reference Include="Aio.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Aio.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="Aio.Utility.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Aio.Utility.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,28 +68,6 @@
     <Compile Include="DataModels\AppsData.cs" />
     <Compile Include="Entrance\DatabaseOracleClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Aio.Db.ConnectionString\Aio.Db.ConnectionString.csproj">
-      <Project>{5C8EE037-EF67-4F42-B197-497C7D831C5D}</Project>
-      <Name>Aio.Db.ConnectionString</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Aio.Db.OracleEF\Aio.Db.OracleEF.csproj">
-      <Project>{90F8505D-B834-4FD4-B755-ABBEB265CAF8}</Project>
-      <Name>Aio.Db.OracleEF</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Aio.Db.Oracle\Aio.Db.Oracle.csproj">
-      <Project>{4A7067B0-2BD1-423D-903A-D0833D1C4B33}</Project>
-      <Name>Aio.Db.Oracle</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Aio.Model\Aio.Model.csproj">
-      <Project>{E3C54393-8553-40BB-BD7F-96116FC91D84}</Project>
-      <Name>Aio.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Aio.Utility.Data\Aio.Utility.Data.csproj">
-      <Project>{BAB6C789-70DF-4188-804C-257810A15183}</Project>
-      <Name>Aio.Utility.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
