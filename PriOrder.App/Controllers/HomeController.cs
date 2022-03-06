@@ -34,8 +34,8 @@ namespace PriOrder.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(USER_LOGIN obj)
         {
-            Tuple<List<USER_LOGIN_INFO>, string> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD);
-            if (_tpl.Item2 == AppKeys.PostSuccess)
+            Tuple<List<USER_LOGIN_INFO>, EQResult> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 Session["userLoginInf"] = _tpl.Item1.FirstOrDefault();
                 Session["userId"] = _tpl.Item1.FirstOrDefault().DIST_ID;
@@ -43,6 +43,12 @@ namespace PriOrder.App.Controllers
                 Session["userGroup"] = _tpl.Item1.FirstOrDefault().DIST_GROUP;
                 Session["userMobile"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
                 Session["userBalnace"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
+
+                //Load Menu
+                Tuple<List<WO_APP_MENU>, EQResult> _tplMenu = LoginService.getMenusByUserId("");
+                Session["menuLeft"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 10).ToList();
+                Session["menuBottom"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 20).ToList();
+
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -83,12 +89,12 @@ namespace PriOrder.App.Controllers
             objList.Add(new SUPPORT_MESSAGES { ID = 1, MESSAGES_DATE_TIME = "01-January-2022 09:45:18 AM", MESSAGES_BODY = "Thank you", IS_READ = false });
             return View(objList);
         }
-        
+
         public ActionResult OrderSuccess()
         {
             return View();
         }
-       
+
         public ActionResult MyOrders()
         {
             return View();

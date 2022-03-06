@@ -152,11 +152,10 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Areas\BackOffice\BackOfficeAreaRegistration.cs" />
-    <Compile Include="Areas\BackOffice\Controllers\SetupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="DataModels\ApplData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -165,14 +164,16 @@
     <Compile Include="ModelsView\CLASS_CATEGORY.cs" />
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
-    <Compile Include="Models\T_ITMA.cs" />
-    <Compile Include="Models\WO_ITEM_CATEGORY.cs" />
+    <Compile Include="Models\WO_APP_MENU.cs" />
+    <Compile Include="Models\WO_ITEMS.cs" />
     <Compile Include="Models\DISTRIBUTORS.cs" />
     <Compile Include="Models\ITEMS_GROUP.cs" />
     <Compile Include="Models\WO_ITEM_CLASS.cs" />
     <Compile Include="Models\ITEMS_MASTER.cs" />
     <Compile Include="Models\SUPPORT_MESSAGES.cs" />
     <Compile Include="Models\MESSAGES.cs" />
+    <Compile Include="Models\WO_ITEM_TYPE.cs" />
+    <Compile Include="Models\WO_NOTE.cs" />
     <Compile Include="Models\WO_ORDER_CART.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\LoginService.cs" />
@@ -180,13 +181,12 @@
     <Compile Include="Services\ProductService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\BackOffice\Views\Setup\Categories.cshtml" />
-    <Content Include="Areas\BackOffice\Views\Setup\Category.cshtml" />
-    <Content Include="Areas\BackOffice\Views\Setup\ProductClass.cshtml" />
-    <Content Include="Areas\BackOffice\Views\Setup\Class.cshtml" />
-    <Content Include="Areas\BackOffice\Views\Setup\Products.cshtml" />
-    <Content Include="Areas\BackOffice\Views\Setup\Product.cshtml" />
-    <None Include="Areas\BackOffice\Views\_ViewStart.cshtml" />
+    <Content Include="Views\Setup\Categories.cshtml" />
+    <Content Include="Views\Setup\Category.cshtml" />
+    <Content Include="Views\Setup\ProductClass.cshtml" />
+    <Content Include="Views\Setup\Class.cshtml" />
+    <Content Include="Views\Setup\Products.cshtml" />
+    <Content Include="Views\Setup\Product.cshtml" />
     <Content Include="Assets\css\bootstrap.css" />
     <Content Include="Assets\css\ui.css" />
     <Content Include="Assets\fonts\material-icon\css\round.css" />
@@ -269,8 +269,6 @@
     <Content Include="Assets\fonts\material-icon\font\MaterialIcons-Round.ttf" />
     <Content Include="Assets\fonts\material-icon\font\MaterialIcons-Round.woff" />
     <Content Include="Assets\fonts\material-icon\font\MaterialIcons-Round.woff2" />
-    <Content Include="Areas\BackOffice\Views\web.config" />
-    <Content Include="Areas\BackOffice\Views\Shared\_Layout.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

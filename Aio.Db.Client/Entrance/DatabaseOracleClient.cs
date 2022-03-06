@@ -3,7 +3,6 @@ using Aio.Db.ConnectionString;
 using Aio.Db.Oracle;
 using Aio.Db.OracleEF;
 using Aio.Model;
-using Aio.Utility.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,20 +13,20 @@ namespace Aio.Db.Client.Entrance
     public static class DatabaseOracleClient
     {
         #region Oracle_DB_Method
-        public static DataTable GetDataTable(string sql, object[] _parameters = null, string _con = "")
+        public static Tuple<DataTable, EQResult> GetDataTable(string sql, object[] _parameters = null, string _con = "")
         {
             return DatabaseOracle.ExecuteQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _parameters: _parameters);
         }
-        public static ENQResult PostSqlList(List<string> sqlList, string _con = "")
+        public static EQResult PostSqlList(List<string> sqlList, string _con = "")
         {
             return DatabaseOracle.ExecuteNonQueryList(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command_list: sqlList);
         }
-        public static ENQResult PostSql(string sql, string _con = "")
+        public static EQResult PostSql(string sql, string _con = "")
         {
             return DatabaseOracle.ExecuteNonQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql);
         }
         // public static Tuple<string, string> PostSqlOut(string sql, string _out, string _con = "")
-        public static ENQResult PostSqlOut(string sql, string _out, string _con = "")
+        public static EQResult PostSqlOut(string sql, string _out, string _con = "")
         {
             return DatabaseOracle.ExecuteNonQueryOut(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _outId: _out);
         }
@@ -38,24 +37,23 @@ namespace Aio.Db.Client.Entrance
         private static T SqlToModel<T>(string sql) where T : new()
         {
             T t = new T();
-            DataTable _dt = GetDataTable(sql: sql);
-            if (_dt.Rows.Count == 0)
+            Tuple<DataTable, EQResult> _tpl = GetDataTable(sql: sql);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
-                t = TableEntity.DataTableToListModel<T>(_dt).ToList().FirstOrDefault();
+                t = TableEntity.DataTableToListModel<T>(_tpl.Item1).ToList().FirstOrDefault();
             }
             return t;
         }
 
-        public static Tuple<List<T>, string> SqlToListObjectBind<T>(string sql, object[] _parameters = null) where T : new()
+        public static Tuple<List<T>, EQResult> SqlToListObjectBind<T>(string sql, object[] _parameters = null) where T : new()
         {
             List<T> lst = new List<T>();
-            DataTable _dt = GetDataTable(sql: sql, _parameters: _parameters);
-            Tuple<DataTable, string> _tpl = Table.Filter(_dt);
-            if (_tpl.Item2 == AppKeys.PostSuccess)
+            Tuple<DataTable, EQResult> _tpl = GetDataTable(sql: sql, _parameters: _parameters);
+            if (_tpl.Item2.SUCCESS)
             {
-                lst = TableEntity.BindObjectList<T>(_dt).ToList();
+                lst = TableEntity.BindObjectList<T>(_tpl.Item1).ToList();
             }
-            return new Tuple<List<T>, string>(lst, _tpl.Item2);
+            return new Tuple<List<T>, EQResult>(lst, _tpl.Item2);
         }
         /// <summary>
         /// Getting error in number system
@@ -66,10 +64,10 @@ namespace Aio.Db.Client.Entrance
         public static List<T> SqlToListModel<T>(string sql) where T : new()
         {
             List<T> lst = new List<T>();
-            DataTable _dt = GetDataTable(sql: sql);
-            if (_dt.Rows.Count > 0)
+            Tuple<DataTable, EQResult> _tpl = GetDataTable(sql: sql);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
-                lst = TableEntity.DataTableToListModel<T>(_dt).ToList();
+                lst = TableEntity.DataTableToListModel<T>(_tpl.Item1).ToList();
             }
             return lst;
         }

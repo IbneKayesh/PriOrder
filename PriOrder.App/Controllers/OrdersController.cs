@@ -17,9 +17,9 @@ namespace PriOrder.App.Controllers
         }
         public ActionResult Cart()
         {
-            string distId = "123"; //Session["userId"];
-            Tuple<List<WO_ORDER_CART>, string> _tpl = OrderService.getCartByDistId_TEMP(distId);
-            if (_tpl.Item2 == AppKeys.PostSuccess)
+            string distId = Session["userId"].ToString();
+            Tuple<List<WO_ORDER_CART>, EQResult> _tpl = OrderService.getCartByDistId(distId);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 return View(_tpl.Item1);
             }
@@ -29,9 +29,21 @@ namespace PriOrder.App.Controllers
                 return View(new List<WO_ORDER_CART>());
             }
         }
+
+        public ActionResult DeleteFromCart(string itemId)
+        {
+            string distId = Session["userId"].ToString();
+            EQResult result = OrderService.DelMyCartItem(distId, itemId);
+            var rslt = new ALERT_BOX
+            {
+                ALERT_MESSAGES = result.MESSAGES
+            };
+
+            return Json(rslt);
+        }
         public ActionResult SubmitCart(List<WO_ORDER_CART> objList)
         {
-            string distId = "123"; //Session["userId"];
+            string distId = Session["userId"].ToString();
             string result = "Success";// OrderService.OrderSubmit(distId,objList);
             var rslt = new ALERT_BOX
             {

@@ -14,11 +14,11 @@
             foreach (var item in Model.CATEGORIES)
             {
                 <div class="item-xs">
-                    <a href="@Url.Action("ProductClass", "Products", new { id = item.CATEGORY_ID })" class="item-category-sm">
+                    <a href="@Url.Action("ProductClass", "Products", new { id = item.ITEM_TYPE_ID })" class="item-category-sm">
                         <div class="icon-wrap bg-primary-light shadow-sm">
-                            <img class="icon" src="~/Images/Category/@item.CATEGORY_ID-.jpg" alt="">
+                            <img class="icon" src="~/Images/Category/@item.ITEM_TYPE_ID-.jpg" alt="">
                         </div>
-                        <small class="title text-white"> @item.CATEGORY_NAME </small>
+                        <small class="title text-white"> @item.ITEM_TYPE_NAME </small>
                     </a>
                 </div>
             }
@@ -37,7 +37,7 @@
             foreach (var item in Model.CLASS)
             {
                 <li class="nav-item">
-                    <a href="@Url.Action("Products", "Products", new { id = item.ITEM_CLASS_ID })" class="icontext">
+                    <a href="@Url.Action("Products", "Products", new { className = item.ITEM_CLASS_ID, catName = item.ITEM_TYPE_ID })" class="icontext">
                         <span class="icon icon-sm rounded"> <img src="~/Images/ItemClass/@item.ITEM_CLASS_ID-.jpg" alt=""> </span>
                         <div class="text"> <h6 class="title">@item.ITEM_CLASS_NAME</h6> <span class="text-muted">@item.ITEMS_COUNT items</span></div>
                     </a>

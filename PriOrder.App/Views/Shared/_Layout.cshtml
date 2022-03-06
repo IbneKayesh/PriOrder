@@ -56,10 +56,23 @@
     </main> <!-- app-content.// -->
 
     <nav class="nav-bottom">
-        <a href="@Url.Action("Index")" class="nav-link">
-            <i class="icon material-icons md-home"></i><span class="text">Home</span>
-        </a>
-        <a href="@Url.Action("Categories","Products")" class="nav-link">
+
+        @if (Session["menuBottom"] != null)
+        {
+            var bottomMenu = (List<PriOrder.App.Models.WO_APP_MENU>)Session["menuBottom"];
+            foreach (var _menu in bottomMenu)
+            {
+                <a href="@Url.Action(_menu.ACTION_NAME,_menu.CONTROLLER_NAME)" class="nav-link">
+                    <i class="icon material-icons @_menu.MENU_ICON"></i><span class="text">@_menu.MENU_NAME_EN</span>
+                </a>
+            }
+        }
+
+
+
+
+  
+        @*<a href="@Url.Action("Categories","Products")" class="nav-link">
             <i class="icon material-icons md-apps"></i><span class="text">Category</span>
         </a>
         <a href="@Url.Action("Cart","Orders")" class="nav-link">
@@ -72,7 +85,7 @@
         <a href="@Url.Action("Messages")" class="nav-link">
             <span class="float-end badge bg-warning">2</span>
             <i class="icon material-icons md-chat"></i><span class="text">Messages</span>
-        </a>
+        </a>*@
     </nav> <!-- nav-bottom -->
 
 
@@ -90,15 +103,24 @@
         </header>
         <article class="offcanvas-body">
             <nav class="nav-sidebar mt-2">
-                <a href="@Url.Action("Categories","Products")"> <i class="material-icons md-apps"></i> Category</a>
-                <a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> Products</a>
-                <a href="@Url.Action("MyOrders")"> <i class="material-icons md-local_shipping"></i> My Orders</a>
-                <a href="@Url.Action("Damages")"> <i class="material-icons md-store"></i> Damages </a>
-                <hr>
-                <a href="@Url.Action("Messages")"> <i class="material-icons md-chat"></i> Messages</a>
-                <a href="@Url.Action("Support")"> <i class="material-icons md-question_answer"></i>Help &amp; Support</a>
-                <a href="#3"> <i class="material-icons md-info"></i> About us</a>
-                <hr>
+
+                @if (Session["menuLeft"] != null)
+                {
+                    var leftMenu = (List<PriOrder.App.Models.WO_APP_MENU>)Session["menuLeft"];
+                    foreach (var _menu in leftMenu)
+                    {
+                        <a href="@Url.Action(_menu.ACTION_NAME,_menu.CONTROLLER_NAME)"> <i class="material-icons md-apps"></i> @_menu.MENU_NAME_EN</a>
+                    }
+                }
+
+                @*<a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> Products</a>
+                    <a href="@Url.Action("MyOrders")"> <i class="material-icons md-local_shipping"></i> My Orders</a>
+                    <a href="@Url.Action("Damages")"> <i class="material-icons md-store"></i> Damages </a>
+                    <hr>
+                    <a href="@Url.Action("Messages")"> <i class="material-icons md-chat"></i> Messages</a>
+                    <a href="@Url.Action("Support")"> <i class="material-icons md-question_answer"></i>Help &amp; Support</a>
+                    <a href="#3"> <i class="material-icons md-info"></i> About us</a>
+                    <hr>*@
                 <a href="@Url.Action("MyProfile","Home")"> <i class="material-icons md-account_circle"></i> Profile </a>
                 <a href="@Url.Action("ChangePassword")"> <i class="material-icons md-lock"></i> Change Password</a>
                 <hr>
@@ -135,7 +157,7 @@
     <script>
         $('.minus').click(function () {
             quantityField = $(this).next();
-            if (quantityField.val() != 0) {
+            if (quantityField.val() != 1) {
                 quantityField.val(parseInt(quantityField.val(), 10) - 1);
             }
         });

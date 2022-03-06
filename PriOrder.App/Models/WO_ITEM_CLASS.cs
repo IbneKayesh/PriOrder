@@ -22,7 +22,7 @@ namespace PriOrder.App.Models
 
         [Display(Name = "Category Id")]
         [Required(ErrorMessage = "{0} is required")]
-        public string CATEGORY_ID { get; set; }
+        public string ITEM_TYPE_ID { get; set; }
         
         [Display(Name = "Class Image")]
         [NotMapped]

@@ -10,25 +10,29 @@
         CurrBalanace = Convert.ToDecimal(Session["userBalnace"]);
     }
 }
-
+<button class="btn btn-primary w-100 mb-2" type="button" id="btnReload"> Refresh Cart Items</button>
 <section class="p-3 cart-items">
     @Html.AntiForgeryToken()
     @foreach (var item in Model)
     {
         <article class="item-cart">
             <figure class="itemside mb-3">
-                <div class="aside"><img src="~/Assets/images/items/1.jpg" class="rounded border img-md"></div>
+                <div class="aside"><img src="~/Images/Products/@item.ITEM_ID-.jpg" class="rounded border img-md"></div>
                 <figcaption class="info">
-                    <a href="#" class="title text-truncate">@item.ITMA_NAME</a>
-                    <input type="hidden" class="item-rate" value="@item.ITMA_PRIC" />
-                    <input type="hidden" class="item-code" value="@item.ITMA_ITID" />
-                    <input type="hidden" class="item-note" value="@item.NOTE_ID" />
+                    <a href="#" class="title text-truncate">@item.ITEM_NAME</a>
+                    <input type="hidden" class="item-rate" value="@item.ITEM_RATE" />
+                    <input type="hidden" class="item-code" value="@item.ITEM_ID" />
                     <small class="text-muted">
-                        @item.ITMA_ITID - @item.NOTE_ID - @item.NOTE_TEXT<br>
-                        @item.ITMA_PRIC / per unit
+                        @item.ITEM_ID - @item.NOTE_TEXT<br>
+                        @item.ITEM_RATE / @item.ITEM_UNIT
                     </small>
                 </figcaption>
             </figure>
+            <div class="row input-group input-group-sm items-select-note">
+                @Html.DropDownList("WO_NOTE", item.WO_NOTE as IEnumerable<SelectListItem>, new { @class = "form-select" })
+                <input class="item-note form-control form-control-sm" type="text" value="@item.NOTES">
+            </div>
+            <br />
             <div class="row align-items-center">
                 <div class="col-auto"> <a href="#" class="btn btn-sm btn-outline-danger delete-item"><i class="material-icons md-delete"></i></a> </div>
                 <div class="col">
@@ -38,7 +42,7 @@
                         <button class="btn btn-light plus-cart" type="button"> <i class="material-icons md-plus"></i> </button>
                     </div> <!-- input-group.// -->
                 </div>
-                <div class="col sub-total-col"> <var class="float-end price">x @item.ITMA_PRIC =<span class="sub-total">@{  var st = item.ITMA_PRIC * item.ITEM_QTY; TotalSum += st; } @st</span></var></div>
+                <div class="col sub-total-col"> <var class="float-end price">x @item.ITEM_RATE =<span class="sub-total">@{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; } @st</span></var></div>
             </div>
         </article> <!-- item-cart.// -->
                     <hr />
@@ -61,7 +65,7 @@
     </dl>
     <br>
     <button class="btn btn-success w-100 mb-2" type="button" id="btnConfirm"> Confirm </button>
-    <a href="@Url.Action("Categories")" class="btn btn-outline-primary w-100">  Back to shop</a>
+    <a href="@Url.Action("Categories","Products")" class="btn btn-outline-primary w-100">  Back to shop</a>
     <br> <br>
 </section>
 
@@ -69,11 +73,14 @@
 @section scripts{
     <script>
         $(document).ready(function () {
+            $('#btnReload').click(function () {
+                location.href = location.href;
+            });
 
             $('.minus-cart').click(function (e) {
                 e.preventDefault();
                 quantityField = $(this).next();
-                if (quantityField.val() != 0) {
+                if (quantityField.val() != 1) {
                     quantityField.val(parseInt(quantityField.val(), 10) - 1);
                 };
                 calculate_subTotal($(this));
@@ -90,6 +97,25 @@
             $(".delete-item").click(function (e) {
                 e.preventDefault();
                 $(this).parent('div.col-auto').parent('div.align-items-center').parent('article.item-cart').remove();
+                var ItemId = $(this).parent('div.col-auto').parent('div.align-items-center').
+                              siblings('figure.itemside').children('figcaption.info').find("input.item-code").val();
+                console.log(ItemId);
+                $.ajax({
+                    type: "POST",
+                    url: "DeleteFromCart",
+                    data: { itemId: ItemId },
+                    success: function (response) {
+                        Swal.fire("messages", response);
+                    },
+                    failure: function (response) {
+                        Swal.fire("messages", response.responseText);
+                    },
+                    error: function (response) {
+                        Swal.fire("messages", response.responseText);
+                    }
+                });
+
+
                 getCartSum();
             });
         });
@@ -124,11 +150,11 @@
             ItemsArr.length = 0;
             $('section.cart-items').children('article.item-cart').each(function () {
                 ItemsArr.push({
-                    "ITMA_ITID": $(this).children('figure.itemside').children('figcaption.info').find("input.item-code").val(),
+                    "ITEM_ID": $(this).children('figure.itemside').children('figcaption.info').find("input.item-code").val(),
                     "ITEM_QTY": $(this).children('div.align-items-center').children('div.col').children('div.input-group').find("input.quantity-cart").val(),
-                    "ITMA_PRIC": $(this).children('figure.itemside').children('figcaption.info').find("input.item-rate").val(),
-                    "NOTE_ID": $(this).children('figure.itemside').children('figcaption.info').find("input.item-note").val(),
-                    "NOTE_TEXT": "note text"
+                    "ITEM_RATE": $(this).children('figure.itemside').children('figcaption.info').find("input.item-rate").val(),
+                    "NOTE_ID": $(this).children('div.items-select-note').find("select.form-select").val(),
+                    "NOTE_TEXT": $(this).children('div.items-select-note').find("input.item-note").val()
                 });
             });
             console.log(ItemsArr);
