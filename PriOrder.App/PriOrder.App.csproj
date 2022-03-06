@@ -179,6 +179,7 @@
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\SetupService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Setup\Categories.cshtml" />

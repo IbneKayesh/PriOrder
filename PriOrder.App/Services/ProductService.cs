@@ -22,7 +22,6 @@ namespace PriOrder.App.Services
                         GROUP BY TYP.ITEM_TYPE_ID,TYP.ITEM_TYPE_NAME
                         ORDER BY TYP.ITEM_TYPE_NAME";
             return DatabaseOracleClient.SqlToListObjectBind<WO_ITEM_TYPE>(sql);
-
         }
         public static Tuple<List<WO_ITEM_CLASS>, EQResult> getClassByCategoryId(string distId, string categoryId)
         {
@@ -100,14 +99,7 @@ namespace PriOrder.App.Services
         //AND DI.DSMA_DSID = '837075' and typ.ITEM_TYPE_ID = 'RFLTP025'
         //GROUP BY TYP.ITEM_TYPE_ID,TYP.ITEM_TYPE_NAME,IM.ITEM_CLASS_ID
 
-        public static Tuple<List<WO_ITEMS>, string> getProductsByClassId_TEMP(string classId)
-        {
-            List<WO_ITEMS> objList = new List<WO_ITEMS>();
-            //objList.Add(new T_ITMA { ITMA_ITID = "123", ITMA_NAME = "Product 1", ITMA_PRIC = 10, ITMA_GRUP = "1", ITMA_FACT = 1, ITMA_CLASS = "1", ITMA_STOCK = 15 });
-            //objList.Add(new T_ITMA { ITMA_ITID = "234", ITMA_NAME = "Product 2", ITMA_PRIC = 11, ITMA_GRUP = "1", ITMA_FACT = 1, ITMA_CLASS = "1", ITMA_STOCK = 15 });
-            //objList.Add(new T_ITMA { ITMA_ITID = "345", ITMA_NAME = "Product 2", ITMA_PRIC = 12, ITMA_GRUP = "1", ITMA_FACT = 1, ITMA_CLASS = "1", ITMA_STOCK = 15 });
-            return new Tuple<List<WO_ITEMS>, string>(objList, "AioSuccess");
-        }
+    
         public static Tuple<List<WO_ITEM_TYPE>, string> getCategoryListByDistGroup_TEMP(string groupId)
         {
             List<WO_ITEM_TYPE> objList = new List<WO_ITEM_TYPE>();
