@@ -2,6 +2,7 @@
 using PriOrder.App.Models;
 using PriOrder.App.ModelsView;
 using PriOrder.App.Services;
+using PriOrder.App.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,18 @@ namespace PriOrder.App.Controllers
     {
         public ActionResult Index()
         {
+            //
+            //return Json(new { success = true, messages = SweetMessages._DeleteSuccess });
+            //return Json(new { success = false, messages = SweetMessages._DeleteError });
             return View();
         }
-        
+
+        public ActionResult TestJson()
+        {
+            return Json(new { success = false, messages = "Successfully added" });
+        }
+
+
         public ActionResult Login()
         {
             ViewBag.Title = "Login";
@@ -101,7 +111,7 @@ namespace PriOrder.App.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        
+
         public ActionResult Messages()
         {
             List<MESSAGES> objList = new List<MESSAGES>();
@@ -120,8 +130,8 @@ namespace PriOrder.App.Controllers
             return View(objList);
         }
 
-      
-  
+
+
         public ActionResult ChangePassword()
         {
             return View();

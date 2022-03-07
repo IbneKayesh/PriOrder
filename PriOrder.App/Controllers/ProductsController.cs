@@ -3,6 +3,7 @@ using PriOrder.App.DataModels;
 using PriOrder.App.Models;
 using PriOrder.App.ModelsView;
 using PriOrder.App.Services;
+using PriOrder.App.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessages = "No Favorite found";
+                    TempData["mesg"] = SweetMessages.Failed("No Favorite products found");
                 }
             }
             return View(objList);
@@ -65,7 +66,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessages = "No Category found";
+                    TempData["mesg"] = SweetMessages.Failed("No Products Category found");
                 }
             }
             return View(objList);
@@ -75,6 +76,7 @@ namespace PriOrder.App.Controllers
         {
             if (Request.UrlReferrer == null)
             {
+                TempData["mesg"] = SweetMessages.Failed("What a joke!");
                 return RedirectToAction(nameof(Categories));
             }
 
@@ -84,7 +86,7 @@ namespace PriOrder.App.Controllers
             var clsList = new List<WO_ITEM_CLASS>();
             if (ApplData.CHACHE_ENABLED)
             {
-                catList = HttpContext.Cache.Get(distId + "chCat") as List<WO_ITEM_TYPE>;               
+                catList = HttpContext.Cache.Get(distId + "chCat") as List<WO_ITEM_TYPE>;
                 clsList = HttpContext.Cache.Get(distId + id) as List<WO_ITEM_CLASS>;
             }
 
@@ -101,7 +103,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessages = "No Category found";
+                    TempData["mesg"] = SweetMessages.Failed("No Products Category found");
                 }
             }
             if (clsList == null)
@@ -118,7 +120,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessages = "No Class found";
+                    TempData["mesg"] = SweetMessages.Failed("No Products Class found");
                 }
             }
 
@@ -132,6 +134,7 @@ namespace PriOrder.App.Controllers
         {
             if (Request.UrlReferrer == null)
             {
+                TempData["mesg"] = SweetMessages.Failed("What a joke!");
                 return RedirectToAction(nameof(Categories));
             }
             //Create Link for Back Button
@@ -150,51 +153,50 @@ namespace PriOrder.App.Controllers
         }
 
 
-
-        
         public ActionResult AddToCart(string id, string qt)
         {
             if (Request.UrlReferrer == null)
             {
+                TempData["mesg"] = SweetMessages.Failed("What a joke!");
                 return RedirectToAction(nameof(Categories));
             }
 
             string distId = Session["userId"].ToString();
             EQResult result = ProductService.AddToCart(distId, id, qt, "", "");
 
-            var rslt = new ALERT_BOX
+            var rslt = new ALERT_MESG
             {
-                ALERT_MESSAGES = result.MESSAGES
+                success = result.SUCCESS,
+                messages = result.SUCCESS == true ? $"Product: {id} Qty: {qt} added to cart" : "Product added failed, try again!"
             };
-
             return Json(rslt);
         }
 
 
 
 
-        public ActionResult AddFav(string id)
+        public ActionResult AddToFav(string id)
         {
             string distId = Session["userId"].ToString();
             EQResult result = ProductService.AddToFav(distId, id);
 
-            var rslt = new ALERT_BOX
+            var rslt = new ALERT_MESG
             {
-                ALERT_MESSAGES = result.MESSAGES
+                success = result.SUCCESS,
+                messages = result.ROWS == 1 ? $"Product: {id} added to Favorite" : "Product added failed, try another product!"
             };
-
             return Json(rslt);
         }
-        public ActionResult DelFav(string id)
+        public ActionResult DelFromFav(string id)
         {
             string distId = Session["userId"].ToString();
             EQResult result = ProductService.DelFromFav(distId, id);
 
-            var rslt = new ALERT_BOX
+            var rslt = new ALERT_MESG
             {
-                ALERT_MESSAGES = result.MESSAGES
+                success = result.SUCCESS,
+                messages = result.ROWS == 1 ? $"Product: {id} removed from Favorite" : "Product is already removed!"
             };
-
             return Json(rslt);
         }
     }

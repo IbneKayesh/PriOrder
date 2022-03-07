@@ -161,7 +161,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="ModelsView\ALERT_BOX.cs" />
+    <Compile Include="ModelsView\ALERT_MESG.cs" />
     <Compile Include="ModelsView\CLASS_CATEGORY.cs" />
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
@@ -182,8 +182,10 @@
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\SetupService.cs" />
+    <Compile Include="Utility\SweetMessages.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\js\sweetalert.min.js" />
     <Content Include="Views\Setup\Categories.cshtml" />
     <Content Include="Views\Setup\Category.cshtml" />
     <Content Include="Views\Setup\ProductClass.cshtml" />
@@ -303,9 +305,7 @@
     <Content Include="Views\Home\Messages.cshtml" />
     <Content Include="Views\Home\Support.cshtml" />
     <Content Include="Views\Home\OrderSuccess.cshtml" />
-    <Content Include="Views\Home\Products.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
-    <Content Include="Views\Home\Statements.cshtml" />
     <Content Include="Views\Accounts\Banks.cshtml" />
     <Content Include="Views\Home\ChangePassword.cshtml" />
     <Content Include="Views\Home\Damages.cshtml" />

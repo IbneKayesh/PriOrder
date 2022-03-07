@@ -5,8 +5,9 @@ using System.Web;
 
 namespace PriOrder.App.ModelsView
 {
-    public class ALERT_BOX
+    public class ALERT_MESG
     {
-        public string ALERT_MESSAGES { get; set; }
+        public bool success { get; set; } = true;
+        public string messages { get; set; }
     }
 }

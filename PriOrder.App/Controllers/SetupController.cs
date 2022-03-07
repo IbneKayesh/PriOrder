@@ -2,6 +2,7 @@
 using PriOrder.App.DataModels;
 using PriOrder.App.Models;
 using PriOrder.App.Services;
+using PriOrder.App.Utility;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,7 +37,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessages = "No Category found";
+                    TempData["mesg"] = SweetMessages.Failed("No Products Category found");
                 }
             }
             return View(objList);
@@ -70,6 +71,8 @@ namespace PriOrder.App.Controllers
                         string filePath = "~/Images/Category/";
                         string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.ITEM_TYPE_ID + "-.jpg");
                         obj.ITEM_TYPE_IMAGE.SaveAs(serverPath);
+
+                        TempData["mesg"] = SweetMessages.SuccessPop("Image successfully added");
                         return RedirectToAction(nameof(Categories));
                     }
                     else
@@ -87,6 +90,7 @@ namespace PriOrder.App.Controllers
                 err = "Invalid file";
             }
             ModelState.AddModelError("", errorMessage: err);
+            TempData["mesg"] = SweetMessages.Failed(err);
             return View();
         }
         //Cache supported
@@ -149,6 +153,8 @@ namespace PriOrder.App.Controllers
                         string filePath = "~/Images/ItemClass/";
                         string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.ITEM_CLASS_ID + "-.jpg");
                         obj.ITEM_CLASS_IMAGE.SaveAs(serverPath);
+
+                        TempData["mesg"] = SweetMessages.SuccessPop("Image successfully added");
                         return RedirectToAction(nameof(ProductClass), new { id = obj.ITEM_TYPE_ID });
                     }
                     else
@@ -166,6 +172,7 @@ namespace PriOrder.App.Controllers
                 err = "Invalid file";
             }
             ModelState.AddModelError("", errorMessage: err);
+            TempData["mesg"] = SweetMessages.Failed(err);
             return View(obj);
         }
         //Cache not supported
@@ -221,6 +228,8 @@ namespace PriOrder.App.Controllers
 
                         //return back to last pages
                         string[] parms = obj.ITEM_UNIT.Split('-');
+
+                        TempData["mesg"] = SweetMessages.SuccessPop("Image successfully added");
                         return RedirectToAction("Products", new { id = parms[0], catName = parms[1] });
                     }
                     else
@@ -238,6 +247,7 @@ namespace PriOrder.App.Controllers
                 err = "Invalid file";
             }
             ModelState.AddModelError("", errorMessage: err);
+            TempData["mesg"] = SweetMessages.Failed(err);
             return View(obj);
         }
     }

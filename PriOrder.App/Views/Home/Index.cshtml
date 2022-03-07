@@ -1,35 +1,58 @@
 ﻿@{
     ViewBag.Title = "Home Pages";
 }
+
+
+<button type="button" class="form-control xxxx">text</button>
+
+@section scripts{
+
+    <script>
+
+        $(document).on('click', '.xxxx', function (e) {
+            e.preventDefault();
+            $.post("TestJson",
+                      function (data) {
+                          if (data.success) {
+                              swal({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
+                          } else {
+                              swal({ title: "Failed!", text: data.messages, icon: "error", button: "Ok!" });
+                          }
+                      });
+        });
+    </script>
+}
+
+
 @*<div class="col-12 col-sm-6 col-md-4">
-    <article class="card mb-3">
-        <img src="~/Assets/images/posts/3.jpg" height="200" class="card-img-top" alt="">
-        <div class="card-body">
-            <h5 class="card-title">New Products Launch</h5>
-            <p class="card-text mb-0">A new product or a company getting the word out there is a tough task that marketers face.</p>
-            <p class="card-text"><small class="text-muted">05-JAN-2022</small></p>
-            <a href="@Url.Action("ProductView")" class="btn btn-light btn-sm stretched-link w-100">View Details</a>
-        </div>
-    </article>
-</div>
+        <article class="card mb-3">
+            <img src="~/Assets/images/posts/3.jpg" height="200" class="card-img-top" alt="">
+            <div class="card-body">
+                <h5 class="card-title">New Products Launch</h5>
+                <p class="card-text mb-0">A new product or a company getting the word out there is a tough task that marketers face.</p>
+                <p class="card-text"><small class="text-muted">05-JAN-2022</small></p>
+                <a href="@Url.Action("ProductView")" class="btn btn-light btn-sm stretched-link w-100">View Details</a>
+            </div>
+        </article>
+    </div>
 
 
-last 3 order item list
+    last 3 order item list
 
-category > class > item
-
-
-delar > group
+    category > class > item
 
 
-item > group
-
-Web Order Stop for Specific User > without inactive code
+    delar > group
 
 
-Code:
-Name:
-Factor:
-Stock:
-Offer:
-Tag:*@
+    item > group
+
+    Web Order Stop for Specific User > without inactive code
+
+
+    Code:
+    Name:
+    Factor:
+    Stock:
+    Offer:
+    Tag:*@

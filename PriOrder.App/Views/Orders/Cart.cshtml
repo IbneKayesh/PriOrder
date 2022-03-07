@@ -127,6 +127,7 @@
                     url: "DeleteFromCart",
                     data: { itemId: ItemId },
                     success: function (response) {
+
                         Swal.fire("messages", response);
                     },
                     failure: function (response) {
