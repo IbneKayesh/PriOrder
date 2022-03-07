@@ -14,54 +14,63 @@ namespace PriOrder.App.Controllers
 {
     public class ProductsController : Controller
     {
-        // GET: Products
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //Cache supported
         public ActionResult Favorite()
         {
-            var objchFavorite = HttpContext.Cache.Get("objchFavorite") as List<WO_ITEMS>;
-            if (objchFavorite != null || objchFavorite == null)
+            string distId = Session["userId"].ToString();
+            var objList = new List<WO_ITEMS>();
+
+            if (ApplData.CHACHE_ENABLED)
             {
-                string distId = Session["userId"].ToString();
+                objList = HttpContext.Cache.Get(distId + "chFav") as List<WO_ITEMS>;
+            }
+            if (objList == null)
+            {
                 Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getFavoriteProductsByDistid(distId);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
                 {
-                    objchFavorite = _tpl.Item1;
-                    HttpContext.Cache.Insert("objchFavorite", objchFavorite, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    objList = _tpl.Item1;
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert(distId + "chFav", objList, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
                 }
                 else
                 {
                     ViewBag.ErrorMessages = "No Favorite found";
-                    return View(new List<WO_ITEMS>());
                 }
             }
-            return View(objchFavorite);
+            return View(objList);
         }
+        //Cache supported
         public ActionResult Categories()
         {
-            var objchCategories = HttpContext.Cache.Get("chCategories") as List<WO_ITEM_TYPE>;
-            if (objchCategories == null)
+            string distId = Session["userId"].ToString();
+            var objList = new List<WO_ITEM_TYPE>();
+
+            if (ApplData.CHACHE_ENABLED)
             {
-                string distId = Session["userId"].ToString();
+                objList = HttpContext.Cache.Get(distId + "chCat") as List<WO_ITEM_TYPE>;
+            }
+            if (objList == null)
+            {
                 Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = ProductService.getCategoryListByDistId(distId);
-                //Tuple<List<WO_ITEM_CATEGORY>, string> _tpl = ProductService.getCategoryListByDistGroup_TEMP(groupId);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
                 {
-                    objchCategories = _tpl.Item1;
-                    HttpContext.Cache.Insert("chCategories", objchCategories, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    objList = _tpl.Item1;
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert(distId + "chCat", objList, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
                 }
                 else
                 {
                     ViewBag.ErrorMessages = "No Category found";
-                    return View(new List<WO_ITEM_TYPE>());
                 }
             }
-            return View(objchCategories);
+            return View(objList);
         }
-
-
+        //Cache supported
         public ActionResult ProductClass(string id)
         {
             if (Request.UrlReferrer == null)
@@ -71,52 +80,54 @@ namespace PriOrder.App.Controllers
 
             string distId = Session["userId"].ToString();
             CLASS_CATEGORY objList = new CLASS_CATEGORY();
-
-            var objchCategories = HttpContext.Cache.Get("chCategories") as List<WO_ITEM_TYPE>;
-            if (objchCategories == null)
+            var catList = new List<WO_ITEM_TYPE>();
+            var clsList = new List<WO_ITEM_CLASS>();
+            if (ApplData.CHACHE_ENABLED)
             {
-                //Get Categories
+                catList = HttpContext.Cache.Get(distId + "chCat") as List<WO_ITEM_TYPE>;               
+                clsList = HttpContext.Cache.Get(distId + id) as List<WO_ITEM_CLASS>;
+            }
 
-                Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl_cat = ProductService.getCategoryListByDistId(distId);
-                if (_tpl_cat.Item2.SUCCESS && _tpl_cat.Item2.ROWS > 0)
+            if (catList == null)
+            {
+                Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = ProductService.getCategoryListByDistId(distId);
+                if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
                 {
-                    objList.CATEGORIES = _tpl_cat.Item1;
-                    HttpContext.Cache.Insert("chCategories", objchCategories, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    catList = _tpl.Item1;
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert(distId + "chCat", objList, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
+                }
+                else
+                {
+                    ViewBag.ErrorMessages = "No Category found";
                 }
             }
-            else
-            {
-                objList.CATEGORIES = objchCategories;
-            }
-
-            //create variable for product Class
-            Dictionary<string, List<WO_ITEM_CLASS>> dynVar = new Dictionary<string, List<WO_ITEM_CLASS>>();
-            dynVar.Add(id, HttpContext.Cache.Get(id) as List<WO_ITEM_CLASS>);
-
-            if (dynVar.FirstOrDefault().Value == null)
+            if (clsList == null)
             {
                 //Get Classes by Category Id
                 Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = ProductService.getClassByCategoryId(distId, id);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
                 {
-                    objList.CLASS = _tpl.Item1;
-
-                    HttpContext.Cache.Insert(dynVar.FirstOrDefault().Key, _tpl.Item1, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    clsList = _tpl.Item1;
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert(distId + id, clsList, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
                 }
                 else
                 {
-                    objList.CLASS = new List<WO_ITEM_CLASS>();
                     ViewBag.ErrorMessages = "No Class found";
                 }
             }
-            else
-            {
-                objList.CLASS = dynVar.FirstOrDefault().Value;
-            }
+
+            //assign cat and class
+            objList.CATEGORIES = catList;
+            objList.CLASS = clsList;
             return View(objList);
         }
-
-
+        //Cache not supported
         public ActionResult Products(string className, string catName)
         {
             if (Request.UrlReferrer == null)
@@ -140,13 +151,7 @@ namespace PriOrder.App.Controllers
 
 
 
-
-
-
-
-
-
-
+        
         public ActionResult AddToCart(string id, string qt)
         {
             if (Request.UrlReferrer == null)
@@ -164,6 +169,8 @@ namespace PriOrder.App.Controllers
 
             return Json(rslt);
         }
+
+
 
 
         public ActionResult AddFav(string id)
@@ -192,3 +199,9 @@ namespace PriOrder.App.Controllers
         }
     }
 }
+
+
+//create variable for product Class
+//Dictionary<string, List<WO_ITEM_CLASS>> dynVar = new Dictionary<string, List<WO_ITEM_CLASS>>();
+//dynVar.Add(id, HttpContext.Cache.Get(distId + id) as List<WO_ITEM_CLASS>);
+//clsList = dynVar?.FirstOrDefault().Value;

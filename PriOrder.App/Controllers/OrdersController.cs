@@ -10,11 +10,6 @@ namespace PriOrder.App.Controllers
 {
     public class OrdersController : Controller
     {
-        // GET: Orders
-        public ActionResult Index()
-        {
-            return View();
-        }
         public ActionResult Cart()
         {
             string distId = Session["userId"].ToString();

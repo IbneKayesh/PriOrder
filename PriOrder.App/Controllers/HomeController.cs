@@ -120,24 +120,8 @@ namespace PriOrder.App.Controllers
             return View(objList);
         }
 
-        public ActionResult OrderSuccess()
-        {
-            return View();
-        }
-
-        public ActionResult MyOrders()
-        {
-            return View();
-        }
-
-        public ActionResult Statements()
-        {
-            return View();
-        }
-        public ActionResult Banks()
-        {
-            return View();
-        }
+      
+  
         public ActionResult ChangePassword()
         {
             return View();
@@ -147,9 +131,5 @@ namespace PriOrder.App.Controllers
             return View();
         }
 
-        public ActionResult ProductView()
-        {
-            return View();
-        }
     }
 }

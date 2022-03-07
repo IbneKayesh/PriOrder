@@ -14,30 +14,34 @@ namespace PriOrder.App.Controllers
 {
     public class SetupController : Controller
     {
-        // GET: Setup
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //Cache supported
         public ActionResult Categories()
         {
-            var objchCategories = HttpContext.Cache.Get("chCategories") as List<WO_ITEM_TYPE>;
-            if (objchCategories == null)
+            var objList = new List<WO_ITEM_TYPE>();
+
+            if (ApplData.CHACHE_ENABLED)
+            {
+                objList = HttpContext.Cache.Get("AllchCat") as List<WO_ITEM_TYPE>;
+            }
+            if (objList == null)
             {
                 Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = SetupService.getCategoryList();
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
                 {
-                    objchCategories = _tpl.Item1;
-                    HttpContext.Cache.Insert("chCategories", objchCategories, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    objList = _tpl.Item1;
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert("AllchCat", objList, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
                 }
                 else
                 {
                     ViewBag.ErrorMessages = "No Category found";
-                    return View(new List<WO_ITEM_TYPE>());
                 }
             }
-            return View(objchCategories);
+            return View(objList);
         }
+        //Cache not supported
         public ActionResult Category(string id)
         {
             Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = SetupService.getCategoryById(id);
@@ -51,13 +55,14 @@ namespace PriOrder.App.Controllers
             }
 
         }
+        //Cache not supported
         [HttpPost]
         public ActionResult Category(WO_ITEM_TYPE obj)
         {
             string err = "";
             if (obj.ITEM_TYPE_ID != null && obj.ITEM_TYPE_IMAGE != null)
             {
-                if (obj.ITEM_TYPE_IMAGE.ContentLength > 0 && obj.ITEM_TYPE_IMAGE.ContentLength < (1024 * 50))
+                if (obj.ITEM_TYPE_IMAGE.ContentLength > 0 && obj.ITEM_TYPE_IMAGE.ContentLength < ApplData.CAT_IMG_SIZE)
                 {
                     string fileExtension = Path.GetExtension(obj.ITEM_TYPE_IMAGE.FileName).ToLower();
                     if (fileExtension == ".jpg")
@@ -74,7 +79,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = "File size must be less than 8KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.CAT_IMG_SIZE}KB and 80 x 80 pixel";
                 }
             }
             else
@@ -84,46 +89,39 @@ namespace PriOrder.App.Controllers
             ModelState.AddModelError("", errorMessage: err);
             return View();
         }
-
-
-
-
-
+        //Cache supported
         public ActionResult ProductClass(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
             {
                 return RedirectToAction(nameof(Categories));
             }
+            var objList = new List<WO_ITEM_CLASS>();
 
-            List<WO_ITEM_CLASS> objProdClass = new List<WO_ITEM_CLASS>();
-            //create variable for product Class
-            Dictionary<string, List<WO_ITEM_CLASS>> dynVar = new Dictionary<string, List<WO_ITEM_CLASS>>();
-            dynVar.Add(id, HttpContext.Cache.Get(id) as List<WO_ITEM_CLASS>);
-
-            if (dynVar.FirstOrDefault().Value == null)
+            if (ApplData.CHACHE_ENABLED)
+            {
+                objList = HttpContext.Cache.Get("Allch" + id) as List<WO_ITEM_CLASS>;
+            }
+            if (objList == null)
             {
                 //Get Classes by Category Id
                 Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = SetupService.getClassByCategoryId(id);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
                 {
-                    objProdClass = _tpl.Item1;
-                    HttpContext.Cache.Insert(dynVar.FirstOrDefault().Key, _tpl.Item1, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    objList = _tpl.Item1;
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert("Allch" + id, objList, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
                 }
                 else
                 {
-                    objProdClass = new List<WO_ITEM_CLASS>();
                     ViewBag.ErrorMessages = "No Class found";
                 }
             }
-            else
-            {
-                objProdClass = dynVar.FirstOrDefault().Value;
-            }
-            return View(objProdClass);
+            return View(objList);
         }
-
-
+        //Cache not supported
         public ActionResult Class(string id, string catName)
         {
             Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = SetupService.getClassById(id, catName);
@@ -136,14 +134,14 @@ namespace PriOrder.App.Controllers
                 return RedirectToAction(nameof(Categories));
             }
         }
-
+        //Cache not supported
         [HttpPost]
         public ActionResult Class(WO_ITEM_CLASS obj)
         {
             string err = "";
             if (obj.ITEM_CLASS_IMAGE != null && obj.ITEM_CLASS_ID != null)
             {
-                if (obj.ITEM_CLASS_IMAGE.ContentLength > 0 && obj.ITEM_CLASS_IMAGE.ContentLength < (1024 * 50))
+                if (obj.ITEM_CLASS_IMAGE.ContentLength > 0 && obj.ITEM_CLASS_IMAGE.ContentLength < ApplData.CLS_IMG_SIZE)
                 {
                     string fileExtension = Path.GetExtension(obj.ITEM_CLASS_IMAGE.FileName).ToLower();
                     if (fileExtension == ".jpg")
@@ -160,7 +158,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = "File size must be less than 8KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.CLS_IMG_SIZE}KB and 80 x 80 pixel";
                 }
             }
             else
@@ -170,11 +168,7 @@ namespace PriOrder.App.Controllers
             ModelState.AddModelError("", errorMessage: err);
             return View(obj);
         }
-
-
-
-
-
+        //Cache not supported
         public ActionResult Products(string id, string catName)
         {
             //Create Link for Back Button
@@ -190,8 +184,8 @@ namespace PriOrder.App.Controllers
                 ViewBag.ErrorMessages = "No Item found";
                 return View(new List<WO_ITEMS>());
             }
-
         }
+        //Cache not supported
         public ActionResult Product(string id)
         {
             Tuple<List<WO_ITEMS>, EQResult> _tpl = SetupService.getProductById(id);
@@ -209,14 +203,14 @@ namespace PriOrder.App.Controllers
                 return RedirectToAction(nameof(Categories));
             }
         }
-
+        //Cache not supported
         [HttpPost]
         public ActionResult Product(WO_ITEMS obj)
         {
             string err = "";
             if (obj.ITEMS_IMAGE != null && obj.ITEM_ID != null)
             {
-                if (obj.ITEMS_IMAGE.ContentLength > 0 && obj.ITEMS_IMAGE.ContentLength < (1024 * 50))
+                if (obj.ITEMS_IMAGE.ContentLength > 0 && obj.ITEMS_IMAGE.ContentLength < ApplData.ITM_IMG_SIZE)
                 {
                     string fileExtension = Path.GetExtension(obj.ITEMS_IMAGE.FileName).ToLower();
                     if (fileExtension == ".jpg")
@@ -224,7 +218,7 @@ namespace PriOrder.App.Controllers
                         string filePath = "~/Images/Products/";
                         string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.ITEM_ID + "-.jpg");
                         obj.ITEMS_IMAGE.SaveAs(serverPath);
-                        
+
                         //return back to last pages
                         string[] parms = obj.ITEM_UNIT.Split('-');
                         return RedirectToAction("Products", new { id = parms[0], catName = parms[1] });
@@ -236,7 +230,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = "File size must be less than 8KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.ITM_IMG_SIZE}KB and 80 x 80 pixel";
                 }
             }
             else
@@ -248,3 +242,8 @@ namespace PriOrder.App.Controllers
         }
     }
 }
+
+
+//create variable for product Class
+//Dictionary<string, List<WO_ITEM_CLASS>> dynVar = new Dictionary<string, List<WO_ITEM_CLASS>>();
+//dynVar.Add(id, HttpContext.Cache.Get(id) as List<WO_ITEM_CLASS>);
