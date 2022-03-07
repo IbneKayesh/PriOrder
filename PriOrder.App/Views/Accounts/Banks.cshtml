@@ -1,0 +1,38 @@
+﻿@model IEnumerable<PriOrder.App.Models.T_BANKCOL>
+@{
+    ViewBag.Title = "Banks";
+}
+<p class="text-center mx-3">
+    <a href="@Url.Action("MyProfile","Accounts")" class="btn w-100 btn-light">
+        <i class="material-icons md-arrow_back"></i>
+        My Profile
+    </a>
+</p>
+<section>
+    <div class="p-3">
+        <ul class="row">
+            @foreach (var item in Model)
+            {
+                <li class="col-12 col-sm-12 col-md-6">
+                    <article class="product-list mb-2">
+                        <a href="#" class="img-wrap">
+                            <img src="~/Images/Banks/@item.BNAME-.jpg">
+                        </a>
+                        <div class="info-wrap">
+                            <p class="title"> @item.BNAME </p>
+                            <div class="price">@item.ANAME </div>
+                            <div class="price">@item.ANUMBER </div>
+                            <div class="price">@item.BRNAME </div>
+                        </div>
+                    </article>
+                </li> <!-- col.// -->
+            }
+        </ul>
+    </div>
+</section>
+<p class="text-center mx-3">
+    <a href="@Url.Action("MyProfile","Accounts")" class="btn w-100 btn-light">
+        <i class="material-icons md-arrow_back"></i>
+        My Profile
+    </a>
+</p>

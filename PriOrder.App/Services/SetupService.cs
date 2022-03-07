@@ -38,10 +38,10 @@ namespace PriOrder.App.Services
             return DatabaseOracleClient.SqlToListObjectBind<WO_ITEM_CLASS>(sql);
         }
 
-        public static Tuple<List<WO_ITEM_CLASS>, EQResult> getClassById(string classId)
+        public static Tuple<List<WO_ITEM_CLASS>, EQResult> getClassById(string classId, string categoryId)
         {
-            string sql = $@"SELECT IM.ITEM_CLASS_ID,ICLS.ITEM_CLASS_NAME
-                        FROM RFL.ITEM_CLASS ICLS  WHERE ICLS.ITEM_CLASS_ID={classId}'";
+            string sql = $@"SELECT ICLS.ITEM_CLASS_ID,ICLS.ITEM_CLASS_NAME,'{categoryId}' ITEM_TYPE_ID
+                        FROM RFL.ITEM_CLASS ICLS  WHERE ICLS.ITEM_CLASS_ID='{classId}'";
             return DatabaseOracleClient.SqlToListObjectBind<WO_ITEM_CLASS>(sql);
         }
 

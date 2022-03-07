@@ -1,11 +1,11 @@
-﻿@model IEnumerable<PriOrder.App.Models.T_ITMA>
+﻿@model IEnumerable<PriOrder.App.Models.WO_ITEMS>
 @{
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <p class="text-center mx-3">
-    <a href="@Url.Action("ProductClass","Setup" , new { id=Model?.FirstOrDefault().ITMA_CLASS})" class="btn w-100 btn-light">
+    <a href="@ViewBag.BackPages" class="btn w-100 btn-light">
         <i class="material-icons md-arrow_back"></i>
         Class
     </a>
@@ -19,12 +19,12 @@
                 <li class="col-12 col-sm-12 col-md-6">
                     <article class="product-list mb-2">
                         <div>
-                            <a href="@Url.Action("Product","Setup", new { id = item.ITMA_ITID })" class="img-wrap"> <img src="~/Images/Products/@item.ITMA_ITID-.jpg"> </a>
+                            <a href="@Url.Action("Product","Setup", new { id = item.ITEM_ID })" class="img-wrap"> <img src="~/Images/Products/@item.ITEM_ID-.jpg"> </a>
                         </div>
                         <div class="info-wrap">
-                            <p class="title"> @item.ITMA_NAME </p>
+                            <p class="title"> @item.ITEM_NAME </p>
                             <div>
-                                <a href="@Url.Action("Product","Setup", new { id = item.ITMA_ITID })" class="btn btn-sm btn-light"> Change Picture  </a>
+                                <a href="@Url.Action("Product","Setup", new { id = item.ITEM_ID })" class="btn btn-sm btn-light"> Change Picture  </a>
                             </div>
                         </div>
                     </article>
@@ -36,7 +36,7 @@
 
 
 <p class="text-center mx-3">
-    <a href="@Url.Action("ProductClass","Setup" , new { id=Model?.FirstOrDefault().ITMA_CLASS})" class="btn w-100 btn-light">
+    <a href="@ViewBag.BackPages" class="btn w-100 btn-light">
         <i class="material-icons md-arrow_back"></i>
         Class
     </a>

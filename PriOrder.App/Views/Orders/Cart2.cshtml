@@ -11,60 +11,43 @@
     }
 }
 <button class="btn btn-primary w-100 mb-2" type="button" id="btnReload"> Refresh Cart Items</button>
-
-
-<section class="p-3">
-    <ul class="row">
-        @if (Model != null)
-        {
-            @Html.AntiForgeryToken()
-
-            foreach (var item in Model)
-            {
-                <li class="col-12 col-sm-12 col-md-6 item-cart">
-                    <article class="product-list mb-2">
-                        <div>
-                            <a href="$" class="img-wrap"> <img src="~/Images/Products/@item.ITEM_ID-.jpg"> </a>
-                        </div>
-                        <div class="info-wrap">
-                            <input class="item-code" type="hidden" value="@item.ITEM_ID" />
-                            <input class="item-rate" type="hidden" value="@item.ITEM_RATE" />
-                            <p class="title"> @item.ITEM_ID </p>
-                            <p class="title"> @item.ITEM_NAME</p>
-                            <div class="price mb-2">@item.ITEM_UNIT-@item.ITEM_FACTOR</div>
-                            @*<div class="input-group input-group-sm">
-                                    @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
-                                    <input class="item-note form-control form-control-sm" type="text" value="">
-                                </div>*@
-                        </div>
-                    </article>
+<section class="p-3 cart-items">
+    @Html.AntiForgeryToken()
+    @foreach (var item in Model)
+    {
+        <article class="item-cart">
+            <figure class="itemside mb-3">
+                <div class="aside"><img src="~/Images/Products/@item.ITEM_ID-.jpg" class="rounded border img-md"></div>
+                <figcaption class="info">
+                    <a href="#" class="title text-truncate">@item.ITEM_NAME</a>
+                    <input type="hidden" class="item-rate" value="@item.ITEM_RATE" />
+                    <input type="hidden" class="item-code" value="@item.ITEM_ID" />
+                    <small class="text-muted">
+                        @item.ITEM_ID - @item.NOTE_TEXT<br>
+                        @item.ITEM_RATE / @item.ITEM_UNIT
+                    </small>
+                </figcaption>
+            </figure>
+            <div class="row input-group input-group-sm items-select-note">
+                @Html.DropDownList("WO_NOTE", item.WO_NOTE as IEnumerable<SelectListItem>, new { @class = "form-select" })
+                <input class="item-note form-control form-control-sm" type="text" value="@item.NOTES">
+            </div>
+            <br />
+            <div class="row align-items-center">
+                <div class="col-auto"> <a href="#" class="btn btn-sm btn-outline-danger delete-item"><i class="material-icons md-delete"></i></a> </div>
+                <div class="col">
                     <div class="input-group input-group-sm">
-                        <button class="btn btn-danger delete-item" type="button">
-                            <i class="material-icons md-delete"></i>
-                        </button>
                         <button class="btn btn-light minus-cart" type="button"> <i class="material-icons md-minus"></i> </button>
-                        <input type="number" name="quantity" class="form-control quantity-cart" value="@item.ITEM_QTY" min="1">
+                        <input type="number" class="form-control quantity-cart" value="@item.ITEM_QTY">
                         <button class="btn btn-light plus-cart" type="button"> <i class="material-icons md-plus"></i> </button>
-                    </div>
-                    <div class="input-group input-group-sm sub-total">
-                        @{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; }
-                        <button type="button" class="form-control">x @item.ITEM_RATE = <span> @st</span></button>
-                    </div>
-                    <div class="input-group input-group-sm items-select-note">
-                        @Html.DropDownList("WO_NOTE", item.WO_NOTE as IEnumerable<SelectListItem>, new { @class = "form-select" })
-                        <input class="item-note form-control form-control-sm" type="text" value="@item.NOTES">
-                    </div>
+                    </div> <!-- input-group.// -->
+                </div>
+                <div class="col sub-total-col"> <var class="float-end price">x @item.ITEM_RATE =<span class="sub-total">@{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; } @st</span></var></div>
+            </div>
+        </article> <!-- item-cart.// -->
                     <hr />
-                </li>
-                                }
-                            }
-                            else
-                            {
-                                <li class="title-sm text-white">No Favorite item found</li>
-                            }
-    </ul>
+                    }
 </section>
-
 <hr class="divider">
 @{ var newBalance = CurrBalanace - TotalSum;}
 <section class="padding-around">
@@ -108,20 +91,15 @@
                 quantityField.val(parseInt(quantityField.val(), 10) + 1);
                 calculate_subTotal($(this));
             });
-            $('.quantity-cart').on("keyup change", function () {
-                var qty = $(this).val();
-                if (qty == '' || qty == '0') {
-                    $(this).val('1');
-                }
+            $('.quantity-cart').on("keyup change", function (e) {
                 calculate_subTotal($(this));
-            });
-
+            })
             $(".delete-item").click(function (e) {
                 e.preventDefault();
-                $(this).parent('div.input-group').parent('li.item-cart').remove();
-
-
-                var ItemId = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-code").val();
+                $(this).parent('div.col-auto').parent('div.align-items-center').parent('article.item-cart').remove();
+                var ItemId = $(this).parent('div.col-auto').parent('div.align-items-center').
+                              siblings('figure.itemside').children('figcaption.info').find("input.item-code").val();
+                console.log(ItemId);
                 $.ajax({
                     type: "POST",
                     url: "DeleteFromCart",
@@ -142,21 +120,21 @@
             });
         });
         function calculate_subTotal(thisObj) {
+            var rate = thisObj.parent('div.input-group').parent('div.col').parent('div.row')
+                .siblings('figure.itemside').children('figcaption.info').find("input.item-rate").val();
 
-            var rate = thisObj.parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-rate").val();
+            var subTotal = parseInt(quantityField.val()) * parseFloat(rate);
 
-            var subTotal = parseFloat(quantityField.val()) * parseFloat(rate);
-
-            thisObj.parent('div.input-group').siblings('div.sub-total').children('button.form-control')
-                .find('span').text(subTotal.toFixed(2));
+            thisObj.parent('div.input-group').parent('div.col').siblings('div.col').children('var.float-end')
+                .children("span.sub-total").text(subTotal.toFixed(2));
 
             getCartSum();
         };
         function getCartSum() {
             var totalPrices = 0;
-            $('li.item-cart').each(function () {
-                var subTotal = $(this).children('div.sub-total').children('button.form-control')
-                .find('span').text();
+            $('section.cart-items').children('article.item-cart').each(function () {
+                var subTotal = $(this).children('div.align-items-center').children('div.sub-total-col')
+                .children('var.float-end').children("span.sub-total").text();
                 totalPrices += parseFloat(subTotal);
             });
             $('section.padding-around').find('#total-sum-amount strong').text(totalPrices.toFixed(2));

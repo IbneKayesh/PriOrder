@@ -15,12 +15,7 @@ namespace PriOrder.App.Controllers
         {
             return View();
         }
-
-        public ActionResult MyProfile()
-        {
-            return View();
-        }
-
+        
         public ActionResult Login()
         {
             ViewBag.Title = "Login";
@@ -34,7 +29,7 @@ namespace PriOrder.App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(USER_LOGIN obj)
         {
-            Tuple<List<USER_LOGIN_INFO>, EQResult> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD);
+            Tuple<List<USER_LOGIN_INFO>, EQResult> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD, false);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 Session["userLoginInf"] = _tpl.Item1.FirstOrDefault();
@@ -45,7 +40,7 @@ namespace PriOrder.App.Controllers
                 Session["userBalnace"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
 
                 //Load Menu
-                Tuple<List<WO_APP_MENU>, EQResult> _tplMenu = LoginService.getMenusByUserId("");
+                Tuple<List<WO_APP_MENU>, EQResult> _tplMenu = LoginService.getMenusByUserId("", IsHo: false);
                 Session["menuLeft"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 10).ToList();
                 Session["menuBottom"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 20).ToList();
 
@@ -60,6 +55,45 @@ namespace PriOrder.App.Controllers
 
 
 
+
+        public ActionResult BoLogin()
+        {
+            return View(viewName: "Login");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult BoLogin(USER_LOGIN obj)
+        {
+            Tuple<List<USER_LOGIN_INFO>, EQResult> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+            {
+                Session["userLoginInf"] = _tpl.Item1.FirstOrDefault();
+                Session["userId"] = _tpl.Item1.FirstOrDefault().DIST_ID;
+                Session["userName"] = _tpl.Item1.FirstOrDefault().DIST_NAME;
+                Session["userGroup"] = _tpl.Item1.FirstOrDefault().DIST_GROUP;
+                Session["userMobile"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
+                Session["userBalnace"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
+
+                //Load Menu
+                Tuple<List<WO_APP_MENU>, EQResult> _tplMenu = LoginService.getMenusByUserId("");
+                Session["menuLeft"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 50).ToList();
+                Session["menuBottom"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 60).ToList();
+
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                ViewBag.ErrorMessages = "User Id/Password is incorrect";
+                return View(viewName: "Login", model: obj);
+            }
+        }
+
+
+
+
+
+
+
         public ActionResult Logout()
         {
             Session.Abandon();
@@ -67,11 +101,7 @@ namespace PriOrder.App.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-
-        public ActionResult Products(int? id)
-        {
-            return View(new ITEMS_MASTER().getItems());
-        }
+        
         public ActionResult Messages()
         {
             List<MESSAGES> objList = new List<MESSAGES>();

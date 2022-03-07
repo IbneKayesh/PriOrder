@@ -91,6 +91,11 @@ namespace PriOrder.App.Controllers
 
         public ActionResult ProductClass(string id)
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                return RedirectToAction(nameof(Categories));
+            }
+
             List<WO_ITEM_CLASS> objProdClass = new List<WO_ITEM_CLASS>();
             //create variable for product Class
             Dictionary<string, List<WO_ITEM_CLASS>> dynVar = new Dictionary<string, List<WO_ITEM_CLASS>>();
@@ -119,9 +124,9 @@ namespace PriOrder.App.Controllers
         }
 
 
-        public ActionResult Class(string id)
+        public ActionResult Class(string id, string catName)
         {
-            Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = SetupService.getClassById(id);
+            Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = SetupService.getClassById(id, catName);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 return View(_tpl.Item1.FirstOrDefault());
@@ -170,9 +175,12 @@ namespace PriOrder.App.Controllers
 
 
 
-        public ActionResult Products(string id, string catId)
+        public ActionResult Products(string id, string catName)
         {
-            Tuple<List<WO_ITEMS>, EQResult> _tpl = SetupService.getProductsByClassId(id, catId);
+            //Create Link for Back Button
+            ViewBag.BackPages = Request.UrlReferrer.ToString();
+
+            Tuple<List<WO_ITEMS>, EQResult> _tpl = SetupService.getProductsByClassId(id, catName);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 return View(_tpl.Item1);
@@ -189,7 +197,12 @@ namespace PriOrder.App.Controllers
             Tuple<List<WO_ITEMS>, EQResult> _tpl = SetupService.getProductById(id);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
-                return View(_tpl.Item1.FirstOrDefault());
+                //Create Link for Back Button with Free Properties // Item Unit
+                var singleProduct = _tpl.Item1.FirstOrDefault();
+                var uri = new Uri(Request.UrlReferrer.ToString());
+                singleProduct.ITEM_UNIT = uri.Segments[3] + "-" + HttpUtility.ParseQueryString(uri.Query).Get("catName");
+
+                return View(singleProduct);
             }
             else
             {
@@ -211,7 +224,10 @@ namespace PriOrder.App.Controllers
                         string filePath = "~/Images/Products/";
                         string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.ITEM_ID + "-.jpg");
                         obj.ITEMS_IMAGE.SaveAs(serverPath);
-                        return RedirectToAction(nameof(Products), new { id = obj.ITEM_ID });
+                        
+                        //return back to last pages
+                        string[] parms = obj.ITEM_UNIT.Split('-');
+                        return RedirectToAction("Products", new { id = parms[0], catName = parms[1] });
                     }
                     else
                     {

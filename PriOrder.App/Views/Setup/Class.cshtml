@@ -10,6 +10,7 @@
     {
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ITEM_CLASS_ID)
+        @Html.HiddenFor(model => model.ITEM_TYPE_ID)
         <div class="mb-3">
             <div class="icontext">
                 <div class="icon">

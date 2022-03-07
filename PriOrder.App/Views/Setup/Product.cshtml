@@ -9,21 +9,22 @@
     @using (Html.BeginForm("Product", "Setup", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ITMA_ITID)
+        @Html.HiddenFor(model => model.ITEM_ID)
+        @Html.HiddenFor(model => model.ITEM_UNIT)
         <div class="mb-3">
             <div class="icontext">
                 <div class="icon">
-                    <img id="profile-images" src="@Model.ITMA_NAME" class="avatar-lg">
+                    <img id="profile-images" src="@Model.ITEM_NAME" class="avatar-lg">
                 </div>
                 <div class="text">
                     <label for="formFile" class="form-label">Change image</label>
-                    <input class="form-control" type="file" name="ITMA_IMGE" onchange="viewImage(this);" accept="image/jpeg">
+                    <input class="form-control" type="file" name="ITEMS_IMAGE" onchange="viewImage(this);" accept="image/jpeg">
                 </div>
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label">@Model.ITMA_ITID</label>
-            <input type="text" required="" class="form-control" value="@Model.ITMA_NAME" readonly>
+            <label class="form-label">@Model.ITEM_ID</label>
+            <input type="text" required="" class="form-control" value="@Model.ITEM_NAME" readonly>
         </div>
         <button type="submit" class="btn btn-primary w-100"> Update  </button>
     }

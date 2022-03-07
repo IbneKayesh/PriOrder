@@ -21,7 +21,23 @@ namespace PriOrder.App.Controllers
         }
         public ActionResult Favorite()
         {
-            return View();
+            var objchFavorite = HttpContext.Cache.Get("objchFavorite") as List<WO_ITEMS>;
+            if (objchFavorite != null || objchFavorite == null)
+            {
+                string distId = Session["userId"].ToString();
+                Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getFavoriteProductsByDistid(distId);
+                if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+                {
+                    objchFavorite = _tpl.Item1;
+                    HttpContext.Cache.Insert("objchFavorite", objchFavorite, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                }
+                else
+                {
+                    ViewBag.ErrorMessages = "No Favorite found";
+                    return View(new List<WO_ITEMS>());
+                }
+            }
+            return View(objchFavorite);
         }
         public ActionResult Categories()
         {
@@ -48,6 +64,11 @@ namespace PriOrder.App.Controllers
 
         public ActionResult ProductClass(string id)
         {
+            if (Request.UrlReferrer == null)
+            {
+                return RedirectToAction(nameof(Categories));
+            }
+
             string distId = Session["userId"].ToString();
             CLASS_CATEGORY objList = new CLASS_CATEGORY();
 
@@ -98,10 +119,13 @@ namespace PriOrder.App.Controllers
 
         public ActionResult Products(string className, string catName)
         {
-            if (Request.UrlReferrer != null)
+            if (Request.UrlReferrer == null)
             {
-                ViewBag.BackPages = Request.UrlReferrer.ToString();
+                return RedirectToAction(nameof(Categories));
             }
+            //Create Link for Back Button
+            ViewBag.BackPages = Request.UrlReferrer.ToString();
+
             Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getProductsByClassId(className, catName);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
@@ -125,6 +149,11 @@ namespace PriOrder.App.Controllers
 
         public ActionResult AddToCart(string id, string qt)
         {
+            if (Request.UrlReferrer == null)
+            {
+                return RedirectToAction(nameof(Categories));
+            }
+
             string distId = Session["userId"].ToString();
             EQResult result = ProductService.AddToCart(distId, id, qt, "", "");
 
@@ -136,5 +165,30 @@ namespace PriOrder.App.Controllers
             return Json(rslt);
         }
 
+
+        public ActionResult AddFav(string id)
+        {
+            string distId = Session["userId"].ToString();
+            EQResult result = ProductService.AddToFav(distId, id);
+
+            var rslt = new ALERT_BOX
+            {
+                ALERT_MESSAGES = result.MESSAGES
+            };
+
+            return Json(rslt);
+        }
+        public ActionResult DelFav(string id)
+        {
+            string distId = Session["userId"].ToString();
+            EQResult result = ProductService.DelFromFav(distId, id);
+
+            var rslt = new ALERT_BOX
+            {
+                ALERT_MESSAGES = result.MESSAGES
+            };
+
+            return Json(rslt);
+        }
     }
 }

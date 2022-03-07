@@ -1,66 +1,95 @@
-﻿@{
+﻿@model IEnumerable<PriOrder.App.Models.WO_ITEMS>
+
+@{
     ViewBag.Title = "Favorite Products";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
-<section>
-    <div class="p-3">
-        <ul class="row">
-
-            <li class="col-12 col-sm-12 col-md-6">
-                <article class="product-list mb-2">
-                    <a href="#" class="img-wrap">
-                        <img src="~/Assets/images/items/1.jpg">
-                    </a>
-                    <div class="info-wrap">
-                        <a href="#" class="float-end">
-                            <i class="material-icons md-favorite"></i>
-                        </a>
-                        <p class="title"> Product name </p>
-                        <div class="price">$99.50 </div>
-                        <div class="rating-wrap">
-                            <div class="input-group input-group-sm">
-                                <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
-                                <input type="number" class="form-control" value="1">
-                                <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
-                                @*<button class="btn btn-light" type="button"> <i class="material-icons md-shopping_cart"></i> </button>*@
-                                <a class="btn btn-light" href="@Url.Action("Cart")"><i class="material-icons md-shopping_cart"></i> </a>
-                            </div>
-                        </div> <!-- rating-wrap end// -->
-                    </div>
-                </article> <!-- product-list end// -->
-            </li>
-            <li class="col-12 col-sm-12 col-md-6">
-                <article class="product-list mb-2">
-                    <a href="#" class="img-wrap">
-                        <img src="~/Assets/images/items/2.jpg">
-                    </a>
-                    <div class="info-wrap">
-                        <a href="#" class="float-end">
-                            <i class="material-icons md-favorite"></i>
-                        </a>
-                        <p class="title"> Code: 15647 </p>
-                        <p class="title"> Product name </p>
-                        <div class="price">$99.50 </div>
-                        <div class="rating-wrap">
-                            <div class="input-group input-group-sm">
-                                <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
-                                <input type="number" class="form-control" value="1">
-                                <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
-                                @*<button class="btn btn-light" type="button"> <i class="material-icons md-shopping_cart"></i> </button>*@
-                                <a class="btn btn-light" href="@Url.Action("Cart")"><i class="material-icons md-shopping_cart"></i> </a>
-                            </div>
-                        </div> <!-- rating-wrap end// -->
-                    </div>
-                </article> <!-- product-list end// -->
-            </li>
-        </ul> <!-- row.// -->
+<div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-delay="10000">
+    <div role="alert" aria-live="assertive" aria-atomic="true">
+        <p id="Message"></p>
     </div>
-</section>
+</div>
 
 <p class="text-center mx-3">
-    <a href="@Url.Action("Categories")" class="btn w-100 btn-light">
-        <i class="material-icons md-arrow_back"></i>
-        More Products
-    </a>
+    <a href="@Url.Action("Categories","Products")" class="btn btn-outline-primary w-100">  Back to shop</a>
 </p>
+
+<section class="p-3">
+    <ul class="row">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <li class="col-12 col-sm-12 col-md-6">
+                    <article class="product-list mb-2">
+                        <div>
+                            <a href="$" class="img-wrap"> <img src="~/Images/Products/@item.ITEM_ID-.jpg"> </a>
+                        </div>
+                        <div class="info-wrap">
+                            <a href="#" class="btn btn-icon btn-sm btn-light float-end favorite-item">
+                                <i class="material-icons md-favorite"></i>
+                            </a>
+                            <input class="item-code" type="hidden" value="@item.ITEM_ID" />
+                            <p class="title"> @item.ITEM_ID </p>
+                            <p class="title"> @item.ITEM_NAME</p>
+                            <div class="price mb-2">@item.ITEM_UNIT-@item.ITEM_RATE-@item.ITEM_FACTOR</div>
+                            @*<div class="input-group input-group-sm">
+                                    @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
+                                    <input class="item-note form-control form-control-sm" type="text" value="">
+                                </div>*@
+                        </div>
+                    </article>
+                    <div class="input-group input-group-sm">
+                        <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
+                        <input type="number" name="quantity" class="form-control" value="10" min="1">
+                        <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
+                        <button class="btn btn-light add_to_cart" type="button"> <i class="material-icons md-shopping_cart"></i> </button>
+                    </div>
+                    <p class="divider"></p>
+                </li>
+            }
+        }
+        else
+        {
+            <li class="title-sm text-white">No Favorite item found</li>
+        }
+    </ul>
+</section>
+
+
+<p class="text-center mx-3">
+    <a href="@Url.Action("Categories","Products")" class="btn btn-outline-primary w-100">  Back to shop</a>
+</p>
+
+@section scripts{
+
+    <script>
+        $(document).on('click', '.add_to_cart', function (e) {
+            e.preventDefault();
+            var itemcode = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').children("input.item-code").val();
+            var quantity = $(this).siblings("input:first").val();
+            if (quantity != '' && itemcode != '') {
+                $.post("AddToCart", { "id": itemcode, "qt": quantity },
+                    function (data) {
+                        $('#Message').text(data.ALERT_MESSAGES);
+                    });
+            }
+
+        });
+
+        $(document).on('click', '.favorite-item', function (e) {
+            e.preventDefault();
+            $(this).children('i.material-icons').toggleClass('md-favorite md-favorite_border');
+            var itemcode = $(this).siblings("input.item-code").val();
+            if (itemcode != '') {
+                $.post("DelFav", { "id": itemcode },
+                    function (data) {
+                        $('#Message').text(data.ALERT_MESSAGES);
+                    });
+            }
+        });
+
+        //var xxx = $(this).parent().find('input:first').val();
+        //console.log("Code:" + $(this).parent().parent().parent().find("input.item-code").attr('id'));
+    </script>
+}

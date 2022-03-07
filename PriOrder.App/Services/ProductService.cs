@@ -82,10 +82,29 @@ namespace PriOrder.App.Services
         }
 
 
+        public static Tuple<List<WO_ITEMS>, EQResult> getFavoriteProductsByDistid(string distId)
+        {
+            string sql = $@"SELECT IM.ITEM_ID,ROUND(IM.D_SALE_PRICE*IM.D_U_FACT ,2)ITEM_RATE,IM.ITEM_NAME,DU.ITEM_D_UNITS_NAME ITEM_UNIT,IM.D_U_FACT ITEM_FACTOR
+                    FROM RPGL.ITEMS IM
+                    INNER JOIN RFL.ITEM_DIST_UNITS du ON DU.ITEM_D_UNITS_ID=IM.ITEM_D_UNITS_ID
+                    INNER JOIN WO_DIST_FAV FVI ON FVI.ITEM_ID=IM.ITEM_ID AND FVI.IS_ACTIVE=1 AND FVI.DSMA_DSID='{distId}'
+                    WHERE IM.D_SALE_PRICE > 0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000', 'RC9500050')
+                    AND IM.INACTIVE = 'N' AND IM.ITEM_GROUP_ID = 'RFLGR001'";
+            var Items = DatabaseOracleClient.SqlToListObjectBind<WO_ITEMS>(sql);
+            Items.Item1.ForEach(x => x.WO_NOTE = getItemNotes());
+            return Items;
+        }
 
-
-
-
+        public static EQResult AddToFav(string distId, string itemId)
+        {
+            string sql = $@"insert into WO_DIST_FAV(DSMA_DSID,ITEM_ID)values('{distId}','{itemId}')";
+            return DatabaseOracleClient.PostSql(sql);
+        }
+        public static EQResult DelFromFav(string distId, string itemId)
+        {
+            string sql = $@"delete WO_DIST_FAV where DSMA_DSID='{distId}' and ITEM_ID='{itemId}'";
+            return DatabaseOracleClient.PostSql(sql);
+        }
 
 
 
@@ -99,7 +118,7 @@ namespace PriOrder.App.Services
         //AND DI.DSMA_DSID = '837075' and typ.ITEM_TYPE_ID = 'RFLTP025'
         //GROUP BY TYP.ITEM_TYPE_ID,TYP.ITEM_TYPE_NAME,IM.ITEM_CLASS_ID
 
-    
+
         public static Tuple<List<WO_ITEM_TYPE>, string> getCategoryListByDistGroup_TEMP(string groupId)
         {
             List<WO_ITEM_TYPE> objList = new List<WO_ITEM_TYPE>();

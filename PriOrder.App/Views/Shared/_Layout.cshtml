@@ -92,7 +92,7 @@
     <aside class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas_left_123">
         <header class="p-3 border-bottom bg-light">
             <button type="button" class="float-end btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            <a href="@Url.Action("MyProfile","Home")" class="icontext">
+            <a href="@Url.Action("MyProfile","Accounts")" class="icontext">
                 <img src="~/Assets/images/avatars/1.jpg" class="icon avatar-sm" alt="">
                 <div class="text">
                     @if (Session["userId"] != null)
@@ -109,7 +109,7 @@
                     var leftMenu = (List<PriOrder.App.Models.WO_APP_MENU>)Session["menuLeft"];
                     foreach (var _menu in leftMenu)
                     {
-                        <a href="@Url.Action(_menu.ACTION_NAME,_menu.CONTROLLER_NAME)"> <i class="material-icons md-apps"></i> @_menu.MENU_NAME_EN</a>
+                        <a href="@Url.Action(_menu.ACTION_NAME,_menu.CONTROLLER_NAME)"> <i class="material-icons @_menu.MENU_ICON"></i> @_menu.MENU_NAME_EN</a>
                     }
                 }
 
@@ -124,7 +124,7 @@
                 <a href="@Url.Action("MyProfile","Home")"> <i class="material-icons md-account_circle"></i> Profile </a>
                 <a href="@Url.Action("ChangePassword")"> <i class="material-icons md-lock"></i> Change Password</a>
                 <hr>
-                <a href="@Url.Action("Logout")"> <i class="material-icons md-log_out"></i> Logout</a>
+                <a href="@Url.Action("Logout","Home")"> <i class="material-icons md-log_out"></i> Logout</a>
             </nav>
         </article> <!-- offcanvas-body .// -->
     </aside> <!-- offcanvas.// -->

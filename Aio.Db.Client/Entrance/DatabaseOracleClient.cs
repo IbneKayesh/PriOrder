@@ -49,7 +49,7 @@ namespace Aio.Db.Client.Entrance
         {
             List<T> lst = new List<T>();
             Tuple<DataTable, EQResult> _tpl = GetDataTable(sql: sql, _parameters: _parameters);
-            if (_tpl.Item2.SUCCESS)
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 lst = TableEntity.BindObjectList<T>(_tpl.Item1).ToList();
             }

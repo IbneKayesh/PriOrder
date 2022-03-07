@@ -1,4 +1,4 @@
-﻿@model  PriOrder.App.Models.WO_ITEM_CATEGORY
+﻿@model  PriOrder.App.Models.WO_ITEM_TYPE
 @{
     ViewBag.Title = "Category";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,21 +9,21 @@
     @using (Html.BeginForm("Category", "Setup", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.CATEGORY_ID)
+        @Html.HiddenFor(model => model.ITEM_TYPE_ID)
         <div class="mb-3">
             <div class="icontext">
                 <div class="icon">
-                    <img id="cat-images" src="@Model.CATEGORY_IMAGE" class="avatar-lg">
+                    <img id="cat-images" src="@Model.ITEM_TYPE_IMAGE" class="avatar-lg">
                 </div>
                 <div class="text">
                     <label for="formFile" class="form-label">Change image</label>
-                    <input class="form-control" type="file" name="CATEGORY_IMAGE" onchange="viewImage(this);" accept="image/jpeg">
+                    <input class="form-control" type="file" name="ITEM_TYPE_IMAGE" onchange="viewImage(this);" accept="image/jpeg">
                 </div>
             </div>
         </div>
         <div class="mb-3">
-            <label class="form-label">@Model.CATEGORY_ID</label>
-            <input type="text" required="" class="form-control" value="@Model.CATEGORY_NAME" readonly>
+            <label class="form-label">@Model.ITEM_TYPE_ID</label>
+            <input type="text" required="" class="form-control" value="@Model.ITEM_TYPE_NAME" readonly>
         </div>
         <button type="submit" class="btn btn-primary w-100"> Update  </button>
     }
