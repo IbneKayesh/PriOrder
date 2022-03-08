@@ -1,0 +1,19 @@
+﻿@model IEnumerable<PriOrder.App.Models.WO_PUSH_MSG>
+@{
+    ViewBag.Title = "SMS";
+}
+
+@foreach (var item in Model)
+{
+    <article class="card-banner rounded bg-light mb-2">
+        <div class="p-3" style="width:95%">
+            @if (item.IS_READ == 0)
+            {
+                <span class="float-end badge bg-warning">New</span>
+            }
+            <span class="badge bg-success">@item.CAT_ID</span><br />
+            <span class="text-secondery">@item.CREATE_DATE</span>
+            <p>@item.BODY_TEXT</p>
+        </div>
+    </article>
+}

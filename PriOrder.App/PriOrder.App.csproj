@@ -154,6 +154,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -173,14 +174,16 @@
     <Compile Include="Models\T_BANKCOL.cs" />
     <Compile Include="Models\WO_ITEM_CLASS.cs" />
     <Compile Include="Models\MR_STATUS.cs" />
-    <Compile Include="Models\SUPPORT_MESSAGES.cs" />
+    <Compile Include="Models\WO_SUP_MSG.cs" />
     <Compile Include="Models\WO_PUSH_MSG.cs" />
     <Compile Include="Models\WO_ITEM_TYPE.cs" />
     <Compile Include="Models\WO_NOTE.cs" />
     <Compile Include="Models\WO_ORDER_CART.cs" />
+    <Compile Include="Models\WO_SUP_MSG_BODY.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\LoginService.cs" />
+    <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ReportService.cs" />
@@ -306,7 +309,7 @@
     <Content Include="Views\Accounts\MyProfile.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
-    <Content Include="Views\Home\Messages.cshtml" />
+    <Content Include="Views\Messages\Sms.cshtml" />
     <Content Include="Views\Home\Support.cshtml" />
     <Content Include="Views\Home\OrderSuccess.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
@@ -322,6 +325,9 @@
     <Content Include="Views\Accounts\MRStatus.cshtml" />
     <Content Include="Views\Orders\Cart.cshtml" />
     <Content Include="Views\Reports\Undelivered.cshtml" />
+    <Content Include="Views\Messages\Support.cshtml" />
+    <Content Include="Views\Messages\SupportReply.cshtml" />
+    <Content Include="Views\Messages\Help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

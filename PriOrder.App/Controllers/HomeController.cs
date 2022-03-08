@@ -110,20 +110,7 @@ namespace PriOrder.App.Controllers
             Session.Clear();
             return RedirectToAction(nameof(Login));
         }
-
-
-
-        public ActionResult Support()
-        {
-            List<SUPPORT_MESSAGES> objList = new List<SUPPORT_MESSAGES>();
-            objList.Add(new SUPPORT_MESSAGES { ID = 1, MESSAGES_DATE_TIME = "01-January-2022 09:45:18 AM", MESSAGES_BODY = "Order:1234 Please Refund", IS_READ = false });
-            objList.Add(new SUPPORT_MESSAGES { ID = 2, MESSAGES_DATE_TIME = "01-January-2022 09:45:18 AM", MESSAGES_BODY = "Your Order:1234 Successfully Refund", REPLIED_BY = "Mr. Support", IS_READ = false });
-            objList.Add(new SUPPORT_MESSAGES { ID = 1, MESSAGES_DATE_TIME = "01-January-2022 09:45:18 AM", MESSAGES_BODY = "Thank you", IS_READ = false });
-            return View(objList);
-        }
-
-
-
+        
         public ActionResult ChangePassword()
         {
             return View();

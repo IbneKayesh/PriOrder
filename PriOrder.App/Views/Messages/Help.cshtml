@@ -1,0 +1,16 @@
+﻿@model PriOrder.App.Models.WO_SUP_MSG
+    @{
+        ViewBag.Title = "Help";
+    }
+
+    <p class="alert alert-danger"> Write your problem is here!</p>
+    <div class="mb-3 row">
+        <input type="text" name="SUP_TYPE" class="form-control">
+        <div class="col-10">
+            <textarea name="SUP_NUMBER" class="form-control" placeholder="Messages"></textarea>
+        </div>
+        <div class="col-2">
+            <br />
+            <button type="submit" class="btn w-100 btn-primary"><i class="material-icons md-send"></i></button>
+        </div>
+    </div>
