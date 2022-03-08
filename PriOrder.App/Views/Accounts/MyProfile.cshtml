@@ -1,11 +1,12 @@
-﻿@{
+﻿@model PriOrder.App.Models.T_DSMA
+@{
     ViewBag.Title = "My Profile";
 }
 
 <section class="p-3 bg-primary">
     <a href="28.page-settings.html" class="float-end"><i class="material-icons md-edit text-white"></i></a>
     <figure class="icontext align-items-center mr-4" style="max-width: 300px;">
-        <img class="icon icon-md rounded-circle" src="~/Assets/images/avatars/1.jpg">
+        <img class="icon icon-md rounded-circle" src="~/Assets/images/avatars/0.jpg">
         <figcaption class="text text-white">
             @if (Session["userId"] != null)
             {
@@ -43,21 +44,52 @@
 <hr class="divider">
 
 <section>
-    <h5 class="title-section pb-2">Orders</h5>
+    <h5 class="title-section pb-2">Account</h5>
     <nav class="nav-list">
-        <a class="btn-list" href="@Url.Action("MyOrders")">
-            <span class="float-end badge bg-warning">3</span>
-            <span class="text">On proccess</span>
-        </a>
-        <a class="btn-list" href="@Url.Action("MyOrders")">
-            <span class="float-end badge bg-success">1</span>
-            <span class="text">Shipped</span>
-        </a>
-        <a class="btn-list" href="@Url.Action("MyOrders")">
-            <span class="float-end badge bg-secondary">0</span>
-            <small class="title"></small>
-            <span class="text">Undelivered</span>
-        </a>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@(String.IsNullOrEmpty(Model.DSTO_NIDN) ? "Update your NID, Contact with Help Line" : Model.DSTO_NIDN)</span>
+            <span class="text">NID</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.DIST_TYPE</span>
+            <span class="text">Type</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-secondary">@Model.DSMA_DSID</span>
+            <span class="text">Code</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.DSMA_NAME</span>
+            <span class="text">Name</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.ADDR1</span>
+            <span class="text">Owner</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-secondary">@Model.CONTACTS</span>
+            <span class="text">Mobile</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.ADDR2</span>
+            <span class="text">Address</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.DIGR_NAME</span>
+            <span class="text">Group</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-secondary">@Model.SALES_ZONE</span>
+            <span class="text">Zone</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.DIST_ZONE</span>
+            <span class="text">Base</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-secondary">@Model.ZCONTACTS</span>
+            <span class="text">Help Line</span>
+        </div>
     </nav>
 </section>
 <hr class="divider">
@@ -85,13 +117,8 @@
     <nav class="nav-list">
         <a class="btn-list" href="29.page-profile-edit.html">
             <i class="icon-control material-icons md-edit"></i>
-            <small class="title">Username</small>
-            <span class="text">vosidiy</span>
-        </a>
-        <a class="btn-list" href="29.page-profile-edit.html">
-            <i class="icon-control material-icons md-edit"></i>
-            <small class="title">Email</small>
-            <span class="text">myname@gmail.com</span>
+            <small class="title">Picture</small>
+            <span class="text">Image</span>
         </a>
     </nav>
 </section>

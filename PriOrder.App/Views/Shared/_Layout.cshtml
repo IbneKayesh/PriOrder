@@ -22,6 +22,8 @@
     <!-- Fonticon -->
     <link href="~/Assets/fonts/material-icon/css/round.css" rel="stylesheet" type="text/css" />
 
+    <!-- Sweet alert 2-->
+    <link href="~/Assets/plugins/swal2/sweetalert2.min.css" rel="stylesheet"  type="text/css" />
 </head>
 <body>
     <noscript>
@@ -96,7 +98,7 @@
         <header class="p-3 border-bottom bg-light">
             <button type="button" class="float-end btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             <a href="@Url.Action("MyProfile","Accounts")" class="icontext">
-                <img src="~/Assets/images/avatars/1.jpg" class="icon avatar-sm" alt="">
+                <img src="~/Assets/images/avatars/0.jpg" class="icon avatar-sm" alt="">
                 <div class="text">
                     @if (Session["userId"] != null)
                     { <h6 class="mb-0">@Session["userId"]</h6>}
@@ -140,8 +142,8 @@
     <!-- custom javascript -->
     <script src="~/Assets/js/script.js" type="text/javascript"></script>
 
-    <!-- Sweet alert -->
-    <script src="~/Assets/js/sweetalert.min.js" type="text/javascript"></script>
+    <!-- Sweet alert 2-->
+    <script src="~/Assets/plugins/swal2/sweetalert2.min.js" type="text/javascript"></script>
 
     <!-- PWA -->
     @*<script src="js/pwa.js"></script>*@

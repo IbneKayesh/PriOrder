@@ -116,29 +116,42 @@
                 calculate_subTotal($(this));
             });
 
+
             $(".delete-item").click(function (e) {
                 e.preventDefault();
-                $(this).parent('div.input-group').parent('li.item-cart').remove();
-
-
-                var ItemId = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-code").val();
-                $.ajax({
-                    type: "POST",
-                    url: "DeleteFromCart",
-                    data: { itemId: ItemId },
-                    success: function (response) {
-
-                        Swal.fire("messages", response);
-                    },
-                    failure: function (response) {
-                        Swal.fire("messages", response.responseText);
-                    },
-                    error: function (response) {
-                        Swal.fire("messages", response.responseText);
+                var thisObj = $(this);
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {                        
+                        var ItemId = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-code").val();
+                        $.ajax({
+                            type: "POST",
+                            url: "DeleteFromCart",
+                            data: { itemId: ItemId },
+                            success: function (response) {
+                                if (response.success) {
+                                    thisObj.parent('div.input-group').parent('li.item-cart').remove();
+                                    Swal.fire({ title: "Success!", text: response.messages, icon: "success", button: "Ok!" });
+                                } else {
+                                    Swal.fire({ title: "Failed!", text: response.messages, icon: "error", button: "Ok!" });
+                                }
+                            },
+                            failure: function (response) {
+                                Swal.fire({ title: "Failed!", text: response.messages, icon: "error", button: "Ok!" });
+                            },
+                            error: function (response) {
+                                Swal.fire({ title: "Failed!", text: response.messages, icon: "error", button: "Ok!" });
+                            }
+                        });
                     }
                 });
-
-
                 getCartSum();
             });
         });

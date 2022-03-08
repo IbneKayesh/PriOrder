@@ -37,7 +37,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    TempData["mesg"] = SweetMessages.Failed("No Products Category found");
+                    TempData["mesg"] = SweetMessages.Info("No Products Category found");
                 }
             }
             return View(objList);
@@ -120,7 +120,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    ViewBag.ErrorMessages = "No Class found";
+                    TempData["mesg"] = SweetMessages.Info("No Class found");
                 }
             }
             return View(objList);
@@ -188,7 +188,7 @@ namespace PriOrder.App.Controllers
             }
             else
             {
-                ViewBag.ErrorMessages = "No Item found";
+                TempData["mesg"] = SweetMessages.Info("No Item found");
                 return View(new List<WO_ITEMS>());
             }
         }

@@ -72,9 +72,9 @@
                 $.post("AddToCart", { "id": itemcode, "qt": quantity },
                     function (data) {
                         if (data.success) {
-                            swal({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
+                            Swal.fire({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
                         } else {
-                            swal({ title: "Failed!", text: data.messages, icon: "error", button: "Ok!" });
+                            Swal.fire({ title: "Failed!", text: data.messages, icon: "error", button: "Ok!" });
                         }
                     });
             };
@@ -88,9 +88,9 @@
                 $.post("DelFromFav", { "id": itemcode },
                     function (data) {
                         if (data.success) {
-                            swal({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
+                            Swal.fire({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
                         } else {
-                            swal({ title: "Failed!", text: data.messages, icon: "error", button: "Ok!" });
+                            Swal.fire({ title: "Info!", text: data.messages, icon: "info", button: "Ok!" });
                         }
                     });
             };

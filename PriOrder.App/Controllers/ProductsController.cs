@@ -38,7 +38,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    TempData["mesg"] = SweetMessages.Failed("No Favorite products found");
+                    TempData["mesg"] = SweetMessages.Info("No Favorite products found");
                 }
             }
             return View(objList);
@@ -66,7 +66,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    TempData["mesg"] = SweetMessages.Failed("No Products Category found");
+                    TempData["mesg"] = SweetMessages.Info("No Products Category found");
                 }
             }
             return View(objList);
@@ -103,7 +103,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    TempData["mesg"] = SweetMessages.Failed("No Products Category found");
+                    TempData["mesg"] = SweetMessages.Info("No Products Category found");
                 }
             }
             if (clsList == null)
@@ -120,7 +120,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    TempData["mesg"] = SweetMessages.Failed("No Products Class found");
+                    TempData["mesg"] = SweetMessages.Info("No Products Class found");
                 }
             }
 
@@ -147,7 +147,7 @@ namespace PriOrder.App.Controllers
             }
             else
             {
-                ViewBag.ErrorMessages = "No Items found";
+                TempData["mesg"] = SweetMessages.Info("No Products found");
                 return View(new List<WO_ITEMS>());
             }
         }
@@ -183,7 +183,7 @@ namespace PriOrder.App.Controllers
             var rslt = new ALERT_MESG
             {
                 success = result.SUCCESS,
-                messages = result.ROWS == 1 ? $"Product: {id} added to Favorite" : "Product added failed, try another product!"
+                messages = result.ROWS == 1 ? $"Product: {id} added to Favorite" : "Product already added, try another product!"
             };
             return Json(rslt);
         }

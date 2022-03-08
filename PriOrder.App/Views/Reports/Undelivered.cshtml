@@ -1,0 +1,85 @@
+﻿@model IEnumerable<PriOrder.App.Models.T_UNDELIVERED>
+
+@{
+    ViewBag.Title = "Undelivered";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var Total = 0M;
+}
+
+<section class="p-3">
+    <div class="table-responsive">        
+        <table class="table table-bordered table-hover table-striped">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.DONO)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DODATE)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ITEMID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ITEMNAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.QTY)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SQTY)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TQTY)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.RATE)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AMOUNT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DEPOT)
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DONO)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DODATE)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ITEMID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ITEMNAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.QTY)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SQTY)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TQTY)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RATE)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AMOUNT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DEPOT)
+                    </td>
+                </tr>
+
+                Total += item.AMOUNT;
+            }
+        </table>
+    </div>
+    <span>Total: <strong>@Total</strong></span>
+</section>

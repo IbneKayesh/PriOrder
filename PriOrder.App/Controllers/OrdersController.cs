@@ -21,7 +21,7 @@ namespace PriOrder.App.Controllers
             }
             else
             {
-                TempData["mesg"] = SweetMessages.Failed("Cart is empty");
+                TempData["mesg"] = SweetMessages.Info("Cart is empty");
                 return View(new List<WO_ORDER_CART>());
             }
         }
@@ -29,7 +29,10 @@ namespace PriOrder.App.Controllers
         public ActionResult DeleteFromCart(string itemId)
         {
 
-            apply js messages
+            //apply js messages
+
+
+
             string distId = Session["userId"].ToString();
             EQResult result = OrderService.DelMyCartItem(distId, itemId);
 
@@ -50,5 +53,7 @@ namespace PriOrder.App.Controllers
             };
             return Json(rslt);
         }
+
+       
     }
 }

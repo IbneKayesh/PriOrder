@@ -156,6 +156,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="DataModels\ApplData.cs" />
     <Compile Include="Global.asax.cs">
@@ -165,14 +166,15 @@
     <Compile Include="ModelsView\CLASS_CATEGORY.cs" />
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
+    <Compile Include="Models\T_DSMA.cs" />
+    <Compile Include="Models\T_UNDELIVERED.cs" />
     <Compile Include="Models\WO_APP_MENU.cs" />
     <Compile Include="Models\WO_ITEMS.cs" />
-    <Compile Include="Models\DISTRIBUTORS.cs" />
     <Compile Include="Models\T_BANKCOL.cs" />
     <Compile Include="Models\WO_ITEM_CLASS.cs" />
     <Compile Include="Models\MR_STATUS.cs" />
     <Compile Include="Models\SUPPORT_MESSAGES.cs" />
-    <Compile Include="Models\MESSAGES.cs" />
+    <Compile Include="Models\WO_PUSH_MSG.cs" />
     <Compile Include="Models\WO_ITEM_TYPE.cs" />
     <Compile Include="Models\WO_NOTE.cs" />
     <Compile Include="Models\WO_ORDER_CART.cs" />
@@ -181,11 +183,13 @@
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SetupService.cs" />
     <Compile Include="Utility\SweetMessages.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\js\sweetalert.min.js" />
+    <Content Include="Assets\plugins\swal2\sweetalert2.min.css" />
+    <Content Include="Assets\plugins\swal2\sweetalert2.min.js" />
     <Content Include="Views\Setup\Categories.cshtml" />
     <Content Include="Views\Setup\Category.cshtml" />
     <Content Include="Views\Setup\ProductClass.cshtml" />
@@ -317,6 +321,7 @@
     <Content Include="Views\Products\Favorite.cshtml" />
     <Content Include="Views\Accounts\MRStatus.cshtml" />
     <Content Include="Views\Orders\Cart.cshtml" />
+    <Content Include="Views\Reports\Undelivered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
