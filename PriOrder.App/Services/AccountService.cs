@@ -11,6 +11,12 @@ namespace PriOrder.App.Services
 {
     public class AccountService
     {
+        public static void GetSp()
+        {
+            var xxxx= DatabaseOracleClient.TestSP();
+        }
+
+
         public static Tuple<List<T_BANKCOL>, EQResult> getBankList()
         {
             string sql = $@"SELECT BNAME,ANAME,ANUMBER,BRNAME FROM RPGL.T_BANKCOL WHERE BNAME<>'N' ORDER BY BNAME";

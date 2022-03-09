@@ -70,5 +70,12 @@ namespace PriOrder.App.Controllers
                 return View(new List<MR_STATUS>());
             }
         }
+
+
+        public ActionResult TestAction()
+        {
+            AccountService.GetSp();
+            return View();
+        }
     }
 }
