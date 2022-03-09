@@ -7,30 +7,30 @@ namespace PriOrder.App.Controllers
 {
     public class MessagesController : Controller
     {
-        // GET: Messages
+        // PUSH messages
         public ActionResult Sms()
         {
             var objList = MessageService.getSms("");
             return View(objList);
         }
+        //New Support
+        public ActionResult SupportRequest()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SupportRequest(WO_SUP_MSG obj)
+        {
+            return View();
+        }
 
+        //All Suppport
         public ActionResult Support()
         {
             string distId = "1234";
             var objList = MessageService.getSupport(distId);
             return View(objList);
         }
-        public ActionResult Help()
-        {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Help(WO_SUP_MSG obj)
-        {
-            return View();
-        }
-
-
         public ActionResult SupportReply(string replyId)
         {
             if (Request.UrlReferrer == null)
@@ -40,6 +40,11 @@ namespace PriOrder.App.Controllers
             }
             var objList = MessageService.getSupportBody(replyId);
             return View(objList);
+        }
+        public ActionResult SupportReply(string replyId, string messagesText)
+        {
+
+            return View();
         }
     }
 }
