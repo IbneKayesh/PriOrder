@@ -29,12 +29,12 @@
                         <div class="info-wrap">
                             <input class="item-code" type="hidden" value="@item.ITEM_ID" />
                             <input class="item-rate" type="hidden" value="@item.ITEM_RATE" />
-                            <p class="title"> @item.ITEM_ID </p>
+                            <p class="title text-primary"> @item.ITEM_ID </p>
                             <p class="title"> @item.ITEM_NAME</p>
                             <div class="price mb-2">
-                                <span class="badge bg-info">@item.ITEM_UNIT</span>
-                                <span class="badge bg-danger">@item.ITEM_RATE</span>
-                                <span class="badge bg-primary">@item.ITEM_FACTOR</span>
+                                <span class="text-success">@item.ITEM_UNIT</span>
+                                <span class="text-danger">@item.ITEM_RATE</span>
+                                <span class="text-warning">@item.ITEM_FACTOR</span>
                             </div>
                             @*<div class="input-group input-group-sm">
                                     @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })

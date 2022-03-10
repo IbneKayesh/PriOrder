@@ -4,12 +4,6 @@
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="toast" role="alert" aria-live="polite" aria-atomic="true" data-delay="10000">
-    <div role="alert" aria-live="assertive" aria-atomic="true">
-        <p id="Message"></p>
-    </div>
-</div>
-
 <p class="text-center mx-3">
     <a href="@ViewBag.BackPages" class="btn w-100 btn-light">
         <i class="material-icons md-arrow_back"></i>  Back
@@ -30,12 +24,12 @@
                             <i class="material-icons md-favorite_border"></i>
                         </a>
                         <input class="item-code" type="hidden" value="@item.ITEM_ID" />
-                        <p class="title"> @item.ITEM_ID </p>
+                        <p class="title text-primary"> @item.ITEM_ID </p>
                         <p class="title"> @item.ITEM_NAME</p>
                         <div class="price mb-2">
-                            <span class="badge bg-info">@item.ITEM_UNIT</span>
-                            <span class="badge bg-danger">@item.ITEM_RATE</span>
-                            <span class="badge bg-primary">@item.ITEM_FACTOR</span>
+                            <span class="text-success">@item.ITEM_UNIT</span>
+                            <span class="text-danger">@item.ITEM_RATE</span>
+                            <span class="text-warning">@item.ITEM_FACTOR</span>
                         </div>
                         @*<div class="input-group input-group-sm">
                                 @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
