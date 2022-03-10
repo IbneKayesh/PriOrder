@@ -1,19 +1,34 @@
-﻿using PriOrder.App.Models;
+﻿using Aio.Db.Client.Entrance;
+using Oracle.ManagedDataAccess.Client;
+using PriOrder.App.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Web.Mvc;
 
 namespace PriOrder.App.Services
 {
     public class MessageService
     {
-        public static List<WO_PUSH_MSG> getSms(string distId)
+
+        public static List<WO_PUSH_MSG> getSms(string distId, string groupId = "", string zoneId = "", string baseId = "")
         {
-            List<WO_PUSH_MSG> objList = new List<WO_PUSH_MSG>();
-            objList.Add(new WO_PUSH_MSG { MSG_ID = "a", CAT_ID = "General", BODY_TEXT = "this is sample message", CREATE_DATE = DateTime.Now, IS_READ = 0 });
-            objList.Add(new WO_PUSH_MSG { MSG_ID = "b", CAT_ID = "General", BODY_TEXT = "this is sample message 2", CREATE_DATE = DateTime.Now, IS_READ = 0 });
-            objList.Add(new WO_PUSH_MSG { MSG_ID = "b", CAT_ID = "General", BODY_TEXT = "this is sample message 3", CREATE_DATE = DateTime.Now, IS_READ = 0 });
-            return objList;
+
+            OracleParameter inp_v = new OracleParameter(parameterName: "VDIST", type: OracleDbType.Varchar2, obj: "837075", direction: ParameterDirection.Input);
+            OracleParameter inp_g = new OracleParameter(parameterName: "VGROUP", type: OracleDbType.Varchar2, obj: "", direction: ParameterDirection.Input);
+            OracleParameter inp_z = new OracleParameter(parameterName: "VZONE", type: OracleDbType.Varchar2, obj: "", direction: ParameterDirection.Input);
+            OracleParameter inp_b = new OracleParameter(parameterName: "VBASE", type: OracleDbType.Varchar2, obj: "", direction: ParameterDirection.Input);
+            object[] inParams = new object[] { inp_v, inp_g, inp_z, inp_b };
+
+            OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
+            object[] outParams = new object[] { out_cur };
+
+            string sql = @"BEGIN RPGL.PRO_GET_PUSH_MSG(:VDIST,:VGROUP,:VZONE,:VBASE,:OUTCURSPARM); END;";
+
+            var smsData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+            return DatabaseOracleClient.DataTableToListObjectBind<WO_PUSH_MSG>(smsData.Item1.Tables[0]);
+
         }
         public static List<WO_SUP_MSG> getSupport(string distId, bool IsOpen = true)
         {

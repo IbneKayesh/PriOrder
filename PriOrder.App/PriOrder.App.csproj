@@ -82,6 +82,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Aio.Db.Client\bin\Debug\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -346,7 +350,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Aio.Db.Client\Aio.Db.Client.csproj">
-      <Project>{92B048AD-6B15-4B4E-866D-6646A4301E5A}</Project>
+      <Project>{92b048ad-6b15-4b4e-866d-6646a4301e5a}</Project>
       <Name>Aio.Db.Client</Name>
     </ProjectReference>
   </ItemGroup>

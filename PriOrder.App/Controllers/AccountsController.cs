@@ -74,7 +74,8 @@ namespace PriOrder.App.Controllers
 
         public ActionResult TestAction()
         {
-            AccountService.GetSp();
+            AccountService.GetDataSetSP();
+            AccountService.ExecuteSP();
             return View();
         }
     }

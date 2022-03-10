@@ -11,13 +11,20 @@ namespace PriOrder.App.Models
         [Display(Name = "Category")]
         public string CAT_ID { get; set; }
 
+
+        public string DIGR_TEXT { get; set; }
+        public string SALES_ZONE_ID { get; set; }
+        public string BASE_ID { get; set; }
+        public string DIST_ID { get; set; }
+
+
         [Display(Name = "Body")]
         public string BODY_TEXT { get; set; }
 
-        [Display(Name = "Read")]
-        public int IS_READ { get; set; }
-
         [Display(Name = "Date")]
         public DateTime CREATE_DATE { get; set; }
+
+        [Display(Name = "New")]
+        public string NEW_MSG { get; set; }
     }
 }

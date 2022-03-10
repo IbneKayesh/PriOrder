@@ -10,7 +10,8 @@ namespace PriOrder.App.Controllers
         // GET: Messages
         public ActionResult Sms()
         {
-            var objList = MessageService.getSms("");
+            string distId = Session["userId"].ToString();
+            var objList = MessageService.getSms(distId);
             return View(objList);
         }
 

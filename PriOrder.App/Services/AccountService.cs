@@ -1,8 +1,10 @@
 ﻿using Aio.Db.Client.Entrance;
 using Aio.Model;
+using Oracle.ManagedDataAccess.Client;
 using PriOrder.App.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,11 +13,22 @@ namespace PriOrder.App.Services
 {
     public class AccountService
     {
-        public static void GetSp()
+        public static void GetDataSetSP()
         {
-            var xxxx= DatabaseOracleClient.TestSP();
+        
         }
 
+        public static void ExecuteSP()
+        {
+            OracleParameter ip_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "sp check controller", direction: ParameterDirection.Input);
+            OracleParameter ip_spid = new OracleParameter(parameterName: "VSUPID", type: OracleDbType.Varchar2, obj: "1", direction: ParameterDirection.Input);
+
+            object[] inParams = new object[] { ip_menu, ip_spid };
+
+            string sql = @"BEGIN RPGL.PRO_GET_SUPP_MSG(:VMENU,:VSUPID); END;";
+
+            var xxxx = DatabaseOracleClient.PostSP(sql, inParams);
+        }
 
         public static Tuple<List<T_BANKCOL>, EQResult> getBankList()
         {

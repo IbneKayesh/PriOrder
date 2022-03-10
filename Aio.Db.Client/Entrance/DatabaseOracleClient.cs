@@ -35,6 +35,12 @@ namespace Aio.Db.Client.Entrance
 
         #region OracleEF
 
+
+        public static List<T> DataTableToListObjectBind<T>(DataTable _dt) where T : new()
+        {
+            return TableEntity.BindObjectList<T>(_dt).ToList();
+        }
+
         private static T SqlToModel<T>(string sql) where T : new()
         {
             T t = new T();
@@ -135,60 +141,15 @@ namespace Aio.Db.Client.Entrance
         #endregion
 
 
-
-        public static Tuple<DataSet, EQResult> TestSP()
+        #region Oracle_DB_Method_SP
+        public static Tuple<DataSet, EQResult> GetDataSetSP(string sql, object[] _in_param, object[] _out_param, string _con="")
         {
-            OracleParameter[] inParams = new OracleParameter[] {
-                new OracleParameter("VDIST",OracleDbType.Varchar2, ParameterDirection.Input),
-                new OracleParameter("VGROUP",OracleDbType.Varchar2, ParameterDirection.Input),
-                new OracleParameter("VZONE",OracleDbType.Varchar2, ParameterDirection.Input),
-                new OracleParameter("VBASE",OracleDbType.Varchar2, ParameterDirection.Input),
-            };
-
-            OracleParameter[] outParams = new OracleParameter[] {
-               new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output)
-           };
-
-            string sql = @"BEGIN RPGL.PRO_GET_PUSH_MSG(:VDIST,:VGROUP,:VZONE,:VBASE,:OUTCURSPARM); END;";
-
-
-            return ExecuteSPQuery(sql, inParams, outParams);
+            return DatabaseOracle.ExecuteSPQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _in_parameters: _in_param, _out_parameters: _out_param);
         }
-
-        public static Tuple<DataSet, EQResult> ExecuteSPQuery(string sql, object[] _parameters, object[] _out_parameters, string _con = "")
+        public static EQResult PostSP(string sql, object[] _in_param, string _con="")
         {
-            EQResult result = new EQResult();
-            result.SUCCESS = true;
-            result.MESSAGES = AppKeys.SUCCESS_MESSAGES;
-
-            DataSet ds = new DataSet();
-            OracleCommand cmd = new OracleCommand();
-            OracleDataAdapter da = new OracleDataAdapter();
-            OracleConnection con = new OracleConnection(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con));
-            try
-            {
-
-                cmd = new OracleCommand(sql, con);
-                cmd.Parameters.AddRange(_parameters);
-                cmd.Parameters.AddRange(_out_parameters);
-                cmd.CommandTimeout = int.MaxValue;
-                cmd.CommandType = CommandType.Text;
-                da.SelectCommand = cmd;
-                da.Fill(ds);
-            }
-            catch (OracleException ex)
-            {
-                result.SUCCESS = false;
-                result.MESSAGES = ex.Message;
-                result.ROWS = 0;
-                return new Tuple<DataSet, EQResult>(new DataSet(), result);
-            }
-            finally
-            {
-                con.Close();
-            }
-            result.ROWS = ds.Tables.Count;
-            return new Tuple<DataSet, EQResult>(ds, result);
+            return DatabaseOracle.ExecuteSPNonQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _in_parameters: _in_param);
         }
+        #endregion
     }
 }
