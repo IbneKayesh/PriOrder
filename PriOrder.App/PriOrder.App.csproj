@@ -331,7 +331,9 @@
     <Content Include="Views\Reports\Undelivered.cshtml" />
     <Content Include="Views\Messages\Support.cshtml" />
     <Content Include="Views\Messages\SupportReply.cshtml" />
-    <Content Include="Views\Messages\Help.cshtml" />
+    <Content Include="Views\Messages\SupportRequest.cshtml" />
+    <Content Include="Views\Messages\FeedbackReply.cshtml" />
+    <Content Include="Views\Messages\Feedback.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
