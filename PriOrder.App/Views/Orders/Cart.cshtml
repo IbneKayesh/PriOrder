@@ -31,7 +31,11 @@
                             <input class="item-rate" type="hidden" value="@item.ITEM_RATE" />
                             <p class="title"> @item.ITEM_ID </p>
                             <p class="title"> @item.ITEM_NAME</p>
-                            <div class="price mb-2">@item.ITEM_UNIT-@item.ITEM_FACTOR</div>
+                            <div class="price mb-2">
+                                <span class="badge bg-info">@item.ITEM_UNIT</span>
+                                <span class="badge bg-danger">@item.ITEM_RATE</span>
+                                <span class="badge bg-primary">@item.ITEM_FACTOR</span>
+                            </div>
                             @*<div class="input-group input-group-sm">
                                     @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
                                     <input class="item-note form-control form-control-sm" type="text" value="">
@@ -129,7 +133,7 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
-                    if (result.isConfirmed) {                        
+                    if (result.isConfirmed) {
                         var ItemId = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-code").val();
                         $.ajax({
                             type: "POST",

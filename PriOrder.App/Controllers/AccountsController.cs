@@ -16,7 +16,7 @@ namespace PriOrder.App.Controllers
     {
         public ActionResult MyProfile()
         {
-            string distId = Session["userId"].ToString();
+            string distId =  Session["userId"].ToString();
             var obj = new T_DSMA();
 
             if (ApplData.CHACHE_ENABLED)
@@ -36,7 +36,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    TempData["mesg"] = SweetMessages.Failed("No Prfile information found");
+                    TempData["mesg"] = SweetMessages.Failed("No Profile information found");
                 }
             }
             return View(obj);
@@ -51,7 +51,7 @@ namespace PriOrder.App.Controllers
             }
             else
             {
-                ViewBag.ErrorMessages = "Account List is empty";
+                TempData["mesg"] = SweetMessages.Info("Bank account list is empty");
                 return View(new List<T_BANKCOL>());
             }
         }
@@ -66,7 +66,7 @@ namespace PriOrder.App.Controllers
             }
             else
             {
-                ViewBag.ErrorMessages = "MR List is empty";
+                TempData["mesg"] = SweetMessages.Info("MR list is empty");
                 return View(new List<MR_STATUS>());
             }
         }
@@ -83,7 +83,7 @@ namespace PriOrder.App.Controllers
             }
             else
             {
-                TempData["mesg"] = SweetMessages.Failed("No Partner information found");
+                TempData["mesg"] = SweetMessages.Info("No Partner information found");
             }
             return View(obj);
         }

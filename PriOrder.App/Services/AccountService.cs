@@ -19,7 +19,7 @@ namespace PriOrder.App.Services
             INNER JOIN T_DSMA T1 ON T.DIST_ID = T1.DSMA_DSID
             LEFT OUTER JOIN T_DGIG T2 ON T1.DSMA_GRUP = T2.DGIG_DSGP
             WHERE T.APPL_NID IN (SELECT T.APPL_NID
-            FROM  RPGL.NIF_DIST T WHERE T.DIST_ID='632369')
+            FROM  RPGL.NIF_DIST T WHERE T.DIST_ID='{distId}')
             ORDER BY T2.DGIG_DNAM";
             return DatabaseOracleClient.SqlToListObjectBind<NIF_DIST>(sql);
         }

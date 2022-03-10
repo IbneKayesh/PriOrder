@@ -28,11 +28,6 @@ namespace PriOrder.App.Controllers
 
         public ActionResult DeleteFromCart(string itemId)
         {
-
-            //apply js messages
-
-
-
             string distId = Session["userId"].ToString();
             EQResult result = OrderService.DelMyCartItem(distId, itemId);
 
