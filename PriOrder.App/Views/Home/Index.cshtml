@@ -3,26 +3,6 @@
 }
 
 
-<button type="button" class="form-control xxxx">text</button>
-
-@section scripts{
-
-    <script>
-
-        $(document).on('click', '.xxxx', function (e) {
-            e.preventDefault();
-            $.post("TestJson",
-                      function (data) {
-                          if (data.success) {
-                              swal({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
-                          } else {
-                              swal({ title: "Failed!", text: data.messages, icon: "error", button: "Ok!" });
-                          }
-                      });
-        });
-    </script>
-}
-
 
 @*<div class="col-12 col-sm-6 col-md-4">
         <article class="card mb-3">

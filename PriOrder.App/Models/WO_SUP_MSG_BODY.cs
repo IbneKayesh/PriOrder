@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -14,9 +15,14 @@ namespace PriOrder.App.Models
         public string BODY_TEXT { get; set; }
 
         [Display(Name = "Support By")]
-        public string SUP_BY { get; set; } = "0";
+        public string CREATE_USER { get; set; } = "0";
 
         [Display(Name = "Date")]
         public DateTime CREATE_DATE { get; set; }
+
+        public bool IS_ACTIVE { get; set; }
+
+        [NotMapped]
+        public SUP_MSG_REPL SUP_MSG_REPL { get; set; }
     }
 }

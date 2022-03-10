@@ -1,0 +1,45 @@
+﻿@model IEnumerable<PriOrder.App.Models.NIF_DIST>
+@{
+    ViewBag.Title = "Business Partner";
+}
+<p class="text-center mx-3">
+    <a href="@Url.Action("MyProfile","Accounts")" class="btn w-100 btn-light">
+        <i class="material-icons md-arrow_back"></i>
+        My Profile
+    </a>
+</p>
+<section class="p-3">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>NID</th>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Group</th>
+                    <th>Date</th>
+                    <td>Status</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.DSTO_NIDN</td>
+                        <td>@item.DIST_ID</td>
+                        <td>@item.DSMA_NAME</td>
+                        <td>@item.DGIG_DNAM</td>
+                        <td>@item.OPDATE</td>
+                        <td>@item.STATUS</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
+<p class="text-center mx-3">
+    <a href="@Url.Action("MyProfile","Accounts")" class="btn w-100 btn-light">
+        <i class="material-icons md-arrow_back"></i>
+        My Profile
+    </a>
+</p>

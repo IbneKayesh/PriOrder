@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<PriOrder.App.Models.WO_SUP_MSG_BODY>
 @{
-    ViewBag.Title = "Support Reply";
+    ViewBag.Title = "Feedback Reply";
 }
 
 @foreach (var item in Model)
 {
-    <article class="card-banner rounded bg-light mb-2" @(item.SUP_BY == "0" ? "style=text-align:right" : "style=text-align:left")>
+    <article class="card-banner rounded bg-light mb-2" @(item.CREATE_USER == "0" ? "style=text-align:left" : "style=text-align:right")>
         <div class="p-3" style="width:95%">
-            <span class="badge bg-success">@(item.SUP_BY == "0" ? @item.SUP_NUMBER : @item.SUP_BY)</span><br />
+            <span class="badge bg-success">@(item.CREATE_USER == "0" ? @item.SUP_NUMBER : @item.CREATE_USER)</span><br />
             <span class="text-secondery">@item.CREATE_DATE</span>
             <p>@item.BODY_TEXT</p>
         </div>
@@ -15,17 +15,51 @@
 }
 
 
-<p class="alert alert-danger">
-    <a href="@Url.Action("Support","Messages")" class="badge bg-danger"> View all messages</a>
+<p class="alert alert-info">
+    <a href="@Url.Action("Feedback","Messages")" class="badge bg-danger">View all messages</a>
     <a href="#" class="badge bg-warning" onclick="location.reload();"> check new messages</a>
-    <a href="@Url.Action("Sms","Messages")" class="badge bg-primary"> View all messages</a>
 </p>
-<div class="mb-3 row">
-    <div class="col-10">
-        <textarea class="form-control" placeholder="Write your problem is here!"></textarea>
-    </div>
-    <div class="col-2">
-        <br />
-        <button type="submit" class="btn w-100 btn-primary"><i class="material-icons md-send"></i></button>
-    </div>
-</div>
+
+
+@if (Model != null && Model.Count() > 0)
+{
+    if (Model.FirstOrDefault().IS_ACTIVE)
+    {
+        <div class="mb-3">
+            @using (Html.BeginForm(FormMethod.Post))
+            {
+                @Html.AntiForgeryToken();
+                <div class="form-group row">
+                    <div class="col-10">
+                        <input type="hidden" name="replyId" value="@Request.Params["replyId"]" />
+                        <textarea id="messagesText" name="messagesText" class="form-control" placeholder="Write your problem is here! (English Characters)" required="required"></textarea>
+                    </div>
+                    <div class="col-2">
+                        <div class="float-end form-check form-switch">
+                            <span>Close</span>
+                            <input class="form-check-input" type="checkbox" id="closereply" name="closereply" value="0" onchange="CheckBoxVal();">
+                            <label class="form-check-label" for="closereply"></label>
+                            <button type="submit" class="btn w-100 btn-primary"><i class="material-icons md-send"></i></button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="alert alert-danger">You can't reply this conversion.</p>
+    }
+}
+
+@section scripts{
+    <script>
+        function CheckBoxVal() {
+            if ($("#closereply").prop('checked') == true) {
+                $('#closereply').val(1);
+            } else {
+                $('#closereply').val(0);
+            };
+        }
+    </script>
+}

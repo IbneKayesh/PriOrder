@@ -7,9 +7,10 @@
 }
 
 <section class="p-3">
-    <div class="table-responsive">        
+    <div class="table-responsive">
         <table class="table table-bordered table-hover table-striped">
             <tr>
+                <th>SL</th>
                 <th>
                     @Html.DisplayNameFor(model => model.DONO)
                 </th>
@@ -40,11 +41,12 @@
                 <th>
                     @Html.DisplayNameFor(model => model.DEPOT)
                 </th>
-                <th></th>
             </tr>
+            @{ int sl = 1;}
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>@sl</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DONO)
                     </td>
@@ -76,7 +78,7 @@
                         @Html.DisplayFor(modelItem => item.DEPOT)
                     </td>
                 </tr>
-
+                sl++;
                 Total += item.AMOUNT;
             }
         </table>

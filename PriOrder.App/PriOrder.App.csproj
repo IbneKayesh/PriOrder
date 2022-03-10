@@ -171,6 +171,9 @@
     <Compile Include="ModelsView\CLASS_CATEGORY.cs" />
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
+    <Compile Include="Models\NIF_DIST.cs" />
+    <Compile Include="Models\SUP_MSG_REPL.cs" />
+    <Compile Include="Models\T_CTYP.cs" />
     <Compile Include="Models\T_DSMA.cs" />
     <Compile Include="Models\T_UNDELIVERED.cs" />
     <Compile Include="Models\WO_APP_MENU.cs" />
@@ -332,8 +335,9 @@
     <Content Include="Views\Messages\Support.cshtml" />
     <Content Include="Views\Messages\SupportReply.cshtml" />
     <Content Include="Views\Messages\SupportRequest.cshtml" />
-    <Content Include="Views\Messages\FeedbackReply.cshtml" />
     <Content Include="Views\Messages\Feedback.cshtml" />
+    <Content Include="Views\Messages\FeedbackReply.cshtml" />
+    <Content Include="Views\Accounts\BusinessPartner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

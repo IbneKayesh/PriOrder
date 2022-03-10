@@ -3,7 +3,7 @@
     ViewBag.Title = "Support";
 }
 <p class="text-center mx-3">
-    <a href="@Url.Action("Help","Messages")" class="btn btn-danger w-100">  Need Help</a>
+    <a href="@Url.Action("SupportRequest","Messages")" class="btn btn-danger w-100">Need Help? Send your query..</a>
 </p>
 
 @foreach (var item in Model)
@@ -13,11 +13,9 @@
             <span class="float-end badge bg-warning">@item.SUP_NUMBER</span>
             <span class="text-secondery">@item.CREATE_DATE</span>
             <p>
-                @item.SUP_TYPE
-                @if (item.IS_ACTIVE)
-                {
-                    <a href="@Url.Action("SupportReply", "Messages", new { replyId= item.SUP_NUMBER})" class="badge bg-dark">Reply</a>
-                }
+                @item.CTYP_TYPE
+
+                <a href="@Url.Action("SupportReply", "Messages", new { replyId = item.SUP_NUMBER })" class="badge bg-danger">@(item.IS_ACTIVE ? "Reply" : "View Messages")</a>
             </p>
         </div>
     </article>

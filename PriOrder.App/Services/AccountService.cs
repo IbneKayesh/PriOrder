@@ -13,9 +13,15 @@ namespace PriOrder.App.Services
 {
     public class AccountService
     {
-        public static void GetDataSetSP()
+        public static Tuple<List<NIF_DIST>, EQResult> getMyBusiness(string distId)
         {
-        
+            string sql = $@"SELECT T1.DSTO_NIDN,T.DIST_ID,T1.DSMA_NAME,T2.DGIG_DNAM,TO_CHAR(T.OPDATE)OPDATE,TO_CHAR(T.CLDATE)CLDATE, CASE WHEN T.CANCELLED = 'N' THEN 'Active' ELSE 'Inactive' END STATUS, CASE WHEN T.IS_ACTIVE = 1 THEN 'Approved' ELSE 'Not Approved' END APPROVAL FROM NIF_DIST T
+            INNER JOIN T_DSMA T1 ON T.DIST_ID = T1.DSMA_DSID
+            LEFT OUTER JOIN T_DGIG T2 ON T1.DSMA_GRUP = T2.DGIG_DSGP
+            WHERE T.APPL_NID IN (SELECT T.APPL_NID
+            FROM  RPGL.NIF_DIST T WHERE T.DIST_ID='632369')
+            ORDER BY T2.DGIG_DNAM";
+            return DatabaseOracleClient.SqlToListObjectBind<NIF_DIST>(sql);
         }
 
         public static void ExecuteSP()
