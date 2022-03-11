@@ -22,20 +22,7 @@ namespace PriOrder.App.Services
             FROM  RPGL.NIF_DIST T WHERE T.DIST_ID='{distId}')
             ORDER BY T2.DGIG_DNAM";
             return DatabaseOracleClient.SqlToListObjectBind<NIF_DIST>(sql);
-        }
-
-        public static void ExecuteSP()
-        {
-            OracleParameter ip_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "sp check controller", direction: ParameterDirection.Input);
-            OracleParameter ip_spid = new OracleParameter(parameterName: "VSUPID", type: OracleDbType.Varchar2, obj: "1", direction: ParameterDirection.Input);
-
-            object[] inParams = new object[] { ip_menu, ip_spid };
-
-            string sql = @"BEGIN RPGL.PRO_GET_SUPP_MSG(:VMENU,:VSUPID); END;";
-
-            var xxxx = DatabaseOracleClient.PostSP(sql, inParams);
-        }
-
+        }        
         public static Tuple<List<T_BANKCOL>, EQResult> getBankList()
         {
             string sql = $@"SELECT BNAME,ANAME,ANUMBER,BRNAME FROM RPGL.T_BANKCOL WHERE BNAME<>'N' ORDER BY BNAME";

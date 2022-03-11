@@ -102,5 +102,24 @@ namespace PriOrder.App.Services
             }
             return DatabaseOracleClient.PostSqlList(sqlList);
         }
+
+
+        public static EQResult AddNewSMS(string cat, string groupId, string zoneId, string baseId, string distId, string msgTxt)
+        {
+            string id = Guid.NewGuid().ToString();
+            OracleParameter ip_vid = new OracleParameter(parameterName: "VID", type: OracleDbType.Varchar2, obj: id, direction: ParameterDirection.Input);
+            OracleParameter ip_cid = new OracleParameter(parameterName: "VCATID", type: OracleDbType.Varchar2, obj: cat, direction: ParameterDirection.Input);
+            OracleParameter ip_gid = new OracleParameter(parameterName: "VGROUPID", type: OracleDbType.Varchar2, obj: groupId, direction: ParameterDirection.Input);
+            OracleParameter ip_zid = new OracleParameter(parameterName: "VZONEID", type: OracleDbType.Varchar2, obj: zoneId, direction: ParameterDirection.Input);
+            OracleParameter ip_bid = new OracleParameter(parameterName: "VBASEID", type: OracleDbType.Varchar2, obj: baseId, direction: ParameterDirection.Input);
+            OracleParameter ip_did = new OracleParameter(parameterName: "DISTID", type: OracleDbType.Int32, obj: distId, direction: ParameterDirection.Input);
+            OracleParameter ip_txt = new OracleParameter(parameterName: "MSGTXT", type: OracleDbType.Varchar2, obj: msgTxt, direction: ParameterDirection.Input);
+
+            object[] inParams = new object[] { ip_vid, ip_cid, ip_gid, ip_zid, ip_bid, ip_did, ip_txt };
+
+            string sql = @"BEGIN RPGL.PRO_INS_PUSH_MSG(:VMENU,:VSUPID); END;";
+
+            return DatabaseOracleClient.PostSP(sql, inParams);
+        }
     }
 }

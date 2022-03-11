@@ -207,7 +207,7 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
                 success: function (response) {
-                    Swal.fire("messages", response);
+                    Swal.fire("messages", response.messages);
                 },
                 failure: function (response) {
                     Swal.fire("messages", response.responseText);

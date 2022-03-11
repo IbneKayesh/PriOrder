@@ -41,6 +41,11 @@ namespace PriOrder.App.Controllers
         public ActionResult SubmitCart(List<WO_ORDER_CART> objList)
         {
             string distId = Session["userId"].ToString();
+
+            string Order = "OR#" + new Random().Next(100, 9999999) +" Placed successfully. please deposit your payment";
+
+            var obj = MessageService.AddNewSMS("Order", "0", "0", "0", distId, Order);
+
             string result = "Success";// OrderService.OrderSubmit(distId,objList);
             var rslt = new ALERT_MESG
             {

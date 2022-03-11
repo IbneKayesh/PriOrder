@@ -93,7 +93,6 @@ namespace PriOrder.App.Controllers
 
         public ActionResult TestAction()
         {
-            AccountService.ExecuteSP();
             return View();
         }
     }
