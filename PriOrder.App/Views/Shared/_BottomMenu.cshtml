@@ -1,0 +1,25 @@
+﻿@model IEnumerable<PriOrder.App.Models.WO_APP_MENU>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <a href="@Url.Action(item.ACTION_NAME,item.CONTROLLER_NAME)" class="nav-link">
+            <i class="icon material-icons @item.MENU_ICON"></i><span class="text">@item.MENU_NAME_EN</span>
+            <span class="badge bg-info">@item.MENU_ORDER</span>
+        </a>
+    }
+}
+
+
+
+        @*@if (Session["menuBottom"] != null)
+            {
+                var bottomMenu = (List<PriOrder.App.Models.WO_APP_MENU>)Session["menuBottom"];
+                foreach (var _menu in bottomMenu)
+                {
+                    <a href="@Url.Action(_menu.ACTION_NAME,_menu.CONTROLLER_NAME)" class="nav-link">
+                        <i class="icon material-icons @_menu.MENU_ICON"></i><span class="text">@_menu.MENU_NAME_EN</span>
+                    </a>
+                }
+            }*@

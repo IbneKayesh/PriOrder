@@ -338,6 +338,7 @@
     <Content Include="Views\Messages\Feedback.cshtml" />
     <Content Include="Views\Messages\FeedbackReply.cshtml" />
     <Content Include="Views\Accounts\BusinessPartner.cshtml" />
+    <Content Include="Views\Shared\_BottomMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -61,21 +61,7 @@
     </main> <!-- app-content.// -->
 
     <nav class="nav-bottom">
-
-        @if (Session["menuBottom"] != null)
-        {
-            var bottomMenu = (List<PriOrder.App.Models.WO_APP_MENU>)Session["menuBottom"];
-            foreach (var _menu in bottomMenu)
-            {
-                <a href="@Url.Action(_menu.ACTION_NAME,_menu.CONTROLLER_NAME)" class="nav-link">
-                    <i class="icon material-icons @_menu.MENU_ICON"></i><span class="text">@_menu.MENU_NAME_EN</span>
-                </a>
-            }
-        }
-
-
-
-
+        @Html.Action("_BottomMenu", "Home")
 
         @*<a href="@Url.Action("Categories","Products")" class="nav-link">
                 <i class="icon material-icons md-apps"></i><span class="text">Category</span>

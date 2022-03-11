@@ -110,14 +110,17 @@ namespace PriOrder.App.Controllers
             Session.Clear();
             return RedirectToAction(nameof(Login));
         }
-        
+
         public ActionResult ChangePassword()
         {
             return View();
         }
-        public ActionResult Damages()
+        public ActionResult BottomMenu()
         {
-            return View();
+            //var objList = HttpContext.Cache.Get("chBottomMenu") as List<WO_APP_MENU>;
+
+            var objList = (List<WO_APP_MENU>)Session["menuBottom"];
+            return View("_NotificationsPartial", objList);
         }
 
     }
