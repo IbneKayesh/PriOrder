@@ -46,7 +46,7 @@ namespace PriOrder.App.Controllers
 
             var obj = MessageService.AddNewSMS("Order", "0", "0", "0", distId, Order);
 
-            string result = "Success";// OrderService.OrderSubmit(distId,objList);
+            string result = "Order Saved success, Check SMS";// OrderService.OrderSubmit(distId,objList);
             var rslt = new ALERT_MESG
             {
                 messages = result

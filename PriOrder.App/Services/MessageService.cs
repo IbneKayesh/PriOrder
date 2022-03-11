@@ -117,7 +117,7 @@ namespace PriOrder.App.Services
 
             object[] inParams = new object[] { ip_vid, ip_cid, ip_gid, ip_zid, ip_bid, ip_did, ip_txt };
 
-            string sql = @"BEGIN RPGL.PRO_INS_PUSH_MSG(:VMENU,:VSUPID); END;";
+            string sql = @"BEGIN RPGL.PRO_INS_PUSH_MSG(:VID,:VCATID,:VGROUPID,:VZONEID,:VBASEID,:DISTID,:MSGTXT); END;";
 
             return DatabaseOracleClient.PostSP(sql, inParams);
         }

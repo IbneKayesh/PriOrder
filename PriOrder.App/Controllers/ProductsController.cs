@@ -53,7 +53,7 @@ namespace PriOrder.App.Controllers
             {
                 objList = HttpContext.Cache.Get(distId + "chCat") as List<WO_ITEM_TYPE>;
             }
-            if (objList == null)
+            if (objList == null || objList.Count==0)
             {
                 Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = ProductService.getCategoryListByDistId(distId);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
@@ -90,7 +90,7 @@ namespace PriOrder.App.Controllers
                 clsList = HttpContext.Cache.Get(distId + id) as List<WO_ITEM_CLASS>;
             }
 
-            if (catList == null)
+            if (catList == null ||catList.Count==0)
             {
                 Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = ProductService.getCategoryListByDistId(distId);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
@@ -106,7 +106,7 @@ namespace PriOrder.App.Controllers
                     TempData["mesg"] = SweetMessages.Info("No Products Category found");
                 }
             }
-            if (clsList == null)
+            if (clsList == null|| clsList.Count==0)
             {
                 //Get Classes by Category Id
                 Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = ProductService.getClassByCategoryId(distId, id);
