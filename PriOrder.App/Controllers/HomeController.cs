@@ -120,7 +120,7 @@ namespace PriOrder.App.Controllers
             //var objList = HttpContext.Cache.Get("chBottomMenu") as List<WO_APP_MENU>;
 
             var objList = (List<WO_APP_MENU>)Session["menuBottom"];
-            return View("_NotificationsPartial", objList);
+            return PartialView("_BottomMenu", objList);
         }
 
     }

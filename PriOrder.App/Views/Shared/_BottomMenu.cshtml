@@ -5,8 +5,9 @@
     foreach (var item in Model)
     {
         <a href="@Url.Action(item.ACTION_NAME,item.CONTROLLER_NAME)" class="nav-link">
-            <i class="icon material-icons @item.MENU_ICON"></i><span class="text">@item.MENU_NAME_EN</span>
-            <span class="badge bg-info">@item.MENU_ORDER</span>
+            <i class="icon material-icons @item.MENU_ICON"></i>
+            @*<span class="badge bg-warning">(@item.MODULE_ID)</span>*@
+            <span class="text">@item.MENU_NAME_EN</span>
         </a>
     }
 }
