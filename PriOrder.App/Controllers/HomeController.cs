@@ -7,6 +7,7 @@ using PriOrder.App.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Caching;
 using System.Web.Mvc;
 
 namespace PriOrder.App.Controllers
@@ -131,15 +132,19 @@ namespace PriOrder.App.Controllers
             List<WO_APP_MENU> objList = (List<WO_APP_MENU>)Session["menuBottom"];
 
             //Cart Count
-            if (objList.Any(x => x.MENU_ID == 10010002))
+            if (objList.Any(x => x.MENU_ID == 20010003))
             {
                 int CartCount = 0;
-                CartCount = (int)HttpContext.Cache.Get(distId + ApplData.CART_COUNT_CACHE);
-                if (CartCount == null || CartCount == 0)
+                try
+                {
+                    CartCount = (int)HttpContext.Cache?.Get(distId + ApplData.CART_COUNT_CACHE);
+                }
+                catch
                 {
                     CartCount = OrderService.getCartItemsCount(distId);
+                    HttpContext.Cache.Insert(distId + ApplData.CART_COUNT_CACHE, CartCount, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
                 }
-                objList.Where(x=>x.MENU_ID== 10010002).First().MODULE_ID = CartCount;
+                objList.Where(x => x.MENU_ID == 20010003).First().MODULE_ID = CartCount;
             }
 
             return PartialView("_BottomMenu", objList);
