@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace PriOrder.App.Controllers
 {
+    [AioAuthorization]
     public class ProductsController : Controller
     {
         //Cache supported

@@ -196,6 +196,7 @@
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SetupService.cs" />
+    <Compile Include="Utility\AioAuthorization.cs" />
     <Compile Include="Utility\SweetMessages.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -318,7 +319,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_Layout - Copy.cshtml" />
     <Content Include="Views\Messages\Sms.cshtml" />
-    <Content Include="Views\Home\Support.cshtml" />
     <Content Include="Views\Home\OrderSuccess.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
     <Content Include="Views\Accounts\Banks.cshtml" />

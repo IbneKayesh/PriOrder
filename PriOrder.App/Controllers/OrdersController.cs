@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace PriOrder.App.Controllers
 {
+    [AioAuthorization]
     public class OrdersController : Controller
     {
         public ActionResult Cart()

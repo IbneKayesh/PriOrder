@@ -37,7 +37,7 @@ namespace PriOrder.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(USER_LOGIN obj)
+        public ActionResult Login(USER_LOGIN obj, string next_url)
         {
             Tuple<List<USER_LOGIN_INFO>, EQResult> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD, false);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
@@ -54,7 +54,16 @@ namespace PriOrder.App.Controllers
                 Session["menuLeft"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 10).ToList();
                 Session["menuBottom"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 20).ToList();
 
-                return RedirectToAction(nameof(Index));
+
+                if (Url.IsLocalUrl(next_url) && next_url.Length > 1 && next_url.StartsWith("/") && !next_url.StartsWith("//") && !next_url.StartsWith("/\\"))
+                {
+                    return Redirect(next_url);
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+
             }
             else
             {

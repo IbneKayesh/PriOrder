@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace PriOrder.App.Controllers
 {
+    [AioAuthorization]
     public class AccountsController : Controller
     {
         public ActionResult MyProfile()

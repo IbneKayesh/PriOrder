@@ -163,6 +163,13 @@
             quantityField = $(this).prev();
             quantityField.val(parseInt(quantityField.val(), 10) + 1);
         });
+        $('.quantity').on("keyup change", function () {
+            var qty = $(this).val();
+            if (qty == '' || qty == '0') {
+                $(this).val('1');
+            };
+        });
+        
     </script>
 </body>
 </html>

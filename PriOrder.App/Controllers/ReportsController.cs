@@ -10,6 +10,7 @@ namespace PriOrder.App.Controllers
 {
     public class ReportsController : Controller
     {
+        [AioAuthorization]
         public ActionResult Undelivered()
         {
             string distId = Session["userId"].ToString();

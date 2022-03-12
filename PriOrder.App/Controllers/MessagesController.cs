@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace PriOrder.App.Controllers
 {
+    [AioAuthorization]
     public class MessagesController : Controller
     {
         // PUSH messages
