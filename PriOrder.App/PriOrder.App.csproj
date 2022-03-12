@@ -171,6 +171,7 @@
     <Compile Include="ModelsView\CLASS_CATEGORY.cs" />
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
+    <Compile Include="ModelsView\USER_PASSWORD.cs" />
     <Compile Include="Models\NIF_DIST.cs" />
     <Compile Include="Models\SUP_MSG_REPL.cs" />
     <Compile Include="Models\T_CTYP.cs" />

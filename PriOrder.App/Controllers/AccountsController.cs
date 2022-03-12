@@ -93,7 +93,31 @@ namespace PriOrder.App.Controllers
 
         public ActionResult ChangePassword()
         {
-            return View();
+
+            return View(new USER_PASSWORD());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(USER_PASSWORD obj)
+        {
+            string distId = Session["userId"].ToString();
+            if (ModelState.IsValid)
+            {
+                EQResult objN = AccountService.changePassword(obj, distId);
+                if (objN.SUCCESS)
+                {
+                    TempData["mesg"] = SweetMessages.Success(objN.MESSAGES);
+                    return RedirectToAction(nameof(MyProfile));
+                }
+                else
+                {
+                    TempData["mesg"] = SweetMessages.Failed(objN.MESSAGES);
+                }
+            }else
+            {
+                TempData["mesg"] = SweetMessages.Failed("All password is required");
+            }
+            return View(obj);
         }
 
         public ActionResult ChangeProfilePicture()

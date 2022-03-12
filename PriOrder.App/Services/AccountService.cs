@@ -2,6 +2,7 @@
 using Aio.Model;
 using Oracle.ManagedDataAccess.Client;
 using PriOrder.App.Models;
+using PriOrder.App.ModelsView;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,7 +23,7 @@ namespace PriOrder.App.Services
             FROM  RPGL.NIF_DIST T WHERE T.DIST_ID='{distId}')
             ORDER BY T2.DGIG_DNAM";
             return DatabaseOracleClient.SqlToListObjectBind<NIF_DIST>(sql);
-        }        
+        }
         public static Tuple<List<T_BANKCOL>, EQResult> getBankList()
         {
             string sql = $@"SELECT BNAME,ANAME,ANUMBER,BRNAME FROM RPGL.T_BANKCOL WHERE BNAME<>'N' ORDER BY BNAME";
@@ -45,6 +46,44 @@ namespace PriOrder.App.Services
                 left outer join rfl.distributor_contacts rzcnt on tdist.dsma_dsid=rzcnt.dist_id and rzcnt.seqn=103
                 where tdist.dsma_dsid='{distId}'";
             return DatabaseOracleClient.SqlToListObjectBind<T_DSMA>(sql);
+        }
+
+
+        public static EQResult changePassword(USER_PASSWORD obj, string distId)
+        {
+            EQResult rslt = new EQResult();
+            rslt.SUCCESS = false;
+            rslt.ROWS = 0;
+            rslt.MESSAGES = "The old Password does not match";
+
+            if (obj.USER_PASSWORD_NEW != obj.USER_PASSWORD_CONFIRM)
+            {
+                rslt.MESSAGES = "New and Confirm Password does not match";
+                return rslt;
+            }
+
+
+
+            string sql_1 = $"SELECT T.DSMA_PASS USER_PASSWORD_OLD FROM T_DSMA T WHERE T.DSMA_DSID='{distId}' AND T.DSMA_PASS='{obj.USER_PASSWORD_OLD}'";
+            Tuple<List<USER_PASSWORD>, EQResult> _tpl = DatabaseOracleClient.SqlToListObjectBind<USER_PASSWORD>(sql_1);
+
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
+            {
+                sql_1 = $"UPDATE T_DSMA SET DSMA_PASS='{obj.USER_PASSWORD_NEW}' WHERE DSMA_DSID ='{distId}'";
+                EQResult result = DatabaseOracleClient.PostSql(sql_1);
+                if (result.SUCCESS && result.ROWS == 1)
+                {
+                    rslt.SUCCESS = true;
+                    rslt.ROWS = 1;
+                    rslt.MESSAGES = "Password change succeed";
+                    return rslt;
+                }
+                else
+                {
+                    rslt.MESSAGES = "Password change failed, try again";
+                }
+            }
+            return rslt;
         }
     }
 }
