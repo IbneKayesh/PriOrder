@@ -35,7 +35,7 @@ namespace PriOrder.App.Services
         }
         public static int getCartItemsCount(string distId)
         {
-            string sql = $"select count(ITEM_ID)CART_COUNT from WO_DIST_FAV where dsma_dsid='{distId}'";
+            string sql = $"select count(ITEM_ID)CART_COUNT from WO_ORDER_CART where DSMA_DSID='{distId}'";
             Tuple<List<WO_COUNT>, EQResult> _tpl = DatabaseOracleClient.SqlToListObjectBind<WO_COUNT>(sql);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
             {

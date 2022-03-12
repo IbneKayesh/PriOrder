@@ -6,10 +6,16 @@
     {
         <a href="@Url.Action(item.ACTION_NAME, item.CONTROLLER_NAME)" class="nav-link">
             <i class="icon material-icons @item.MENU_ICON"></i>
-            @(item.MENU_ID == 10010002)
+
+
+
+            @if (item.MENU_ID == 20010003)
             {
-                <span class='badge bg-warning'>(@item.MODULE_ID)</span>;
+                <span class='badge bg-warning'>@item.MODULE_ID</span>
             }
+
+
+
             <span class="text">@item.MENU_NAME_EN</span>
         </a>
     }
