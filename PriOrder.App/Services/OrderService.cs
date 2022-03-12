@@ -33,6 +33,19 @@ namespace PriOrder.App.Services
             string sql = $@"delete wo_order_cart t where t.dsma_dsid='{distId}' and t.item_id='{itemId}'";
             return DatabaseOracleClient.PostSql(sql);
         }
+        public static int getCartItemsCount(string distId)
+        {
+            string sql = $"select count(ITEM_ID)CART_COUNT from WO_DIST_FAV where dsma_dsid='{distId}'";
+            Tuple<List<WO_COUNT>, EQResult> _tpl = DatabaseOracleClient.SqlToListObjectBind<WO_COUNT>(sql);
+            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS == 1)
+            {
+                return _tpl.Item1.FirstOrDefault().CART_COUNT;
+            }
+            else
+            {
+                return 0;
+            }
+        }
 
         public static EQResult OrderSubmit(string distId, string itemId, string qty, string noteId, string noteText)
         {
@@ -41,6 +54,6 @@ namespace PriOrder.App.Services
         }
 
 
-       
+
     }
 }

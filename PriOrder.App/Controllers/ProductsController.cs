@@ -54,7 +54,7 @@ namespace PriOrder.App.Controllers
             {
                 objList = HttpContext.Cache.Get(distId + "chCat") as List<WO_ITEM_TYPE>;
             }
-            if (objList == null || objList.Count==0)
+            if (objList == null || objList.Count == 0)
             {
                 Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = ProductService.getCategoryListByDistId(distId);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
@@ -91,7 +91,7 @@ namespace PriOrder.App.Controllers
                 clsList = HttpContext.Cache.Get(distId + id) as List<WO_ITEM_CLASS>;
             }
 
-            if (catList == null ||catList.Count==0)
+            if (catList == null || catList.Count == 0)
             {
                 Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = ProductService.getCategoryListByDistId(distId);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
@@ -107,7 +107,7 @@ namespace PriOrder.App.Controllers
                     TempData["mesg"] = SweetMessages.Info("No Products Category found");
                 }
             }
-            if (clsList == null|| clsList.Count==0)
+            if (clsList == null || clsList.Count == 0)
             {
                 //Get Classes by Category Id
                 Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = ProductService.getClassByCategoryId(distId, id);
@@ -166,6 +166,12 @@ namespace PriOrder.App.Controllers
 
             string distId = Session["userId"].ToString();
             EQResult result = ProductService.AddToCart(distId, id, qt, "", "");
+
+            if (result.SUCCESS)
+            {
+                int CartCount = OrderService.getCartItemsCount(distId);
+                HttpContext.Cache.Insert(distId + ApplData.CART_COUNT_CACHE, CartCount, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+            }
 
             var rslt = new ALERT_MESG
             {

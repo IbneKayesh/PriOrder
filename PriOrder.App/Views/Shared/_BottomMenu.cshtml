@@ -4,9 +4,12 @@
 {
     foreach (var item in Model)
     {
-        <a href="@Url.Action(item.ACTION_NAME,item.CONTROLLER_NAME)" class="nav-link">
+        <a href="@Url.Action(item.ACTION_NAME, item.CONTROLLER_NAME)" class="nav-link">
             <i class="icon material-icons @item.MENU_ICON"></i>
-            @*<span class="badge bg-warning">(@item.MODULE_ID)</span>*@
+            @(item.MENU_ID == 10010002)
+            {
+                <span class='badge bg-warning'>(@item.MODULE_ID)</span>;
+            }
             <span class="text">@item.MENU_NAME_EN</span>
         </a>
     }

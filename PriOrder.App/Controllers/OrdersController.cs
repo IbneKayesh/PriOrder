@@ -1,10 +1,12 @@
 ﻿using Aio.Model;
+using PriOrder.App.DataModels;
 using PriOrder.App.Models;
 using PriOrder.App.ModelsView;
 using PriOrder.App.Services;
 using PriOrder.App.Utility;
 using System;
 using System.Collections.Generic;
+using System.Web.Caching;
 using System.Web.Mvc;
 
 namespace PriOrder.App.Controllers
@@ -31,6 +33,12 @@ namespace PriOrder.App.Controllers
         {
             string distId = Session["userId"].ToString();
             EQResult result = OrderService.DelMyCartItem(distId, itemId);
+
+            if (result.SUCCESS)
+            {
+                int CartCount = OrderService.getCartItemsCount(distId);
+                HttpContext.Cache.Insert(distId + ApplData.CART_COUNT_CACHE, CartCount, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+            }
 
             var rslt = new ALERT_MESG
             {

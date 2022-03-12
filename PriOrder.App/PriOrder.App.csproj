@@ -177,6 +177,7 @@
     <Compile Include="Models\T_CTYP.cs" />
     <Compile Include="Models\T_DSMA.cs" />
     <Compile Include="Models\T_UNDELIVERED.cs" />
+    <Compile Include="Models\WO_COUNT.cs" />
     <Compile Include="Models\WO_APP_MENU.cs" />
     <Compile Include="Models\WO_ITEMS.cs" />
     <Compile Include="Models\T_BANKCOL.cs" />

@@ -1,4 +1,5 @@
 ﻿using Aio.Model;
+using PriOrder.App.DataModels;
 using PriOrder.App.Models;
 using PriOrder.App.ModelsView;
 using PriOrder.App.Services;
@@ -123,9 +124,24 @@ namespace PriOrder.App.Controllers
 
         public ActionResult BottomMenu()
         {
+            string distId = Session["userId"].ToString();
+
             //var objList = HttpContext.Cache.Get("chBottomMenu") as List<WO_APP_MENU>;
 
-            var objList = (List<WO_APP_MENU>)Session["menuBottom"];
+            List<WO_APP_MENU> objList = (List<WO_APP_MENU>)Session["menuBottom"];
+
+            //Cart Count
+            if (objList.Any(x => x.MENU_ID == 10010002))
+            {
+                int CartCount = 0;
+                CartCount = (int)HttpContext.Cache.Get(distId + ApplData.CART_COUNT_CACHE);
+                if (CartCount == null || CartCount == 0)
+                {
+                    CartCount = OrderService.getCartItemsCount(distId);
+                }
+                objList.Where(x=>x.MENU_ID== 10010002).First().MODULE_ID = CartCount;
+            }
+
             return PartialView("_BottomMenu", objList);
         }
 

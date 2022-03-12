@@ -134,6 +134,7 @@ namespace PriOrder.App.Services
             return DatabaseOracleClient.PostSql(sql);
         }
 
+   
 
 
         //SELECT distinct TYP.ITEM_TYPE_ID,INITCAP(TYP.ITEM_TYPE_NAME)ITEM_TYPE_NAME,IM.ITEM_CLASS_ID
@@ -147,14 +148,7 @@ namespace PriOrder.App.Services
         //GROUP BY TYP.ITEM_TYPE_ID,TYP.ITEM_TYPE_NAME,IM.ITEM_CLASS_ID
 
 
-        public static Tuple<List<WO_ITEM_TYPE>, string> getCategoryListByDistGroup_TEMP(string groupId)
-        {
-            List<WO_ITEM_TYPE> objList = new List<WO_ITEM_TYPE>();
-            //objList.Add(new WO_ITEM_CATEGORY { CATEGORY_ID = "1", CATEGORY_NAME = "Home Appliance", ITEM_CLASS_COUNT = 1, ITEM_COUNT = 1 });
-            //objList.Add(new WO_ITEM_CATEGORY { CATEGORY_ID = "2", CATEGORY_NAME = "Electroics", ITEM_CLASS_COUNT = 1, ITEM_COUNT = 1 });
-            //objList.Add(new WO_ITEM_CATEGORY { CATEGORY_ID = "3", CATEGORY_NAME = "Plastics", ITEM_CLASS_COUNT = 1, ITEM_COUNT = 1 });
-            return new Tuple<List<WO_ITEM_TYPE>, string>(objList, "AioSuccess");
-        }
+
         public static Tuple<List<WO_ITEM_CLASS>, string> getClassByCategoryId_TEMP(string categoryId)
         {
             List<WO_ITEM_CLASS> objList = new List<WO_ITEM_CLASS>();
