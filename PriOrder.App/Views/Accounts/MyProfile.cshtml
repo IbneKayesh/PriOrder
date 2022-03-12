@@ -4,17 +4,17 @@
 }
 
 <section class="p-3 bg-primary">
-    <a href="28.page-settings.html" class="float-end"><i class="material-icons md-edit text-white"></i></a>
+    <a href="@Url.Action("ChangeProfilePicture","Accounts")" class="float-end"><i class="material-icons md-edit text-white"></i></a>
     <figure class="icontext align-items-center mr-4" style="max-width: 300px;">
-        <img class="icon icon-md rounded-circle" src="~/Assets/images/avatars/0.jpg">
-        <figcaption class="text text-white">
-            @if (Session["userId"] != null)
+        @if (Session["userId"] != null)
             {
+            <img class="icon icon-md rounded-circle" src="~/Images/Distributor/Profile/@Session["userId"]-.jpg" alt="@Session["userId"]">
+            <figcaption class="text text-white">
                 <p class="h5 title mb-1">@Session["userId"]</p>
                 <p>@Session["userName"]</p>
-                <p class="text-white-50 lh-sm">@Session["userGroup"]<br>@Session["userMobile"]</p>
+                <p class="text-white-50 lh-sm"><br>@Session["userMobile"]</p>
+            </figcaption>
             }
-        </figcaption>
     </figure>
 </section>
 
@@ -111,10 +111,10 @@
 <section>
     <h5 class="title-section pb-2">Personal</h5>
     <nav class="nav-list">
-        <a class="btn-list" href="29.page-profile-edit.html">
+        <a class="btn-list" href="@Url.Action("ChangeProfilePicture","Accounts")">
             <i class="icon-control material-icons md-edit"></i>
-            <small class="title">Picture</small>
-            <span class="text">Image</span>
+            <small class="title">Profile Picture</small>
+            <span class="text">Change</span>
         </a>
     </nav>
 </section>

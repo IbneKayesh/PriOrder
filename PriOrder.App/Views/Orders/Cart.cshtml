@@ -31,17 +31,15 @@
                             <input class="item-rate" type="hidden" value="@item.ITEM_RATE" />
                             <p class="title text-primary"> @item.ITEM_ID </p>
                             <p class="title"> @item.ITEM_NAME</p>
-                            <div class="price mb-2">
-                                <span class="text-success">@item.ITEM_UNIT</span>
-                                <span class="text-danger">@item.ITEM_RATE</span>
-                                <span class="text-warning">@item.ITEM_FACTOR</span>
-                            </div>
-                            @*<div class="input-group input-group-sm">
-                                    @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
-                                    <input class="item-note form-control form-control-sm" type="text" value="">
-                                </div>*@
                         </div>
                     </article>
+                    <div class="price mb-2">
+                        <span class="badge bg-dark">UOM: @item.ITEM_UNIT</span>
+                        <span class="badge bg-primary">Stk: @item.NEW_STOCK</span>
+                        <span class="badge bg-warning">Tk: @item.ITEM_RATE</span>
+                        <span class="badge bg-info">Fact: @item.ITEM_FACTOR</span>
+                        <span class="badge bg-danger">Inc: 0.0%</span>
+                    </div>
                     <div class="input-group input-group-sm">
                         <button class="btn btn-danger delete-item" type="button">
                             <i class="material-icons md-delete"></i>

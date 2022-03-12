@@ -18,6 +18,7 @@ namespace PriOrder.App.Models
         public string NOTE_ID { get; set; }
         public string NOTE_TEXT { get; set; }
         public string NOTES { get; set; }
+        public int NEW_STOCK { get; set; }
         public virtual List<SelectListItem> WO_NOTE { get; set; }
     }
 }

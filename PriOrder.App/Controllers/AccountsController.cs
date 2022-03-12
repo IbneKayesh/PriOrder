@@ -1,10 +1,12 @@
 ﻿using Aio.Model;
 using PriOrder.App.DataModels;
 using PriOrder.App.Models;
+using PriOrder.App.ModelsView;
 using PriOrder.App.Services;
 using PriOrder.App.Utility;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Caching;
@@ -16,7 +18,7 @@ namespace PriOrder.App.Controllers
     {
         public ActionResult MyProfile()
         {
-            string distId =  Session["userId"].ToString();
+            string distId = Session["userId"].ToString();
             var obj = new T_DSMA();
 
             if (ApplData.CHACHE_ENABLED)
@@ -89,10 +91,53 @@ namespace PriOrder.App.Controllers
         }
 
 
-
-
-        public ActionResult TestAction()
+        public ActionResult ChangePassword()
         {
+            return View();
+        }
+
+        public ActionResult ChangeProfilePicture()
+        {
+            string distId = Session["userId"].ToString();
+            USER_LOGIN obj = new USER_LOGIN();
+            obj.USER_ID = distId;
+            obj.USER_IMAGE = null;
+            return View(obj);
+        }
+        [HttpPost]
+        public ActionResult ChangeProfilePicture(USER_LOGIN obj)
+        {
+            string err = "";
+            if (obj.USER_ID != null && obj.USER_IMAGE != null)
+            {
+                if (obj.USER_IMAGE.ContentLength > 0 && obj.USER_IMAGE.ContentLength < ApplData.PRO_IMG_SIZE)
+                {
+                    string fileExtension = Path.GetExtension(obj.USER_IMAGE.FileName).ToLower();
+                    if (fileExtension == ".jpg")
+                    {
+                        string filePath = "~/Images/Distributor/Profile/";
+                        string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.USER_ID + "-.jpg");
+                        obj.USER_IMAGE.SaveAs(serverPath);
+
+                        TempData["mesg"] = SweetMessages.SuccessPop("Picture successfully updated");
+                        return RedirectToAction(nameof(MyProfile));
+                    }
+                    else
+                    {
+                        err = "File type must be JPEG/JPG format";
+                    }
+                }
+                else
+                {
+                    err = $"File size must be less than {ApplData.PRO_IMG_SIZE}KB and 80 x 80 pixel";
+                }
+            }
+            else
+            {
+                err = "Invalid file";
+            }
+            ModelState.AddModelError("", errorMessage: err);
+            TempData["mesg"] = SweetMessages.Failed(err);
             return View();
         }
     }

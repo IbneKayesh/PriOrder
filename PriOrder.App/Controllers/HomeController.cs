@@ -111,10 +111,7 @@ namespace PriOrder.App.Controllers
             return RedirectToAction(nameof(Login));
         }
 
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
+
         public ActionResult BottomMenu()
         {
             //var objList = HttpContext.Cache.Get("chBottomMenu") as List<WO_APP_MENU>;

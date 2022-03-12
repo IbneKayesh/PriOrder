@@ -321,7 +321,7 @@
     <Content Include="Views\Home\OrderSuccess.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
     <Content Include="Views\Accounts\Banks.cshtml" />
-    <Content Include="Views\Home\ChangePassword.cshtml" />
+    <Content Include="Views\Accounts\ChangePassword.cshtml" />
     <Content Include="Views\Home\Damages.cshtml" />
     <Content Include="Views\Home\ProductView.cshtml" />
     <Content Include="Views\Products\Categories.cshtml" />
@@ -339,11 +339,13 @@
     <Content Include="Views\Messages\FeedbackReply.cshtml" />
     <Content Include="Views\Accounts\BusinessPartner.cshtml" />
     <Content Include="Views\Shared\_BottomMenu.cshtml" />
+    <Content Include="Views\Accounts\ChangeProfilePicture.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Images\Banks\" />
     <Folder Include="Images\Category\" />
+    <Folder Include="Images\Distributor\Profile\" />
     <Folder Include="Images\ItemClass\" />
     <Folder Include="Images\Products\" />
   </ItemGroup>

@@ -23,7 +23,7 @@
     <link href="~/Assets/fonts/material-icon/css/round.css" rel="stylesheet" type="text/css" />
 
     <!-- Sweet alert 2-->
-    <link href="~/Assets/plugins/swal2/sweetalert2.min.css" rel="stylesheet"  type="text/css" />
+    <link href="~/Assets/plugins/swal2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
     <noscript>
@@ -78,18 +78,20 @@
                 <i class="icon material-icons md-chat"></i><span class="text">Messages</span>
             </a>*@
     </nav> <!-- nav-bottom -->
-
+    
 
     <aside class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas_left_123">
         <header class="p-3 border-bottom bg-light">
             <button type="button" class="float-end btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             <a href="@Url.Action("MyProfile","Accounts")" class="icontext">
-                <img src="~/Assets/images/avatars/0.jpg" class="icon avatar-sm" alt="">
-                <div class="text">
-                    @if (Session["userId"] != null)
-                    { <h6 class="mb-0">@Session["userId"]</h6>}
-                    <small>View profile</small>
-                </div>
+                @if (Session["userId"] != null)
+                {
+                    <img src="~/Images/Distributor/Profile/@Session["userId"]-.jpg" class="icon avatar-sm" alt="@Session["userId"]">
+                    <div class="text">
+                        <h6 class="mb-0">@Session["userId"]</h6>
+                        <small>View profile</small>
+                    </div>
+                }
             </a>
         </header>
         <article class="offcanvas-body">

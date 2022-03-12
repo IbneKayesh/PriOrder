@@ -31,6 +31,10 @@ namespace PriOrder.App.Models
         public int ITEM_FACTOR { get; set; }
 
 
+        public int NIST_STOCK { get; set; }
+        public int WHOC_AVG { get; set; }
+        public int NEW_STOCK { get; set; }
+
         [Display(Name = "Item Image")]
         [NotMapped]
         public HttpPostedFileBase ITEMS_IMAGE { get; set; }

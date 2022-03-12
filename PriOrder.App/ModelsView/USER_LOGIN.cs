@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace PriOrder.App.ModelsView
 {
@@ -11,5 +13,10 @@ namespace PriOrder.App.ModelsView
         [Display(Name = "Password")]
         [Required(ErrorMessage = "{0} is required")]
         public string USER_PASSWORD { get; set; }
+
+
+        [Display(Name = "Profile Image")]
+        [NotMapped]
+        public HttpPostedFileBase USER_IMAGE { get; set; }
     }
 }

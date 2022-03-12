@@ -11,8 +11,7 @@ namespace PriOrder.App.Services
     {
         public static Tuple<List<WO_ITEM_TYPE>, EQResult> getCategoryListByDistId(string distId)
         {
-            string sql = $@"SELECT TYP.ITEM_TYPE_ID,INITCAP(TYP.ITEM_TYPE_NAME)ITEM_TYPE_NAME,COUNT(DISTINCT IM.ITEM_CLASS_ID)ITEM_CLASS_COUNT
-                        FROM RFL.ITEM_TYPE TYP
+            string sql = $@"SELECT TYP.ITEM_TYPE_ID,INITCAP(TYP.ITEM_TYPE_NAME)ITEM_TYPE_NAME,COUNT(DISTINCT IM.ITEM_CLASS_ID)ITEM_CLASS_COUNT FROM RFL.ITEM_TYPE TYP
                         INNER JOIN RPGL.ITEMS IM ON TYP.ITEM_TYPE_ID=IM.ITEM_TYPE_ID
                         INNER JOIN RFL.V_DIST_CLASS D_CLASS ON D_CLASS.ITEM_CLASS_ID=IM.ITEM_CLASS_ID
                         INNER JOIN RPGL.T_DSMA DI ON D_CLASS.DIGR_DGRP=DI.DSMA_GRUP
@@ -39,20 +38,36 @@ namespace PriOrder.App.Services
             return DatabaseOracleClient.SqlToListObjectBind<WO_ITEM_CLASS>(sql);
         }
 
-        public static Tuple<List<WO_ITEMS>, EQResult> getProductsByClassId(string classId, string categoryId)
+        //public static Tuple<List<WO_ITEMS>, EQResult> getProductsByClassId(string classId, string categoryId)
+        //{
+        //    string sql = $@"SELECT IM.ITEM_ID,ROUND(IM.D_SALE_PRICE*IM.D_U_FACT,2)ITEM_RATE,IM.ITEM_NAME,DU.ITEM_D_UNITS_NAME ITEM_UNIT,IM.D_U_FACT ITEM_FACTOR FROM RPGL.ITEMS IM 
+        //        INNER JOIN RFL.ITEM_DIST_UNITS du ON DU.ITEM_D_UNITS_ID=IM.ITEM_D_UNITS_ID
+        //        WHERE IM.D_SALE_PRICE > 0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000', 'RC9500050')
+        //        AND IM.INACTIVE = 'N' AND IM.ITEM_GROUP_ID = 'RFLGR001'
+        //        AND IM.ITEM_CLASS_ID='{classId}'
+        //        AND IM.ITEM_TYPE_ID = '{categoryId}'";
+        //    var Items = DatabaseOracleClient.SqlToListObjectBind<WO_ITEMS>(sql);
+        //    Items.Item1.ForEach(x => x.WO_NOTE = getItemNotes());
+        //    return Items;
+        //}
+        public static Tuple<List<WO_ITEMS>, EQResult> getProductsByClassId(string classId, string categoryId, string distId)
         {
-            string sql = $@"SELECT IM.ITEM_ID,ROUND(IM.D_SALE_PRICE*IM.D_U_FACT ,2)ITEM_RATE,IM.ITEM_NAME,DU.ITEM_D_UNITS_NAME ITEM_UNIT,IM.D_U_FACT ITEM_FACTOR
-                FROM RPGL.ITEMS IM 
-                INNER JOIN RFL.ITEM_DIST_UNITS du ON DU.ITEM_D_UNITS_ID=IM.ITEM_D_UNITS_ID
-                WHERE IM.D_SALE_PRICE > 0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000', 'RC9500050')
-                AND IM.INACTIVE = 'N' AND IM.ITEM_GROUP_ID = 'RFLGR001'
-                AND IM.ITEM_CLASS_ID='{classId}'
-                AND IM.ITEM_TYPE_ID = '{categoryId}'";
+            string sql = $@"SELECT IM.ITEM_ID,ROUND(IM.D_SALE_PRICE*IM.D_U_FACT,2)ITEM_RATE,IM.ITEM_NAME,DU.ITEM_D_UNITS_NAME ITEM_UNIT,IM.D_U_FACT ITEM_FACTOR,
+                    ROUND(NVL(STK.CL,0),0)NIST_STOCK,ROUND(NVL(AVG20,0),0)WHOC_AVG,
+                    CASE WHEN (ROUND(STK.CL,0)>ROUND(AVG20,0)) THEN ROUND(ROUND(STK.CL,0)/IM.D_U_FACT,0)
+                    ELSE 0 END NEW_STOCK
+                    FROM RPGL.ITEMS IM 
+                    INNER JOIN RFL.ITEM_DIST_UNITS DU ON DU.ITEM_D_UNITS_ID=IM.ITEM_D_UNITS_ID
+                    LEFT OUTER JOIN RPGL.T_NIST STK ON STK.ITEM=IM.ITEM_ID AND STK.WH=(SELECT WH_ID FROM RFL.DISTRIBUTOR_MASTER WHERE DIST_ID='{distId}')
+                    LEFT OUTER JOIN RPGL.T_WHOC WHOC ON STK.WH=WHOC.WH_ID AND STK.ITEM=WHOC.ITEM_ID
+                    WHERE IM.D_SALE_PRICE > 0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000','RC9500050')
+                    AND IM.INACTIVE='N' AND IM.ITEM_GROUP_ID='RFLGR001'
+                    AND IM.ITEM_CLASS_ID='{classId}'
+                    AND IM.ITEM_TYPE_ID='{categoryId}'";
             var Items = DatabaseOracleClient.SqlToListObjectBind<WO_ITEMS>(sql);
             Items.Item1.ForEach(x => x.WO_NOTE = getItemNotes());
             return Items;
         }
-
 
         public static List<SelectListItem> getItemNotes(string id = "0")
         {
@@ -77,19 +92,32 @@ namespace PriOrder.App.Services
 
         public static EQResult AddToCart(string distId, string itemId, string qty, string noteId, string noteText)
         {
-            string sql = $@"insert into wo_order_cart(dsma_dsid,ITEM_ID,item_qty,note_id,note_text)values('{distId}','{itemId}',{qty},'{noteId}','{noteText}')";
-            return DatabaseOracleClient.PostSql(sql);
+            string sql = $"UPDATE WO_ORDER_CART SET ITEM_QTY=ITEM_QTY+{qty} WHERE DSMA_DSID='{distId}' AND ITEM_ID='{itemId}'";
+            EQResult result = DatabaseOracleClient.PostSql(sql);
+            if (result.SUCCESS && result.ROWS == 0)
+            {
+                sql = $@"INSERT INTO WO_ORDER_CART(DSMA_DSID,ITEM_ID,ITEM_QTY,NOTE_ID,NOTE_TEXT)VALUES('{distId}','{itemId}',{qty},'{noteId}','{noteText}')";
+                result = DatabaseOracleClient.PostSql(sql);
+            }
+            return result;
         }
 
 
         public static Tuple<List<WO_ITEMS>, EQResult> getFavoriteProductsByDistid(string distId)
         {
-            string sql = $@"SELECT IM.ITEM_ID,ROUND(IM.D_SALE_PRICE*IM.D_U_FACT ,2)ITEM_RATE,IM.ITEM_NAME,DU.ITEM_D_UNITS_NAME ITEM_UNIT,IM.D_U_FACT ITEM_FACTOR
+            string sql = $@"SELECT IM.ITEM_ID,ROUND(IM.D_SALE_PRICE*IM.D_U_FACT ,2)ITEM_RATE,IM.ITEM_NAME,DU.ITEM_D_UNITS_NAME ITEM_UNIT,IM.D_U_FACT ITEM_FACTOR,
+                    ROUND(NVL(STK.CL,0),0)NIST_STOCK,ROUND(NVL(AVG20,0),0)WHOC_AVG,
+                    CASE WHEN (ROUND(STK.CL,0)>ROUND(AVG20,0)) THEN ROUND(ROUND(STK.CL,0)/IM.D_U_FACT,0)
+                    ELSE 0 END NEW_STOCK
                     FROM RPGL.ITEMS IM
                     INNER JOIN RFL.ITEM_DIST_UNITS du ON DU.ITEM_D_UNITS_ID=IM.ITEM_D_UNITS_ID
                     INNER JOIN WO_DIST_FAV FVI ON FVI.ITEM_ID=IM.ITEM_ID AND FVI.IS_ACTIVE=1 AND FVI.DSMA_DSID='{distId}'
+                    LEFT OUTER JOIN RPGL.T_NIST STK ON STK.ITEM=IM.ITEM_ID AND STK.WH=(SELECT WH_ID FROM RFL.DISTRIBUTOR_MASTER WHERE DIST_ID=FVI.DSMA_DSID)
+                    LEFT OUTER JOIN RPGL.T_WHOC WHOC ON STK.WH=WHOC.WH_ID AND STK.ITEM=WHOC.ITEM_ID
                     WHERE IM.D_SALE_PRICE > 0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000', 'RC9500050')
                     AND IM.INACTIVE = 'N' AND IM.ITEM_GROUP_ID = 'RFLGR001'";
+
+
             var Items = DatabaseOracleClient.SqlToListObjectBind<WO_ITEMS>(sql);
             Items.Item1.ForEach(x => x.WO_NOTE = getItemNotes());
             return Items;

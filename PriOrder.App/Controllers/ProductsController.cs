@@ -25,7 +25,7 @@ namespace PriOrder.App.Controllers
             {
                 objList = HttpContext.Cache.Get(distId + "chFav") as List<WO_ITEMS>;
             }
-            if (objList == null)
+            if (objList == null || objList.Count == 0)
             {
                 Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getFavoriteProductsByDistid(distId);
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
@@ -140,7 +140,9 @@ namespace PriOrder.App.Controllers
             //Create Link for Back Button
             ViewBag.BackPages = Request.UrlReferrer.ToString();
 
-            Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getProductsByClassId(className, catName);
+            string distId = Session["userId"].ToString();
+
+            Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getProductsByClassId(className, catName, distId);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 return View(_tpl.Item1);

@@ -10,13 +10,11 @@ namespace PriOrder.App.Controllers
 {
     public class MessagesController : Controller
     {
-        private string distId;
-
         // PUSH messages
         public ActionResult Sms()
         {
             string distId = Session["userId"].ToString();
-            var objList = MessageService.getSms(distId);
+            List<WO_PUSH_MSG> objList = MessageService.getSms(distId);
             if (objList.Count < 1)
             {
                 TempData["mesg"] = SweetMessages.Info("No SMS found");

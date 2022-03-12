@@ -37,7 +37,7 @@
                     </article>
                     <div class="price mb-2">
                         <span class="badge bg-dark">UOM: @item.ITEM_UNIT</span>
-                        <span class="badge bg-primary">Stk: 0</span>
+                        <span class="badge bg-primary">Stk: @item.NEW_STOCK</span>
                         <span class="badge bg-warning">Tk: @item.ITEM_RATE</span>
                         <span class="badge bg-info">Fact: @item.ITEM_FACTOR</span>
                         <span class="badge bg-danger">Inc: 0.0%</span>
@@ -71,7 +71,7 @@
             e.preventDefault();
             var itemcode = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').children("input.item-code").val();
             var quantity = $(this).siblings("input:first").val();
-            if (quantity != '' && itemcode != '') {
+            if (quantity != '' && parseInt(quantity) != '0' && itemcode != '') {
                 $.post("AddToCart", { "id": itemcode, "qt": quantity },
                     function (data) {
                         if (data.success) {
@@ -80,6 +80,9 @@
                             Swal.fire({ title: "Failed!", text: data.messages, icon: "error", button: "Ok!" });
                         }
                     });
+            }
+            else {
+                Swal.fire({ title: "Info!", text: 'Enter quantity', icon: "Info", button: "Ok!" });
             };
         });
 
