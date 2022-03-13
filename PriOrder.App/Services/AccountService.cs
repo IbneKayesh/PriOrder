@@ -85,5 +85,40 @@ namespace PriOrder.App.Services
             }
             return rslt;
         }
+
+
+
+
+        public static Tuple<List<T_DSMA_BAL>, EQResult> getDistBalance(string distId)
+        {
+            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "WAUTO", direction: ParameterDirection.Input);
+            OracleParameter inp_dist = new OracleParameter(parameterName: "VUSER", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            OracleParameter inp_par1 = new OracleParameter(parameterName: "VPARA1", type: OracleDbType.Varchar2, obj: "GET_BALANCE", direction: ParameterDirection.Input);
+            OracleParameter inp_par2 = new OracleParameter(parameterName: "VPARA2", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            OracleParameter inp_par3 = new OracleParameter(parameterName: "VPARA3", type: OracleDbType.Varchar2, obj: "", direction: ParameterDirection.Input);
+            OracleParameter inp_par4 = new OracleParameter(parameterName: "VPARA4", type: OracleDbType.Varchar2, obj: "", direction: ParameterDirection.Input);
+            object[] inParams = new object[] { inp_menu, inp_dist, inp_par1, inp_par2, inp_par3, inp_par4 };
+
+            OracleParameter out_cur = new OracleParameter("P_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+            object[] outParams = new object[] { out_cur };
+            string sql = @"BEGIN RFL.PRO_LEGACY_DO_WA(:VMENU,:VUSER,:VPARA1,:VPARA2,:VPARA3,:VPARA4,:P_CURSOR); END;";
+            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+            EQResult rslt = new EQResult();
+            rslt.SUCCESS = false;
+            rslt.ROWS = 0;
+            if (procData.Item2.SUCCESS && procData.Item2.ROWS == 1)
+            {
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_DSMA_BAL>(procData.Item1.Tables[0]);
+                if (objList.Count > 0)
+                {
+                    rslt.SUCCESS = true;
+                    rslt.ROWS = objList.Count;
+                    return new Tuple<List<T_DSMA_BAL>, EQResult>(objList, rslt);
+                }
+            }
+            return new Tuple<List<T_DSMA_BAL>, EQResult>(new List<T_DSMA_BAL>(), rslt);
+
+        }
     }
 }

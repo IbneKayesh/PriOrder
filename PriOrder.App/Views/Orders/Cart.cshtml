@@ -4,10 +4,10 @@
     ViewBag.Title = "Cart";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var TotalSum = 0M;
-    var CurrBalanace = 5000M;
+    var CurrBalanace = 0M;
     if (Session["userBalnace"] != null)
     {
-        CurrBalanace = Convert.ToDecimal(Session["userBalnace"]);
+        CurrBalanace = Math.Abs(Convert.ToDecimal(Session["userBalnace"]));
     }
 }
 <button class="btn btn-primary w-100 mb-2" type="button" id="btnReload"> Refresh Cart Items</button>

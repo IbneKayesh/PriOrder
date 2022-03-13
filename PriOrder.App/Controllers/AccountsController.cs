@@ -20,6 +20,7 @@ namespace PriOrder.App.Controllers
         public ActionResult MyProfile()
         {
             string distId = Session["userId"].ToString();
+
             var obj = new T_DSMA();
 
             if (ApplData.CHACHE_ENABLED)
@@ -36,6 +37,14 @@ namespace PriOrder.App.Controllers
                     {
                         HttpContext.Cache.Insert(distId + "chProfile", obj, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
                     }
+                    //Get Balance
+                    Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance(distId);
+                    if (_tpl_bal.Item2.SUCCESS && _tpl_bal.Item2.ROWS == 1)
+                    {
+                        obj.T_DSMA_BAL = _tpl_bal.Item1.FirstOrDefault();
+                        Session["userBalnace"] = obj.T_DSMA_BAL.DBAL_ABAL;
+                    }
+                    //End Get Balance
                 }
                 else
                 {
@@ -94,7 +103,6 @@ namespace PriOrder.App.Controllers
 
         public ActionResult ChangePassword()
         {
-
             return View(new USER_PASSWORD());
         }
         [HttpPost]
@@ -114,7 +122,8 @@ namespace PriOrder.App.Controllers
                 {
                     TempData["mesg"] = SweetMessages.Failed(objN.MESSAGES);
                 }
-            }else
+            }
+            else
             {
                 TempData["mesg"] = SweetMessages.Failed("All password is required");
             }

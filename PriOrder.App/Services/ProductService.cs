@@ -1,8 +1,10 @@
 ﻿using Aio.Db.Client.Entrance;
 using Aio.Model;
+using Oracle.ManagedDataAccess.Client;
 using PriOrder.App.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Web.Mvc;
 
 namespace PriOrder.App.Services
@@ -11,16 +13,28 @@ namespace PriOrder.App.Services
     {
         public static Tuple<List<WO_ITEM_TYPE>, EQResult> getCategoryListByDistId(string distId)
         {
-            string sql = $@"SELECT TYP.ITEM_TYPE_ID,INITCAP(TYP.ITEM_TYPE_NAME)ITEM_TYPE_NAME,COUNT(DISTINCT IM.ITEM_CLASS_ID)ITEM_CLASS_COUNT FROM RFL.ITEM_TYPE TYP
-                        INNER JOIN RPGL.ITEMS IM ON TYP.ITEM_TYPE_ID=IM.ITEM_TYPE_ID
-                        INNER JOIN RFL.V_DIST_CLASS D_CLASS ON D_CLASS.ITEM_CLASS_ID=IM.ITEM_CLASS_ID
-                        INNER JOIN RPGL.T_DSMA DI ON D_CLASS.DIGR_DGRP=DI.DSMA_GRUP
-                        WHERE IM.D_SALE_PRICE>0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000','RC9500050') 
-                        AND IM.INACTIVE='N' AND IM.ITEM_GROUP_ID='RFLGR001'
-                        AND DI.DSMA_DSID='{distId}'
-                        GROUP BY TYP.ITEM_TYPE_ID,TYP.ITEM_TYPE_NAME
-                        ORDER BY TYP.ITEM_TYPE_NAME";
-            return DatabaseOracleClient.SqlToListObjectBind<WO_ITEM_TYPE>(sql);
+            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "ITMTYPE", direction: ParameterDirection.Input);
+            OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            object[] inParams = new object[] { inp_menu, inp_dist };
+            OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
+            object[] outParams = new object[] { out_cur };
+            string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
+            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+            EQResult rslt = new EQResult();
+            rslt.SUCCESS = false;
+            rslt.ROWS = 0;
+            if (procData.Item2.SUCCESS && procData.Item2.ROWS == 1)
+            {
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<WO_ITEM_TYPE>(procData.Item1.Tables[0]);
+                if (objList.Count > 0)
+                {
+                    rslt.SUCCESS = true;
+                    rslt.ROWS = objList.Count;
+                    return new Tuple<List<WO_ITEM_TYPE>, EQResult>(objList, rslt);
+                }
+            }
+            return new Tuple<List<WO_ITEM_TYPE>, EQResult>(new List<WO_ITEM_TYPE>(), rslt);
         }
         public static Tuple<List<WO_ITEM_CLASS>, EQResult> getClassByCategoryId(string distId, string categoryId)
         {
@@ -134,7 +148,7 @@ namespace PriOrder.App.Services
             return DatabaseOracleClient.PostSql(sql);
         }
 
-   
+
 
 
         //SELECT distinct TYP.ITEM_TYPE_ID,INITCAP(TYP.ITEM_TYPE_NAME)ITEM_TYPE_NAME,IM.ITEM_CLASS_ID
@@ -148,14 +162,5 @@ namespace PriOrder.App.Services
         //GROUP BY TYP.ITEM_TYPE_ID,TYP.ITEM_TYPE_NAME,IM.ITEM_CLASS_ID
 
 
-
-        public static Tuple<List<WO_ITEM_CLASS>, string> getClassByCategoryId_TEMP(string categoryId)
-        {
-            List<WO_ITEM_CLASS> objList = new List<WO_ITEM_CLASS>();
-            objList.Add(new WO_ITEM_CLASS { ITEM_CLASS_ID = "1", ITEM_CLASS_NAME = "Class 1", ITEMS_COUNT = 10 });
-            objList.Add(new WO_ITEM_CLASS { ITEM_CLASS_ID = "2", ITEM_CLASS_NAME = "Class 2", ITEMS_COUNT = 14 });
-            objList.Add(new WO_ITEM_CLASS { ITEM_CLASS_ID = "3", ITEM_CLASS_NAME = "Class 3", ITEMS_COUNT = 34 });
-            return new Tuple<List<WO_ITEM_CLASS>, string>(objList, "AioSuccess");
-        }
     }
 }

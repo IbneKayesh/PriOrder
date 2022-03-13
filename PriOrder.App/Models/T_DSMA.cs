@@ -22,5 +22,7 @@ namespace PriOrder.App.Models
         public string DIST_ZONE_ID { get; set; }
         public string DIST_ZONE { get; set; }
         public string ZCONTACTS { get; set; }
+
+        public virtual T_DSMA_BAL T_DSMA_BAL { get; set; }
     }
 }
