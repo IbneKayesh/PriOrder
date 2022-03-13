@@ -47,10 +47,18 @@
                 <div class="mb-2">
                     <label class="alert-warning">@ViewBag.ErrorMessages</label>
                 </div>
-                <input type="submit" value="Login" class="btn btn-primary w-100" />                
+                <input type="submit" value="Login" class="btn btn-primary w-100" />
             }
         </section>
-        <a href="@Url.Action("BoLogin","Home")" class="btn btn-outline-danger w-100"> Support User</a>
+        @if (!Model.IS_XO)
+        {
+            <a href="@Url.Action("Signin","Home")" class="btn btn-outline-danger w-100">Support</a>
+        }
+        else
+        {
+            <a href="@Url.Action("Login","Home")" class="btn btn-outline-danger w-100">Distributor</a>
+        }
+
     </main>
     <!-- app-content.// -->
     <!-- jQuery -->

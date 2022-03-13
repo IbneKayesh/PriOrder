@@ -22,7 +22,7 @@ namespace PriOrder.App.Controllers
             string distId = Session["userId"].ToString();
 
             var obj = new T_DSMA();
-
+            obj.T_DSMA_BAL = new T_DSMA_BAL();
             if (ApplData.CHACHE_ENABLED)
             {
                 obj = HttpContext.Cache.Get(distId + "chProfile") as T_DSMA;

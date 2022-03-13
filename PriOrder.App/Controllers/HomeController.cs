@@ -32,7 +32,7 @@ namespace PriOrder.App.Controllers
         {
             ViewBag.Title = "Login";
             USER_LOGIN obj = new USER_LOGIN();
-            obj.USER_ID = "837075";
+            //obj.USER_ID = "837075";
             //obj.USER_PASSWORD = "25802";
             return View(obj);
         }
@@ -77,13 +77,15 @@ namespace PriOrder.App.Controllers
 
 
 
-        public ActionResult BoLogin()
+        public ActionResult Signin()
         {
-            return View(viewName: "Login");
+            USER_LOGIN obj = new USER_LOGIN();
+            obj.IS_XO = true;
+            return View(viewName: "Login",model: obj);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult BoLogin(USER_LOGIN obj)
+        public ActionResult Signin(USER_LOGIN obj)
         {
             Tuple<List<USER_LOGIN_INFO>, EQResult> _tpl = LoginService.getDistInfo(obj.USER_ID, obj.USER_PASSWORD);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
