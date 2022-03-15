@@ -81,6 +81,27 @@ namespace PriOrder.App.Controllers
             return Json(rslt);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeOrderNote(string itmCod, string noId, string noVal)
+        {
+            string distId = Session["userId"].ToString();
+            string sql = string.Empty;
+            if (itmCod == "0")
+            {
+                sql = $"UPDATE WO_ORDER_CART SET NOTE_ID='{noId}',NOTE_VALUE='{noVal}' WHERE DSMA_DSID='{distId}'";
+            }
+            else
+            {
+                sql = $"UPDATE WO_ORDER_CART SET NOTE_ID='{noId}',NOTE_VALUE='{noVal}' WHERE DSMA_DSID='{distId}' AND ITEM_ID='{itmCod}'";
+            }
+
+            var rslt = new ALERT_MESG
+            {
+                messages = "Order note updated"
+            };
+            return Json(rslt);
+        }
 
     }
 }

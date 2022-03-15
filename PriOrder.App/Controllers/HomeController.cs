@@ -81,7 +81,7 @@ namespace PriOrder.App.Controllers
         {
             USER_LOGIN obj = new USER_LOGIN();
             obj.IS_XO = true;
-            return View(viewName: "Login",model: obj);
+            return View(viewName: "Login", model: obj);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -128,11 +128,8 @@ namespace PriOrder.App.Controllers
         public ActionResult BottomMenu()
         {
             string distId = Session["userId"].ToString();
-
             //var objList = HttpContext.Cache.Get("chBottomMenu") as List<WO_APP_MENU>;
-
             List<WO_APP_MENU> objList = (List<WO_APP_MENU>)Session["menuBottom"];
-
             //Cart Count
             if (objList.Any(x => x.MENU_ID == 20010003))
             {
@@ -150,6 +147,12 @@ namespace PriOrder.App.Controllers
             }
 
             return PartialView("_BottomMenu", objList);
+        }
+
+        public ActionResult LeftMenu()
+        {
+            List<WO_APP_MENU> objList = (List<WO_APP_MENU>)Session["menuLeft"];
+            return PartialView("_LeftMenu", objList);
         }
 
     }

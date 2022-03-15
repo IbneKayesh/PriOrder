@@ -174,7 +174,6 @@
     <Compile Include="ModelsView\USER_PASSWORD.cs" />
     <Compile Include="Models\NIF_DIST.cs" />
     <Compile Include="Models\SUP_MSG_REPL.cs" />
-    <Compile Include="Models\T_CTYP.cs" />
     <Compile Include="Models\T_DSMA.cs" />
     <Compile Include="Models\T_DSMA_BAL.cs" />
     <Compile Include="Models\T_UNDELIVERED.cs" />
@@ -345,6 +344,7 @@
     <Content Include="Views\Shared\_BottomMenu.cshtml" />
     <Content Include="Views\Accounts\ChangeProfilePicture.cshtml" />
     <Content Include="Views\Orders\Cart.cshtml" />
+    <Content Include="Views\Shared\_LeftMenu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

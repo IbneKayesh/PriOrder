@@ -1,0 +1,9 @@
+﻿@model IEnumerable<PriOrder.App.Models.WO_APP_MENU>
+
+@if (Model != null || Model.Count() > 0)
+{
+    foreach (var _menu in Model)
+    {
+        <a href="@Url.Action(_menu.ACTION_NAME, _menu.CONTROLLER_NAME)"> <i class="material-icons @_menu.MENU_ICON"></i> @_menu.MENU_NAME_EN</a>
+    }
+}
