@@ -7,6 +7,7 @@ namespace PriOrder.App.Models
 {
     public class T_DSMA
     {
+        public string APPL_NID { get; set; }
         public string DSTO_NIDN { get; set; }
         public string DIST_TYPE_ID { get; set; }
         public string DIST_TYPE { get; set; }

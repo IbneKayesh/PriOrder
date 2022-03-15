@@ -25,7 +25,7 @@ namespace PriOrder.App.Controllers
         //New Support
         public ActionResult SupportRequest()
         {
-            ViewBag.CTYP_TYPE = MessageService.getSupportCategory();
+            ViewBag.CAT_ID = MessageService.getSupportCategory();
             return View();
         }
         [HttpPost]
@@ -35,7 +35,7 @@ namespace PriOrder.App.Controllers
             if (ModelState.IsValid)
             {
                 string distId = Session["userId"].ToString();
-                string result = MessageService.AddNewSupport(obj.CTYP_TYPE, distId, obj.SUP_NUMBER);
+                string result = MessageService.AddNewSupport(obj.CAT_NAME, distId, obj.SUP_NUMBER);
                 if (result != "0")
                 {
                     TempData["mesg"] = SweetMessages.Info($"Your Request sent to respective concern. NO#{result}");
@@ -43,7 +43,7 @@ namespace PriOrder.App.Controllers
                 }
             }
             TempData["mesg"] = SweetMessages.Failed($"New support request sending failed, try again");
-            ViewBag.CTYP_TYPE = MessageService.getSupportCategory();
+            ViewBag.CAT_ID = MessageService.getSupportCategory();
             return View(obj);
         }
 

@@ -12,46 +12,33 @@
 }
 <button class="btn btn-primary w-100 mb-2" type="button" id="btnReload"> Refresh Cart Items</button>
 
-<section class="p-1">
-    <div class="row mb-1">
-        <div class="col">
-            @Html.DropDownList("CART_ITEMS", ViewBag.CART_ITEMS as List<SelectListItem>, "--Select All--", new { @class = "form-select form-select-sm" })
-        </div>
-        <div class="col">
-            @Html.DropDownList("WO_NOTE", ViewBag.WO_NOTE as List<SelectListItem>, new { @class = "form-select form-select-sm" })
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <input id="WO_NOTE_VALUE" class="item-note form-control form-control-sm" type="text" value="" max="20">
-        </div>
-        <div class="col">
-            <button class="btn btn-warning w-100 mb-2 btn-sm" type="button" id="btnNoteApply"> Apply </button>
-        </div>
-    </div>
-</section>
 
-
-<section class="p-1">
+<section class="p-3">
     <ul class="row">
         @if (Model != null)
-            {
+        {
             @Html.AntiForgeryToken()
 
             foreach (var item in Model)
             {
                 <li class="col-12 col-sm-12 col-md-6 item-cart">
                     <article class="product-list mb-2">
+                        <div>
+                            <a href="#" class="img-wrap"> <img src="~/Images/Products/@item.ITEM_ID-.jpg" alt="@item.ITEM_ID"> </a>
+                        </div>
                         <div class="info-wrap">
                             <input class="item-code" type="hidden" value="@item.ITEM_ID" />
                             <input class="item-rate" type="hidden" value="@item.ITEM_RATE" />
-                            <input class="item-factor" type="hidden" value="@item.ITEM_FACTOR" />
-                            <p class="title text-primary"> @item.ITEM_ID~@item.ITEM_NAME</p>
+                            <p class="title text-primary"> @item.ITEM_ID </p>
+                            <p class="title"> @item.ITEM_NAME</p>
                         </div>
                     </article>
                     <div class="price mb-2">
-                        <span class="badge bg-secondary">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
-                        <span class="badge bg-warning">@item.NOTE_TEXT=@item.NOTE_VALUE</span>
+                        <span class="badge bg-dark">UOM: @item.ITEM_UNIT</span>
+                        <span class="badge bg-primary">Stk: @item.NEW_STOCK</span>
+                        <span class="badge bg-warning">Tk: @item.ITEM_RATE</span>
+                        <span class="badge bg-info">Fact: @item.ITEM_FACTOR</span>
+                        <span class="badge bg-danger">Inc: 0.0%</span>
                     </div>
                     <div class="input-group input-group-sm">
                         <button class="btn btn-danger delete-item" type="button">
@@ -62,11 +49,14 @@
                         <button class="btn btn-light plus-cart" type="button"> <i class="material-icons md-plus"></i> </button>
                     </div>
                     <div class="input-group input-group-sm sub-total">
-                        <button class="btn btn-secondary cart-dqty">@item.ITEM_DQTY</button>
                         @{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; }
                         <button type="button" class="form-control">x @item.ITEM_RATE = <span> @st</span></button>
                     </div>
-                    <br />
+                    <div class="input-group input-group-sm items-select-note">
+                        @Html.DropDownList("WO_NOTE", item.WO_NOTE as IEnumerable<SelectListItem>, new { @class = "form-select" })
+                        <input class="item-note form-control form-control-sm" type="text" value="@item.NOTES">
+                    </div>
+                    <hr />
                 </li>
                                 }
                             }
@@ -124,16 +114,8 @@
                 var qty = $(this).val();
                 if (qty == '' || qty == '0') {
                     $(this).val('1');
-                    qty = 1;
                 };
-                var rate = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-rate").val();
-                var subTotal = parseFloat(qty) * parseFloat(rate);
-                $(this).parent('div.input-group').siblings('div.sub-total').children('button.form-control')
-                    .find('span').text(subTotal.toFixed(2));
-                var itemFact = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-factor").val();
-                var itemDQty = parseFloat(qty) / parseFloat(itemFact);
-                $(this).parent('div.input-group').siblings('div.sub-total').children('button.cart-dqty').text(itemDQty.toFixed(2));
-                getCartSum();
+                calculate_subTotal($(this));
             });
 
 
@@ -176,14 +158,13 @@
             });
         });
         function calculate_subTotal(thisObj) {
+
             var rate = thisObj.parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-rate").val();
+
             var subTotal = parseFloat(quantityField.val()) * parseFloat(rate);
+
             thisObj.parent('div.input-group').siblings('div.sub-total').children('button.form-control')
                 .find('span').text(subTotal.toFixed(2));
-
-            var itemFact = thisObj.parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-factor").val();
-            var itemDQty = parseFloat(quantityField.val()) / parseFloat(itemFact);
-            thisObj.parent('div.input-group').siblings('div.sub-total').children('button.cart-dqty').text(itemDQty.toFixed(2));
 
             getCartSum();
         };
@@ -234,50 +215,6 @@
                 }
             });
         })
-
-
-        $("#btnNoteApply").click(function (e) {
-            e.preventDefault();
-            var itemCode = $("select#CART_ITEMS option").filter(":selected").val();
-            console.log(itemCode);
-            var itemNote = $("select#WO_NOTE option").filter(":selected").val();
-            console.log(itemNote);
-            var itemNoteVal = $("#WO_NOTE_VALUE").val();
-            console.log(itemNoteVal);
-            if (itemNote == "0" || itemNote == "" || itemNoteVal == "0" || itemNoteVal == "") {
-                Swal.fire({ title: "Unable to Change!", text: "Enter Note and Value", icon: "warning" });
-                return;
-            }
-
-            if (itemCode == "") {
-
-            } else {
-
-            }
-
-            return;
-
-            $.ajax({
-                type: "POST",
-                url: "SubmitCart",
-                data: { objList: ItemsArr },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("RequestVerificationToken",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                success: function (response) {
-                    Swal.fire("messages", response.messages);
-                },
-                failure: function (response) {
-                    Swal.fire("messages", response.responseText);
-                },
-                error: function (response) {
-                    Swal.fire("messages", response.responseText);
-                }
-            });
-        })
-
-
     </script>
 
 }

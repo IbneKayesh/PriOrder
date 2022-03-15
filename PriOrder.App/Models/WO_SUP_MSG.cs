@@ -14,7 +14,7 @@ namespace PriOrder.App.Models
 
         [Display(Name = "Support Type")]
         [Required(ErrorMessage = "{0} is required")]
-        public string CTYP_TYPE { get; set; }
+        public string CAT_NAME { get; set; }
 
         public string DIST_ID { get; set; }
         public string CLOSED_NOTE { get; set; }

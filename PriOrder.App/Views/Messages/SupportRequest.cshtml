@@ -11,7 +11,7 @@
         @Html.AntiForgeryToken();
 
         <div class="form-group">
-            @Html.DropDownList("CTYP_TYPE", ViewBag.CTYP_TYPE as List<SelectListItem>, new { @class = "form-select", required = "required" })
+            @Html.DropDownList("CAT_NAME", ViewBag.CAT_ID as List<SelectListItem>, new { @class = "form-select", required = "required" })
         </div>
         <small>Min 10 & Max 250 char.</small>
         <div class="form-group row">

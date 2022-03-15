@@ -48,6 +48,10 @@
     <h5 class="title-section pb-2">Account</h5>
     <nav class="nav-list">
         <div class="btn-list">
+            <span class="float-end badge bg-warning">@(String.IsNullOrEmpty(Model.APPL_NID) ? "Update your Master NID, Contact with Help Line" : Model.APPL_NID)</span>
+            <span class="text">Master ID</span>
+        </div>
+        <div class="btn-list">
             <span class="float-end badge bg-warning">@(String.IsNullOrEmpty(Model.DSTO_NIDN) ? "Update your NID, Contact with Help Line" : Model.DSTO_NIDN)</span>
             <span class="text">NID</span>
         </div>
@@ -97,9 +101,9 @@
 <section>
     <h5 class="title-section pb-2">Business</h5>
     <nav class="nav-list">
-        <a class="btn-list" href="@Url.Action("BusinessPartner","Accounts")">
+        <a class="btn-list" href="@Url.Action("MyDistributors","Accounts")">
             <i class="icon-control material-icons md-keyboard_arrow_right"></i>
-            <span class="text">Business Partner</span>
+            <span class="text">My Distributors</span>
         </a>
         <a class="btn-list" href="@Url.Action("ChangePassword")">
             <i class="icon-control material-icons md-keyboard_arrow_right"></i>

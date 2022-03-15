@@ -84,7 +84,7 @@ namespace PriOrder.App.Controllers
         }
 
 
-        public ActionResult BusinessPartner()
+        public ActionResult MyDistributors()
         {
             string distId = Session["userId"].ToString();
             var obj = new List<NIF_DIST>();

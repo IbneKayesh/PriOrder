@@ -32,16 +32,16 @@ namespace PriOrder.App.Services
         }
         public static List<SelectListItem> getSupportCategory()
         {
-            string sql_1 = @"SELECT T.CTYP_SLNO,T.CTYP_TYPE FROM T_CTYP T WHERE T.CTYP_ACTV='Y' ORDER BY T.CTYP_SLNO";
-            Tuple<List<T_CTYP>, EQResult> _tpl = DatabaseOracleClient.SqlToListObjectBind<T_CTYP>(sql_1);
+            string sql_1 = @"SELECT T.CAT_ID,T.CAT_NAME FROM WO_SUP_CAT T WHERE T.IS_ACTIVE=1 ORDER BY T.CAT_ID";
+            Tuple<List<WO_SUP_CAT>, EQResult> _tpl = DatabaseOracleClient.SqlToListObjectBind<WO_SUP_CAT>(sql_1);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
                 return _tpl.Item1.ConvertAll(a =>
                 {
                     return new SelectListItem()
                     {
-                        Text = a.CTYP_TYPE,
-                        Value = a.CTYP_SLNO.ToString(),
+                        Text = a.CAT_NAME,
+                        Value = a.CAT_ID.ToString(),
                         Selected = false,
                     };
                 });
@@ -53,7 +53,7 @@ namespace PriOrder.App.Services
         {
             string spId = distId + DateTime.Now.ToString("MMM").ToUpper() + DateTime.Now.ToString("yy") + "-" + new Random().Next(1, 1000);
             List<string> sqlList = new List<string>();
-            sqlList.Add($@"INSERT INTO WO_SUP_MSG(SUP_NUMBER,CTYP_TYPE,DIST_ID,CREATE_USER)VALUES('{spId}','{typeId}', '{distId}','{distId}')");
+            sqlList.Add($@"INSERT INTO WO_SUP_MSG(SUP_NUMBER,CAT_ID,DIST_ID,CREATE_USER)VALUES('{spId}','{typeId}', '{distId}','{distId}')");
             sqlList.Add($"INSERT INTO WO_SUP_MSG_BODY(SUP_NUMBER,BODY_TEXT,CREATE_USER)VALUES('{spId}','{text.Replace("'", "")}','0')");
             EQResult result = DatabaseOracleClient.PostSqlList(sqlList);
             if (result.SUCCESS && result.ROWS == 2)
@@ -74,7 +74,7 @@ namespace PriOrder.App.Services
 
         public static Tuple<List<WO_SUP_MSG>, EQResult> getSupport(string distId)
         {
-            string sql = $@"SELECT T.SUP_NUMBER,TC.CTYP_TYPE,T.DIST_ID,T.CLOSED_NOTE,T.IS_ACTIVE,T.CREATE_DATE,T.UPDATE_DATE,T.UPDATE_USER                FROM WO_SUP_MSG T JOIN T_CTYP TC ON TC.CTYP_SLNO=T.CTYP_TYPE WHERE T.DIST_ID='{distId}' ORDER BY T.IS_ACTIVE DESC";
+            string sql = $@"SELECT T.SUP_NUMBER,SC.CAT_NAME,T.DIST_ID,T.CLOSED_NOTE,T.IS_ACTIVE,T.CREATE_DATE,T.UPDATE_DATE,T.UPDATE_USER                FROM WO_SUP_MSG T JOIN WO_SUP_CAT SC ON SC.CAT_ID=T.CAT_ID WHERE T.DIST_ID='{distId}' ORDER BY T.IS_ACTIVE DESC";
             return DatabaseOracleClient.SqlToListObjectBind<WO_SUP_MSG>(sql);
         }
 
@@ -89,7 +89,7 @@ namespace PriOrder.App.Services
 
         public static Tuple<List<WO_SUP_MSG>, EQResult> getFeedback(string userId)
         {
-            string sql = $@"SELECT T.SUP_NUMBER,TC.CTYP_TYPE,T.DIST_ID,T.CLOSED_NOTE,T.IS_ACTIVE,T.CREATE_DATE,T.UPDATE_DATE,T.UPDATE_USER                FROM WO_SUP_MSG T JOIN T_CTYP TC ON TC.CTYP_SLNO=T.CTYP_TYPE WHERE T.IS_ACTIVE=1";
+            string sql = $@"SELECT T.SUP_NUMBER,SC.CAT_NAME,T.DIST_ID,T.CLOSED_NOTE,T.IS_ACTIVE,T.CREATE_DATE,T.UPDATE_DATE,T.UPDATE_USER                FROM WO_SUP_MSG T JOIN WO_SUP_CAT SC ON SC.CAT_ID=T.CAT_ID WHERE T.IS_ACTIVE=1";
             return DatabaseOracleClient.SqlToListObjectBind<WO_SUP_MSG>(sql);
         }
         public static EQResult FeedbackReply(SUP_MSG_REPL obj, string user)

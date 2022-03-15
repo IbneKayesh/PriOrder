@@ -156,7 +156,7 @@ namespace PriOrder.App.Controllers
         }
 
 
-        public ActionResult AddToCart(string id, string qt)
+        public ActionResult AddToCart(string id, string qt,string noId, string noVal)
         {
             if (Request.UrlReferrer == null)
             {
@@ -165,7 +165,7 @@ namespace PriOrder.App.Controllers
             }
 
             string distId = Session["userId"].ToString();
-            EQResult result = ProductService.AddToCart(distId, id, qt, "", "");
+            EQResult result = ProductService.AddToCart(distId, id, qt, noId, noVal);
 
             if (result.SUCCESS)
             {

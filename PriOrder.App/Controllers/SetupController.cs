@@ -25,7 +25,7 @@ namespace PriOrder.App.Controllers
             {
                 objList = HttpContext.Cache.Get("AllchCat") as List<WO_ITEM_TYPE>;
             }
-            if (objList == null)
+            if (objList == null || objList.Count == 0)
             {
                 Tuple<List<WO_ITEM_TYPE>, EQResult> _tpl = SetupService.getCategoryList();
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
@@ -107,7 +107,7 @@ namespace PriOrder.App.Controllers
             {
                 objList = HttpContext.Cache.Get("Allch" + id) as List<WO_ITEM_CLASS>;
             }
-            if (objList == null)
+            if (objList == null || objList.Count == 0)
             {
                 //Get Classes by Category Id
                 Tuple<List<WO_ITEM_CLASS>, EQResult> _tpl = SetupService.getClassByCategoryId(id);

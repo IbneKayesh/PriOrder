@@ -3,47 +3,56 @@
     ViewBag.Title = "Support Reply";
 }
 
-@foreach (var item in Model)
-{
-    <article class="card-banner rounded bg-light mb-2" @(item.CREATE_USER == "0" ? "style=text-align:right" : "style=text-align:left")>
-        <div class="p-3" style="width:95%">
-            <span class="badge bg-success">@(item.CREATE_USER == "0" ? @item.SUP_NUMBER : @item.CREATE_USER)</span><br />
-            <small>@item.CREATE_DATE</small>
-            <p>@item.BODY_TEXT</p>
-        </div>
-    </article>
-}
-
-
-<p class="alert alert-info">
-    <a href="@Url.Action("Sms","Messages")" class="badge bg-primary"> View all SMS</a>
-    <a href="@Url.Action("Support","Messages")" class="badge bg-danger">View all messages</a>
-    <a href="#" class="badge bg-warning" onclick="location.reload();"> check new messages</a>
-</p>
-
-
-@if (Model != null && Model.Count() > 0)
-{
-    if (Model.FirstOrDefault().IS_ACTIVE)
-    {
-        <div class="mb-3">
-            @using (Html.BeginForm(FormMethod.Post))
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Chat with Agent</h5>
+    </div>
+    <div class="card-body">
+        @foreach (var item in Model)
+        {
+            <article class="@(item.CREATE_USER == "0" ? ("card-banner rounded bg-primary-light mb-2 text-white") : "card-banner rounded bg-primary mb-2 text-white")" style="@(item.CREATE_USER == "0" ? ("text-align:right") : "text-align:left")"> 
+                <div class="p-3" style="width:95%">
+                    <span class="badge bg-success">@(item.CREATE_USER == "0" ? @item.SUP_NUMBER : @item.CREATE_USER)</span><br />
+                    <small>@item.CREATE_DATE</small>
+                    <p>@item.BODY_TEXT</p>
+                </div>
+            </article>
+        }
+        <p class="alert alert-info">
+            <a href="@Url.Action("Sms","Messages")" class="badge bg-primary"> View all SMS</a>
+            <a href="@Url.Action("Support","Messages")" class="badge bg-danger">View all messages</a>
+            <a href="#" class="badge bg-warning" onclick="location.reload();"> check new messages</a>
+        </p>
+    </div>
+    <div class="card-footer">
+        @if (Model != null && Model.Count() > 0)
+        {
+            if (Model.FirstOrDefault().IS_ACTIVE)
             {
-                @Html.AntiForgeryToken();
-                <div class="form-group row">
-                    <div class="col-10">
-                        <input type="hidden" name="replyId" value="@Request.Params["replyId"]" />
-                        <textarea id="messagesText" name="messagesText" class="form-control" placeholder="Write your problem is here! (English Characters)" required="required"></textarea>
-                    </div>
-                    <div class="col-2">
-                        <button type="submit" class="btn w-100 btn-primary"><i class="material-icons md-send"></i></button>
-                    </div>
+                <div class="mb-3">
+                    @using (Html.BeginForm(FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken();
+                        <div class="form-group row">
+                            <div class="col-10">
+                                <input type="hidden" name="replyId" value="@Request.Params["replyId"]" />
+                                <textarea id="messagesText" name="messagesText" class="form-control" placeholder="Write your problem is here! (English Characters)" required="required"></textarea>
+                            </div>
+                            <div class="col-2">
+                                <button type="submit" class="btn w-100 btn-primary"><i class="material-icons md-send"></i></button>
+                            </div>
+                        </div>
+                    }
                 </div>
             }
-        </div>
-    }
-    else
-    {
-        <p class="alert alert-danger">You can't reply to this conversion.</p>
-    }
-}
+            else
+            {
+                <p class="alert alert-danger">You can't reply to this conversion.</p>
+            }
+        }
+    </div>
+</div>
+
+
+
+

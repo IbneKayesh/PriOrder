@@ -5,7 +5,7 @@
 
 @foreach (var item in Model)
 {
-    <article class="card-banner rounded bg-light mb-2" @(item.CREATE_USER == "0" ? "style=text-align:left" : "style=text-align:right")>
+    <article class="@(item.CREATE_USER == "0" ? ("card-banner rounded bg-primary-light mb-2 text-white") : "card-banner rounded bg-primary mb-2 text-white")" style="@(item.CREATE_USER == "0" ? ("text-align:left") : "text-align:right")">
         <div class="p-3" style="width:95%">
             <span class="badge bg-success">@(item.CREATE_USER == "0" ? @item.SUP_NUMBER : @item.CREATE_USER)</span><br />
             <small>@item.CREATE_DATE</small>

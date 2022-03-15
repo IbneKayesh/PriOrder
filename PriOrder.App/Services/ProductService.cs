@@ -110,7 +110,7 @@ namespace PriOrder.App.Services
             EQResult result = DatabaseOracleClient.PostSql(sql);
             if (result.SUCCESS && result.ROWS == 0)
             {
-                sql = $@"INSERT INTO WO_ORDER_CART(DSMA_DSID,ITEM_ID,ITEM_QTY,NOTE_ID,NOTE_TEXT)VALUES('{distId}','{itemId}',{qty},'{noteId}','{noteText}')";
+                sql = $@"INSERT INTO WO_ORDER_CART(DSMA_DSID,ITEM_ID,ITEM_QTY,NOTE_ID,NOTE_VALUE)VALUES('{distId}','{itemId}',{qty},'{noteId}','{noteText.Replace("'", "")}')";
                 result = DatabaseOracleClient.PostSql(sql);
             }
             return result;

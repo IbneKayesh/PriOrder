@@ -184,6 +184,7 @@
     <Compile Include="Models\T_BANKCOL.cs" />
     <Compile Include="Models\WO_ITEM_CLASS.cs" />
     <Compile Include="Models\MR_STATUS.cs" />
+    <Compile Include="Models\WO_SUP_CAT.cs" />
     <Compile Include="Models\WO_SUP_MSG.cs" />
     <Compile Include="Models\WO_PUSH_MSG.cs" />
     <Compile Include="Models\WO_ITEM_TYPE.cs" />
@@ -333,16 +334,17 @@
     <Content Include="Views\Orders\Cart2.cshtml" />
     <Content Include="Views\Products\Favorite.cshtml" />
     <Content Include="Views\Accounts\MRStatus.cshtml" />
-    <Content Include="Views\Orders\Cart.cshtml" />
+    <Content Include="Views\Orders\Cart3.cshtml" />
     <Content Include="Views\Reports\Undelivered.cshtml" />
     <Content Include="Views\Messages\Support.cshtml" />
     <Content Include="Views\Messages\SupportReply.cshtml" />
     <Content Include="Views\Messages\SupportRequest.cshtml" />
     <Content Include="Views\Messages\Feedback.cshtml" />
     <Content Include="Views\Messages\FeedbackReply.cshtml" />
-    <Content Include="Views\Accounts\BusinessPartner.cshtml" />
+    <Content Include="Views\Accounts\MyDistributors.cshtml" />
     <Content Include="Views\Shared\_BottomMenu.cshtml" />
     <Content Include="Views\Accounts\ChangeProfilePicture.cshtml" />
+    <Content Include="Views\Orders\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

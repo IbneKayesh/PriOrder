@@ -6,6 +6,7 @@ using PriOrder.App.Services;
 using PriOrder.App.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Caching;
 using System.Web.Mvc;
 
@@ -20,10 +21,23 @@ namespace PriOrder.App.Controllers
             Tuple<List<WO_ORDER_CART>, EQResult> _tpl = OrderService.getCartByDistId(distId);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
+                ViewBag.CART_ITEMS = _tpl.Item1.ConvertAll(a =>
+                                      {
+                                          return new SelectListItem()
+                                          {
+                                              Text = a.ITEM_NAME,
+                                              Value = a.ITEM_ID,
+                                          };
+                                      });
+
+                ViewBag.WO_NOTE = ProductService.getItemNotes();
+
                 return View(_tpl.Item1);
             }
             else
             {
+                ViewBag.CART_ITEMS = new SelectList(Enumerable.Empty<SelectListItem>());
+                ViewBag.WO_NOTE = new SelectList(Enumerable.Empty<SelectListItem>());
                 TempData["mesg"] = SweetMessages.Info("Cart is empty");
                 return View(new List<WO_ORDER_CART>());
             }
@@ -51,7 +65,7 @@ namespace PriOrder.App.Controllers
         {
             string distId = Session["userId"].ToString();
 
-            string Order = "OR#" + new Random().Next(100, 9999999) +" Placed successfully. please deposit your payment";
+            string Order = "OR#" + new Random().Next(100, 9999999) + " Placed successfully. please deposit your payment";
 
             var obj = MessageService.AddNewSMS("Order", "0", "0", "0", distId, Order);
 
@@ -67,6 +81,6 @@ namespace PriOrder.App.Controllers
             return Json(rslt);
         }
 
-       
+
     }
 }
