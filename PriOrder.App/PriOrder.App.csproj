@@ -348,6 +348,7 @@
     <Content Include="Views\Accounts\ChangeProfilePicture.cshtml" />
     <Content Include="Views\Orders\Cart.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
+    <Content Include="Views\Promotion\Slab.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -356,7 +357,6 @@
     <Folder Include="Images\Distributor\Profile\" />
     <Folder Include="Images\ItemClass\" />
     <Folder Include="Images\Products\" />
-    <Folder Include="Views\Promotion\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<PriOrder.App.Models.V_CHOITALY>
+
+@{
+    ViewBag.Title = "Slab";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="p-1">
+    <div class="table-responsive">
+
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SPMS_FDAT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SPMS_TDAT)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SPMS_NSLB)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SMPL_ITEM)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ITEM_NAME)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SPGM_GQTY)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.GRP1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ITEM_GROUP)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SPMS_ITTY)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SPMS_FDAT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SPMS_TDAT)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SPMS_NSLB)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SMPL_ITEM)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ITEM_NAME)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SPGM_GQTY)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GRP1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ITEM_GROUP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SPMS_ITTY)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</section>
+
