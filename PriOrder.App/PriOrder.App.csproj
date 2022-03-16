@@ -161,6 +161,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\PromotionController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="DataModels\ApplData.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Models\T_DSMA.cs" />
     <Compile Include="Models\T_DSMA_BAL.cs" />
     <Compile Include="Models\T_UNDELIVERED.cs" />
+    <Compile Include="Models\V_CHOITALY.cs" />
     <Compile Include="Models\WO_COUNT.cs" />
     <Compile Include="Models\WO_APP_MENU.cs" />
     <Compile Include="Models\WO_ITEMS.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Services\MessageService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
+    <Compile Include="Services\PromotionService.cs" />
     <Compile Include="Services\ReportService.cs" />
     <Compile Include="Services\SetupService.cs" />
     <Compile Include="Utility\AioAuthorization.cs" />
@@ -353,6 +356,7 @@
     <Folder Include="Images\Distributor\Profile\" />
     <Folder Include="Images\ItemClass\" />
     <Folder Include="Images\Products\" />
+    <Folder Include="Views\Promotion\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
