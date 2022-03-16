@@ -78,7 +78,19 @@ namespace PriOrder.App.Services
             return DatabaseOracleClient.PostSql(sql);
         }
 
-
+        public static EQResult ChanageOrderNote(string _distId, string _itemCode, string _noteId, string _noteValue)
+        {
+            string sql = string.Empty;
+            if (_itemCode == "0")
+            {
+                sql = $"UPDATE WO_ORDER_CART SET NOTE_ID='{_noteId}',NOTE_VALUE='{_noteValue.Replace("'","")}' WHERE DSMA_DSID='{_distId}'";
+            }
+            else
+            {
+                sql = $"UPDATE WO_ORDER_CART SET NOTE_ID='{_noteId}',NOTE_VALUE='{_noteValue.Replace("'", "")}' WHERE DSMA_DSID='{_distId}' AND ITEM_ID='{_itemCode}'";
+            }
+            return DatabaseOracleClient.PostSql(sql);
+        }
 
     }
 }

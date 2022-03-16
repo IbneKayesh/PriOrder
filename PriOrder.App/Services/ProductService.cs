@@ -106,6 +106,11 @@ namespace PriOrder.App.Services
 
         public static EQResult AddToCart(string distId, string itemId, string qty, string noteId, string noteText)
         {
+            if (noteId == "0")
+            {
+                noteId = "";
+            }
+
             string sql = $"UPDATE WO_ORDER_CART SET ITEM_QTY=ITEM_QTY+{qty} WHERE DSMA_DSID='{distId}' AND ITEM_ID='{itemId}'";
             EQResult result = DatabaseOracleClient.PostSql(sql);
             if (result.SUCCESS && result.ROWS == 0)

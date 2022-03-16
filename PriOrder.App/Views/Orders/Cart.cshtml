@@ -10,7 +10,17 @@
         CurrBalanace = Math.Abs(Convert.ToDecimal(Session["userBalnace"]));
     }
 }
-<button class="btn btn-primary w-100 mb-2" type="button" id="btnReload"> Refresh Cart Items</button>
+<section class="p-1">
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary btn-sm w-100 mb-2" type="button" id="btnReload">Refresh Cart</button>
+        </div>
+        <div class="col">
+            <a href="@Url.Action("Categories","Products")" class="btn btn-outline-success btn-sm w-100">Back to shop</a>
+        </div>
+    </div>
+</section>
+
 
 <section class="p-1">
     <div class="row mb-1">
@@ -26,16 +36,16 @@
             <input id="WO_NOTE_VALUE" class="item-note form-control form-control-sm" type="text" value="" max="20">
         </div>
         <div class="col">
-            <button class="btn btn-warning w-100 mb-2 btn-sm" type="button" id="btnNoteApply"> Apply </button>
+            <button class="btn btn-warning w-100 mb-2 btn-sm" type="button" id="btnNoteApply">Apply Note</button>
         </div>
     </div>
 </section>
 
 
-<section class="p-1">
+<section class="p-1 cart-items">
     <ul class="row">
         @if (Model != null)
-            {
+        {
             @Html.AntiForgeryToken()
 
             foreach (var item in Model)
@@ -51,7 +61,10 @@
                     </article>
                     <div class="price mb-2">
                         <span class="badge bg-secondary">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
-                        <span class="badge bg-warning">@item.NOTE_TEXT=@item.NOTE_VALUE</span>
+                        @if (!string.IsNullOrEmpty(item.NOTE_TEXT))
+                        {
+                            <span class='badge bg-warning'>@item.NOTE_TEXT=@item.NOTE_VALUE</span>
+                        }
                     </div>
                     <div class="input-group input-group-sm">
                         <button class="btn btn-danger delete-item" type="button">
@@ -93,11 +106,16 @@
         <dd class="text-end" id="total-sum-new-balance"><strong>@newBalance</strong></dd>
     </dl>
     <br>
-    <button class="btn btn-success w-100 mb-2" type="button" id="btnConfirm"> Confirm </button>
-    <a href="@Url.Action("Categories","Products")" class="btn btn-outline-primary w-100">  Back to shop</a>
-    <br> <br>
+    <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Confirm Order</button>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary btn-sm w-100 mb-2" type="button" id="btnReload">Refresh Cart</button>
+        </div>
+        <div class="col">
+            <a href="@Url.Action("Categories","Products")" class="btn btn-outline-success btn-sm w-100">Back to shop</a>
+        </div>
+    </div>
 </section>
-
 
 @section scripts{
     <script>
@@ -205,16 +223,12 @@
             e.preventDefault();
             var ItemsArr = [];
             ItemsArr.length = 0;
-            $('section.cart-items').children('article.item-cart').each(function () {
+            $('section.cart-items').children('ul.row').children('li.item-cart').each(function () {
                 ItemsArr.push({
-                    "ITEM_ID": $(this).children('figure.itemside').children('figcaption.info').find("input.item-code").val(),
-                    "ITEM_QTY": $(this).children('div.align-items-center').children('div.col').children('div.input-group').find("input.quantity-cart").val(),
-                    "ITEM_RATE": $(this).children('figure.itemside').children('figcaption.info').find("input.item-rate").val(),
-                    "NOTE_ID": $(this).children('div.items-select-note').find("select.form-select").val(),
-                    "NOTE_TEXT": $(this).children('div.items-select-note').find("input.item-note").val()
+                    "ITEM_ID": $(this).children('article.product-list').children('div.info-wrap').find("input.item-code").val(),
+                    "ITEM_QTY": $(this).children('div.input-group').find("input.quantity-cart").val()
                 });
             });
-            console.log(ItemsArr);
             $.ajax({
                 type: "POST",
                 url: "SubmitCart",
@@ -227,13 +241,13 @@
                     Swal.fire("messages", response.messages);
                 },
                 failure: function (response) {
-                    Swal.fire("messages", response.responseText);
+                    Swal.fire("messages", response.messages);
                 },
                 error: function (response) {
                     Swal.fire("messages", response.responseText);
                 }
             });
-        })
+        });
 
 
         $("#btnNoteApply").click(function (e) {
@@ -259,35 +273,29 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, Apply to all!'
                 }).then((result) => {
-                    if (result.isConfirmed)
-                    {
+                    if (result.isConfirmed) {
                         change_order_note("0", itemNote, itemNoteVal);
                     }
                 });
             }
-            else
-            {
+            else {
                 change_order_note(itemCode, itemNote, itemNoteVal);
             }
         });
-        function change_order_note(itmCode, notId, notVal)
-        {
+        function change_order_note(itmCode, notId, notVal) {
             $.ajax({
                 type: "POST",
                 url: "ChangeOrderNote",
                 data: { itmCod: itmCode, noId: notId, noVal: notVal },
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("RequestVerificationToken",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
                 success: function (response) {
-                    Swal.fire("messages", response.messages);
+                    Swal.fire({ title: "Success!", text: response.messages, icon: "success", showConfirmButton: false, timer: 1000 });
+                    location.reload();
                 },
                 failure: function (response) {
-                    Swal.fire("messages", response.responseText);
+                    Swal.fire({ title: "Error!", text: response.responseText, icon: "error" });
                 },
                 error: function (response) {
-                    Swal.fire("messages", response.responseText);
+                    Swal.fire({ title: "Error!", text: response.responseText, icon: "error" });
                 }
             });
         }
