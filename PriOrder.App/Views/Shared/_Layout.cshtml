@@ -62,23 +62,8 @@
 
     <nav class="nav-bottom">
         @Html.Action("BottomMenu", "Home")
-
-        @*<a href="@Url.Action("Categories","Products")" class="nav-link">
-                <i class="icon material-icons md-apps"></i><span class="text">Category</span>
-            </a>
-            <a href="@Url.Action("Cart","Orders")" class="nav-link">
-                <span class="float-end badge bg-warning">1</span>
-                <i class="icon material-icons md-shopping_cart"></i><span class="text">Cart</span>
-            </a>
-            <a href="@Url.Action("Favorite","Products")" class="nav-link">
-                <i class="icon material-icons md-favorite"></i><span class="text">Favorite</span>
-            </a>
-            <a href="@Url.Action("Messages")" class="nav-link">
-                <span class="float-end badge bg-warning">2</span>
-                <i class="icon material-icons md-chat"></i><span class="text">Messages</span>
-            </a>*@
     </nav> <!-- nav-bottom -->
-    
+
 
     <aside class="offcanvas offcanvas-start" tabindex="-1" id="offcanvas_left_123">
         <header class="p-3 border-bottom bg-light">
@@ -97,7 +82,7 @@
         <article class="offcanvas-body">
             <nav class="nav-sidebar mt-2">
                 @Html.Action("LeftMenu", "Home")
-                
+
                 @*<a href="@Url.Action("Products")"> <i class="material-icons md-local_offer"></i> Products</a>
                     <a href="@Url.Action("MyOrders")"> <i class="material-icons md-local_shipping"></i> My Orders</a>
                     <a href="@Url.Action("Damages")"> <i class="material-icons md-store"></i> Damages </a>
@@ -165,7 +150,7 @@
 
 
     <script>
-           
+
     </script>
 </body>
 </html>

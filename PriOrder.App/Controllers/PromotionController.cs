@@ -14,7 +14,7 @@ namespace PriOrder.App.Controllers
     {
         public ActionResult Slab()
         {
-            string distId = Session["userId"].ToString();
+            //string distId = Session["userId"].ToString();
             var objList = new List<V_CHOITALY>();
             Tuple<List<V_CHOITALY>, EQResult> _tpl = PromotionService.getSlabPromo();
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
