@@ -11,7 +11,7 @@ namespace PriOrder.App.Models
 
         [Display(Name = "To")]
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
-        public string SPMS_TDAT { get; set; }
+        public DateTime SPMS_TDAT { get; set; }
 
         [Display(Name = "Slab")]
         public decimal SPMS_NSLB { get; set; }
