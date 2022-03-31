@@ -10,20 +10,20 @@
         CurrBalanace = Math.Abs(Convert.ToDecimal(Session["userBalnace"]));
     }
 }
-<section class="p-1">
+<section class="p-0">
     <div class="row">
         <div class="col">
             <button class="btn btn-primary btn-sm w-100 mb-2" type="button" id="btnReload">Refresh Cart</button>
         </div>
         <div class="col">
-            <a href="@Url.Action("Categories","Products")" class="btn btn-outline-success btn-sm w-100">Back to shop</a>
+            <a href="@Url.Action("Categories","Products")" class="btn btn-success btn-sm w-100">Back to shop</a>
         </div>
     </div>
 </section>
 
 
-<section class="p-1">
-    <div class="row mb-1">
+<section class="p-0">
+    <div class="row mb-0">
         <div class="col">
             @Html.DropDownList("CART_ITEMS", ViewBag.CART_ITEMS as List<SelectListItem>, "--Select All--", new { @class = "form-select form-select-sm" })
         </div>
@@ -42,7 +42,7 @@
 </section>
 
 
-<section class="p-1 cart-items">
+<section class="p-0 cart-items">
     <ul class="row">
         @if (Model != null)
         {
@@ -50,22 +50,23 @@
 
             foreach (var item in Model)
             {
-                <li class="col-12 col-sm-12 col-md-6 item-cart">
-                    <article class="product-list mb-2">
+                <li class="col-12 col-sm-12 col-md-6 item-cart card shadow-sm p-1 mb-1">
+                    <article class="product-list mb-0">
                         <div class="info-wrap">
                             <input class="item-code" type="hidden" value="@item.ITEM_ID" />
                             <input class="item-rate" type="hidden" value="@item.ITEM_RATE" />
                             <input class="item-factor" type="hidden" value="@item.ITEM_FACTOR" />
-                            <p class="title text-primary"> @item.ITEM_ID~@item.ITEM_NAME</p>
+                            <p class="title text-dark"> @item.ITEM_ID~@item.ITEM_NAME</p>
                         </div>
                     </article>
-                    <div class="price mb-2">
-                        <span class="badge bg-secondary">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
+                    <div class="price mb-0">
+                        <span class="badge bg-secondary" style="display:none">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
                         @if (!string.IsNullOrEmpty(item.NOTE_TEXT))
                         {
                             <span class='badge bg-warning'>@item.NOTE_TEXT=@item.NOTE_VALUE</span>
                         }
                     </div>
+                    @{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; }
                     <div class="input-group input-group-sm">
                         <button class="btn btn-danger delete-item" type="button">
                             <i class="material-icons md-delete"></i>
@@ -73,13 +74,12 @@
                         <button class="btn btn-light minus-cart" type="button"> <i class="material-icons md-minus"></i> </button>
                         <input type="number" name="quantity" class="form-control quantity-cart" value="@item.ITEM_QTY" min="1">
                         <button class="btn btn-light plus-cart" type="button"> <i class="material-icons md-plus"></i> </button>
+                        <button class="btn btn-secondary sub-total-new" type="button">@st</button>
                     </div>
-                    <div class="input-group input-group-sm sub-total">
+                    <div class="input-group input-group-sm sub-total" style="display:none">
                         <button class="btn btn-secondary cart-dqty">@item.ITEM_DQTY</button>
-                        @{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; }
                         <button type="button" class="form-control">x @item.ITEM_RATE = <span> @st</span></button>
                     </div>
-                    <br />
                 </li>
                                 }
                             }
@@ -112,7 +112,7 @@
             <button class="btn btn-primary btn-sm w-100 mb-2" type="button" id="btnReload">Refresh Cart</button>
         </div>
         <div class="col">
-            <a href="@Url.Action("Categories","Products")" class="btn btn-outline-success btn-sm w-100">Back to shop</a>
+            <a href="@Url.Action("Categories","Products")" class="btn btn-success btn-sm w-100">Back to shop</a>
         </div>
     </div>
 </section>
@@ -146,6 +146,9 @@
                 };
                 var rate = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-rate").val();
                 var subTotal = parseFloat(qty) * parseFloat(rate);
+                //
+                $(this).siblings('button.sub-total-new').text(subTotal.toFixed(2));
+                //
                 $(this).parent('div.input-group').siblings('div.sub-total').children('button.form-control')
                     .find('span').text(subTotal.toFixed(2));
                 var itemFact = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-factor").val();
@@ -196,6 +199,11 @@
         function calculate_subTotal(thisObj) {
             var rate = thisObj.parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-rate").val();
             var subTotal = parseFloat(quantityField.val()) * parseFloat(rate);
+
+            //
+            $(thisObj).siblings('button.sub-total-new').text(subTotal.toFixed(2));
+            //
+
             thisObj.parent('div.input-group').siblings('div.sub-total').children('button.form-control')
                 .find('span').text(subTotal.toFixed(2));
 

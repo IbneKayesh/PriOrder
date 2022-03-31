@@ -8,7 +8,7 @@
     <figure class="icontext align-items-center mr-4" style="max-width: 300px;">
         @if (Session["userId"] != null)
             {
-            <img class="icon icon-md rounded-circle" src="~/Images/Distributor/Profile/@Session["userId"]-.jpg" alt="@Session["userId"]">
+            <img class="icon icon-md rounded-circle" src="~/Images/Distributor/Profile/@(Session["userId"]).jpg" alt="@Session["userId"]">
             <figcaption class="text text-white">
                 <p class="h5 title mb-1">@Session["userId"]</p>
                 <p>@Session["userName"]</p>

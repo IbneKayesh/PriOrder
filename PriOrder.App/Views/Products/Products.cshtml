@@ -17,7 +17,9 @@
             <li class="col-12 col-sm-12 col-md-6">
                 <article class="product-list mb-2">
                     <div>
-                        <a href="#" class="img-wrap"> <img src="~/Images/Products/@item.ITEM_ID-.jpg" alt="@item.ITEM_ID"> </a>
+                        <a href="#" class="img-wrap">
+                            <img src="~/Images/Products/@(item.ITEM_ID).jpg" alt="@item.ITEM_ID" />
+                        </a>
                     </div>
                     <div class="info-wrap">
                         <a href="#" class="btn btn-icon btn-sm btn-light float-end favorite-item">
@@ -67,7 +69,7 @@
                         .children("div.price").children('div.input-group').find("select#WO_NOTE option").filter(":selected").val()
             var notVal = $(this).parent('div.input-group').siblings('article.product-list').children("div.info-wrap")
                         .children("div.price").children('div.input-group').find('input.item-note').val();
-            
+
             if (quantity != '' && parseInt(quantity) != '0' && itemcode != '') {
                 $.post("AddToCart", { "id": itemcode, "qt": quantity, "noId": notId, "noVal": notVal },
                     function (data) {

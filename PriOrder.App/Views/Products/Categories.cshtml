@@ -11,7 +11,7 @@
                 <li class="col-12 col-sm-12 col-md-4">
                     <article class="product-list mb-2">
                         <div>
-                            <a href="@Url.Action("ProductClass","Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap"> <img src="~/Images/Category/@item.ITEM_TYPE_ID-.jpg" alt="@item.ITEM_TYPE_ID"> </a>
+                            <a href="@Url.Action("ProductClass","Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap"> <img src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID"> </a>
                         </div>
                         <div class="info-wrap">
                             <p class="title"> @item.ITEM_TYPE_NAME </p>

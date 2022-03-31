@@ -14,11 +14,9 @@
             foreach (var item in Model.CATEGORIES)
             {
                 <div class="item-xs">
-                    <a href="@Url.Action("ProductClass", "Products", new { id = item.ITEM_TYPE_ID })" class="item-category-sm">
-                        <div class="icon-wrap bg-primary-light shadow-sm">
-                            <img class="icon" src="~/Images/Category/@item.ITEM_TYPE_ID-.jpg" alt="@item.ITEM_TYPE_ID">
-                        </div>
-                        <small class="title text-white"> @item.ITEM_TYPE_NAME </small>
+                    <a href="@Url.Action("ProductClass", "Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap">
+                        <img class="rounded-circle" src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID">
+                        <small class="text-muted"> @item.ITEM_TYPE_NAME </small>
                     </a>
                 </div>
             }
@@ -38,7 +36,7 @@
             {
                 <li class="nav-item">
                     <a href="@Url.Action("Products", "Products", new { className = item.ITEM_CLASS_ID, catName = item.ITEM_TYPE_ID })" class="icontext">
-                        <span class="icon icon-sm rounded"> <img src="~/Images/ItemClass/@item.ITEM_CLASS_ID-.jpg" alt="@item.ITEM_CLASS_ID"> </span>
+                        <span class="icon icon-sm rounded"> <img src="~/Images/ItemClass/@(item.ITEM_CLASS_ID).jpg" alt="@item.ITEM_CLASS_ID"> </span>
                         <div class="text"> <h6 class="title">@item.ITEM_CLASS_NAME</h6> <span class="text-muted">@item.ITEMS_COUNT items</span></div>
                     </a>
                 </li>

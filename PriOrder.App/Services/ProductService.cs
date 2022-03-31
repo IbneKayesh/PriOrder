@@ -47,7 +47,7 @@ namespace PriOrder.App.Services
                         AND IM.INACTIVE = 'N' AND IM.ITEM_GROUP_ID = 'RFLGR001'
                         AND DI.DSMA_DSID = '{distId}' 
                         AND IM.ITEM_TYPE_ID = '{categoryId}'
-                        GROUP BY IM.ITEM_CLASS_ID,ICLS.ITEM_CLASS_NAME,IM.ITEM_TYPE_ID";
+                        GROUP BY IM.ITEM_CLASS_ID,ICLS.ITEM_CLASS_NAME,IM.ITEM_TYPE_ID ORDER BY IM.ITEM_CLASS_ID";
 
             return DatabaseOracleClient.SqlToListObjectBind<WO_ITEM_CLASS>(sql);
         }
@@ -77,7 +77,7 @@ namespace PriOrder.App.Services
                     WHERE IM.D_SALE_PRICE > 0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000','RC9500050')
                     AND IM.INACTIVE='N' AND IM.ITEM_GROUP_ID='RFLGR001'
                     AND IM.ITEM_CLASS_ID='{classId}'
-                    AND IM.ITEM_TYPE_ID='{categoryId}'";
+                    AND IM.ITEM_TYPE_ID='{categoryId}' ORDER BY IM.ITEM_NAME";
             var Items = DatabaseOracleClient.SqlToListObjectBind<WO_ITEMS>(sql);
             Items.Item1.ForEach(x => x.WO_NOTE = getItemNotes());
             return Items;
@@ -134,7 +134,7 @@ namespace PriOrder.App.Services
                     LEFT OUTER JOIN RPGL.T_NIST STK ON STK.ITEM=IM.ITEM_ID AND STK.WH=(SELECT WH_ID FROM RFL.DISTRIBUTOR_MASTER WHERE DIST_ID=FVI.DSMA_DSID)
                     LEFT OUTER JOIN RPGL.T_WHOC WHOC ON STK.WH=WHOC.WH_ID AND STK.ITEM=WHOC.ITEM_ID
                     WHERE IM.D_SALE_PRICE > 0 AND IM.ITEM_CLASS_ID NOT IN('RC9000000', 'RC9500050')
-                    AND IM.INACTIVE = 'N' AND IM.ITEM_GROUP_ID = 'RFLGR001'";
+                    AND IM.INACTIVE = 'N' AND IM.ITEM_GROUP_ID = 'RFLGR001' ORDER BY IM.ITEM_NAME";
 
 
             var Items = DatabaseOracleClient.SqlToListObjectBind<WO_ITEMS>(sql);
