@@ -27,7 +27,7 @@ namespace PriOrder.App.Services
 
             var smsData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
 
-            return DatabaseOracleClient.DataTableToListObjectBind<WO_PUSH_MSG>(smsData.Item1.Tables[0]);
+            return DatabaseOracleClient.DataTableToListObjectBind<WO_PUSH_MSG>(smsData.Set.Tables[0]);
 
         }
         public static List<SelectListItem> getSupportCategory()

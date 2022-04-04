@@ -108,9 +108,9 @@ namespace PriOrder.App.Services
             EQResult rslt = new EQResult();
             rslt.SUCCESS = false;
             rslt.ROWS = 0;
-            if (procData.Item2.SUCCESS && procData.Item2.ROWS == 1)
+            if (procData.Result.SUCCESS && procData.Result.ROWS == 1)
             {
-                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_DSMA_BAL>(procData.Item1.Tables[0]);
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_DSMA_BAL>(procData.Set.Tables[0]);
                 if (objList.Count > 0)
                 {
                     rslt.SUCCESS = true;

@@ -14,7 +14,7 @@ namespace Aio.Db.Client.Entrance
     public static class DatabaseOracleClient
     {
         #region Oracle_DB_Method
-        public static Tuple<DataTable, EQResult> GetDataTable(string sql, object[] _parameters = null, string _con = "")
+        public static EQResultTable GetDataTable(string sql, object[] _parameters = null, string _con = "")
         {
             return DatabaseOracle.ExecuteQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _parameters: _parameters);
         }
@@ -44,10 +44,10 @@ namespace Aio.Db.Client.Entrance
         private static T SqlToModel<T>(string sql) where T : new()
         {
             T t = new T();
-            Tuple<DataTable, EQResult> _tpl = GetDataTable(sql: sql);
-            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+            EQResultTable _tpl = GetDataTable(sql: sql);
+            if (_tpl.Result.SUCCESS && _tpl.Result.ROWS > 0)
             {
-                t = TableEntity.DataTableToListModel<T>(_tpl.Item1).ToList().FirstOrDefault();
+                t = TableEntity.DataTableToListModel<T>(_tpl.Table).ToList().FirstOrDefault();
             }
             return t;
         }
@@ -55,12 +55,12 @@ namespace Aio.Db.Client.Entrance
         public static Tuple<List<T>, EQResult> SqlToListObjectBind<T>(string sql, object[] _parameters = null) where T : new()
         {
             List<T> lst = new List<T>();
-            Tuple<DataTable, EQResult> _tpl = GetDataTable(sql: sql, _parameters: _parameters);
-            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+            EQResultTable _tpl = GetDataTable(sql: sql, _parameters: _parameters);
+            if (_tpl.Result.SUCCESS && _tpl.Result.ROWS > 0)
             {
-                lst = TableEntity.BindObjectList<T>(_tpl.Item1).ToList();
+                lst = TableEntity.BindObjectList<T>(_tpl.Table).ToList();
             }
-            return new Tuple<List<T>, EQResult>(lst, _tpl.Item2);
+            return new Tuple<List<T>, EQResult>(lst, _tpl.Result);
         }
         /// <summary>
         /// Getting error in number system
@@ -71,10 +71,10 @@ namespace Aio.Db.Client.Entrance
         public static List<T> SqlToListModel<T>(string sql) where T : new()
         {
             List<T> lst = new List<T>();
-            Tuple<DataTable, EQResult> _tpl = GetDataTable(sql: sql);
-            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+            EQResultTable _tpl = GetDataTable(sql: sql);
+            if (_tpl.Result.SUCCESS && _tpl.Result.ROWS > 0)
             {
-                lst = TableEntity.DataTableToListModel<T>(_tpl.Item1).ToList();
+                lst = TableEntity.DataTableToListModel<T>(_tpl.Table).ToList();
             }
             return lst;
         }
@@ -142,7 +142,7 @@ namespace Aio.Db.Client.Entrance
 
 
         #region Oracle_DB_Method_SP
-        public static Tuple<DataSet, EQResult> GetDataSetSP(string sql, object[] _in_param, object[] _out_param, string _con="")
+        public static EQResultSet GetDataSetSP(string sql, object[] _in_param, object[] _out_param, string _con="")
         {
             return DatabaseOracle.ExecuteSPQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _in_parameters: _in_param, _out_parameters: _out_param);
         }
