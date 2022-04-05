@@ -11,7 +11,7 @@ namespace PriOrder.App.DataModels
         public const int CLS_IMG_SIZE = 51200; //1024 * 50 KB
         public const int ITM_IMG_SIZE = 51200; //1024 * 50 KB
 
-        public const int PRO_IMG_SIZE = 51200; //1024 * 50 KB
+        public const int PRO_IMG_SIZE = 512000; //1024 * 500 KB
 
         public const string CART_COUNT_CACHE = "ChCartItemCount";
     }

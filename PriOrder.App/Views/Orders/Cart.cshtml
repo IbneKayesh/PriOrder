@@ -7,7 +7,8 @@
     var CurrBalanace = 0M;
     if (Session["userBalnace"] != null)
     {
-        CurrBalanace = Math.Abs(Convert.ToDecimal(Session["userBalnace"]));
+        //CurrBalanace = Math.Abs(Convert.ToDecimal(Session["userBalnace"]));
+        CurrBalanace = Convert.ToDecimal(Session["userBalnace"]);
     }
 }
 <section class="p-0">
@@ -56,6 +57,8 @@
                             <input class="item-code" type="hidden" value="@item.ITEM_ID" />
                             <input class="item-rate" type="hidden" value="@item.ITEM_RATE" />
                             <input class="item-factor" type="hidden" value="@item.ITEM_FACTOR" />
+                            <input class="item-note-id" type="hidden" value="@item.NOTE_ID" />
+                            <input class="item-note-val" type="hidden" value="@item.NOTE_VALUE" />
                             <p class="title text-dark"> @item.ITEM_ID~@item.ITEM_NAME</p>
                         </div>
                     </article>
@@ -78,32 +81,38 @@
                     </div>
                     <div class="input-group input-group-sm sub-total" style="display:none">
                         <button class="btn btn-secondary cart-dqty">@item.ITEM_DQTY</button>
-                        <button type="button" class="form-control">x @item.ITEM_RATE = <span> @st</span></button>
+                        <button type="button" class="form-control">x @item.ITEM_RATE = <span>@st.ToString("0.##")</span></button>
                     </div>
                 </li>
-                                }
                             }
-                            else
-                            {
-                                <li class="title-sm text-white">No Cart item found</li>
-                            }
+                        }
+                        else
+                        {
+                            <li class="title-sm text-white">No Cart item found</li>
+                        }
     </ul>
 </section>
 
-<hr class="divider">
-@{ var newBalance = CurrBalanace - TotalSum;}
-<section class="padding-around">
+<section class="padding-around card shadow-sm bg-light">
     <dl class="dlist-align">
-        <dt class="text-muted"><strong>Total price:</strong></dt>
+        <dt class="text-primary-light"><strong>Total price:</strong></dt>
         <dd class="text-end" id="total-sum-amount"><strong>@TotalSum</strong></dd>
     </dl>
     <dl class="dlist-align">
-        <dt class="text-muted"><strong>Balance:</strong></dt>
-        <dd class="text-end" id="total-sum-balance">@CurrBalanace</dd>
+        <dt class="text-primary-light"><strong>Total discount:</strong></dt>
+        <dd class="text-end" id="total-sum-discount"><strong>0.00</strong></dd>
     </dl>
     <dl class="dlist-align">
-        <dt class="text-muted"><strong>New Balance:</strong></dt>
-        <dd class="text-end" id="total-sum-new-balance"><strong>@newBalance</strong></dd>
+        <dt class="text-primary-light"><strong>Net payment:</strong></dt>
+        <dd class="text-end" id="total-sum-payment"><strong>0.00</strong></dd>
+    </dl>
+    <dl class="dlist-align">
+        <dt class="text-primary-light"><strong>Balance:</strong></dt>
+        <dd class="text-end" id="total-sum-balance"><strong>@CurrBalanace</strong></dd>
+    </dl>
+    <dl class="dlist-align">
+        <dt class="text-primary-light"><strong>New balance:</strong></dt>
+        <dd class="text-end" id="total-sum-new-balance"><strong>0.00</strong></dd>
     </dl>
     <br>
     <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Confirm Order</button>
@@ -195,6 +204,9 @@
                 });
                 getCartSum();
             });
+
+            getCartSum();
+
         });
         function calculate_subTotal(thisObj) {
             var rate = thisObj.parent('div.input-group').siblings('article.product-list').children('div.info-wrap').find("input.item-rate").val();
@@ -213,19 +225,38 @@
 
             getCartSum();
         };
+
+
         function getCartSum() {
             var totalPrices = 0;
+            var totalDiscounts = 0;
+            //subtotal
             $('li.item-cart').each(function () {
                 var subTotal = $(this).children('div.sub-total').children('button.form-control')
                 .find('span').text();
                 totalPrices += parseFloat(subTotal);
-            });
-            $('section.padding-around').find('#total-sum-amount strong').text(totalPrices.toFixed(2));
 
-            var oldBalance = $('section.padding-around').find('#total-sum-balance').text();
-            var newBalance = parseFloat(oldBalance) - parseFloat(totalPrices);
+                //discount
+                var noteId = $(this).children('article.product-list').children('div.info-wrap')
+               .find('input.item-note-id').val();
+                if (noteId == "200") {
+                    var noteVal = $(this).children('article.product-list').children('div.info-wrap').find('input.item-note-val').val();
+                    totalDiscounts += (parseFloat(subTotal) * parseFloat(noteVal))/100;
+                }
+            });
+
+
+            $('section.padding-around').find('#total-sum-amount strong').text(totalPrices.toFixed(2));
+            $('section.padding-around').find('#total-sum-discount strong').text(totalDiscounts.toFixed(2));
+            var netPayment = (totalPrices - totalDiscounts).toFixed(2);
+            $('section.padding-around').find('#total-sum-payment strong').text(netPayment);
+            var oldBalance = $('section.padding-around').find('#total-sum-balance strong').text();
+            var newBalance = parseFloat(netPayment) + parseFloat(oldBalance);
             $('section.padding-around').find('#total-sum-new-balance strong').text(newBalance.toFixed(2));
         }
+
+
+
 
         $("#btnConfirm").click(function (e) {
             e.preventDefault();

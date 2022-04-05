@@ -49,7 +49,6 @@ namespace PriOrder.App.Controllers
                 Session["userName"] = _tpl.Item1.FirstOrDefault().DIST_NAME;
                 Session["userGroup"] = _tpl.Item1.FirstOrDefault().DIST_GROUP;
                 Session["userMobile"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
-                Session["userBalnace"] = _tpl.Item1.FirstOrDefault().DIST_MOBILE;
 
                 //Load Menu
                 Tuple<List<WO_APP_MENU>, EQResult> _tplMenu = LoginService.getMenusByUserId("", IsHo: false);

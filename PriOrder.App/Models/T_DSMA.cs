@@ -11,6 +11,8 @@ namespace PriOrder.App.Models
         public string DSTO_NIDN { get; set; }
         public string DIST_TYPE_ID { get; set; }
         public string DIST_TYPE { get; set; }
+        public string DOMO_TEXT { get; set; }
+        public string DIST_CLASS_NAME { get; set; }
         public string DSMA_DSID { get; set; }
         public string DSMA_NAME { get; set; }
         public string ADDR1 { get; set; }

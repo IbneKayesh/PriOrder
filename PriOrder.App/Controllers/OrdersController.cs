@@ -18,6 +18,8 @@ namespace PriOrder.App.Controllers
         public ActionResult Cart()
         {
             string distId = Session["userId"].ToString();
+            updateBalance(distId);
+
             Tuple<List<WO_ORDER_CART>, EQResult> _tpl = OrderService.getCartByDistId(distId);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
@@ -93,5 +95,21 @@ namespace PriOrder.App.Controllers
             return Json(rslt);
         }
 
+
+        private void updateBalance(string distId)
+        {
+            if (Session["userBalnace"] == null)
+            {
+                //Get Balance
+                var obj = new T_DSMA();
+                Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance(distId);
+                if (_tpl_bal.Item2.SUCCESS && _tpl_bal.Item2.ROWS == 1)
+                {
+                    obj.T_DSMA_BAL = _tpl_bal.Item1.FirstOrDefault();
+                    Session["userBalnace"] = obj.T_DSMA_BAL.DBAL_ABAL;
+                }
+                //End Get Balance 
+            }
+        }
     }
 }

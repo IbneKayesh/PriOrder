@@ -12,7 +12,6 @@
             <figcaption class="text text-white">
                 <p class="h5 title mb-1">@Session["userId"]</p>
                 <p>@Session["userName"]</p>
-                <p class="text-white-50 lh-sm">@Session["userMobile"]</p>
                 <p class="text-white-50 lh-sm">MR: @Model.T_DSMA_BAL.MRDO_AMNT, Balance: @Model.T_DSMA_BAL.DBAL_ABAL, Credit: @Model.T_DSMA_BAL.DBAL_CBAL</p>
             </figcaption>
             }
@@ -48,7 +47,7 @@
     <h5 class="title-section pb-2">Account</h5>
     <nav class="nav-list">
         <div class="btn-list">
-            <span class="float-end badge bg-warning">@(String.IsNullOrEmpty(Model.APPL_NID) ? "Update your Master NID, Contact with Help Line" : Model.APPL_NID)</span>
+            <span class="float-end badge bg-danger">@(String.IsNullOrEmpty(Model.APPL_NID) ? "Update your Master NID, Contact with Help Line" : Model.APPL_NID)</span>
             <span class="text">Master ID</span>
         </div>
         <div class="btn-list">
@@ -58,6 +57,10 @@
         <div class="btn-list">
             <span class="float-end badge bg-success">@Model.DIST_TYPE</span>
             <span class="text">Type</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.DIST_CLASS_NAME</span>
+            <span class="text">Class</span>
         </div>
         <div class="btn-list">
             <span class="float-end badge bg-secondary">@Model.DSMA_DSID</span>

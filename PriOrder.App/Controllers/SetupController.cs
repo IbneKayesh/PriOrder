@@ -70,7 +70,7 @@ namespace PriOrder.App.Controllers
                     if (fileExtension == ".jpg")
                     {
                         string filePath = "~/Images/Category/";
-                        string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.ITEM_TYPE_ID + "-.jpg");
+                        string serverPath = Path.Combine(Server.MapPath(filePath), obj.ITEM_TYPE_ID + ".jpg");
                         obj.ITEM_TYPE_IMAGE.SaveAs(serverPath);
 
                         TempData["mesg"] = SweetMessages.SuccessPop("Image successfully added");
@@ -83,7 +83,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = $"File size must be less than {ApplData.CAT_IMG_SIZE}KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.CAT_IMG_SIZE/1024}KB and 80 x 80 pixel";
                 }
             }
             else
@@ -152,7 +152,7 @@ namespace PriOrder.App.Controllers
                     if (fileExtension == ".jpg")
                     {
                         string filePath = "~/Images/ItemClass/";
-                        string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.ITEM_CLASS_ID + "-.jpg");
+                        string serverPath = Path.Combine(Server.MapPath(filePath), obj.ITEM_CLASS_ID + ".jpg");
                         obj.ITEM_CLASS_IMAGE.SaveAs(serverPath);
 
                         TempData["mesg"] = SweetMessages.SuccessPop("Image successfully added");
@@ -165,7 +165,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = $"File size must be less than {ApplData.CLS_IMG_SIZE}KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.CLS_IMG_SIZE/1024}KB and 80 x 80 pixel";
                 }
             }
             else
@@ -224,7 +224,7 @@ namespace PriOrder.App.Controllers
                     if (fileExtension == ".jpg")
                     {
                         string filePath = "~/Images/Products/";
-                        string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.ITEM_ID + "-.jpg");
+                        string serverPath = Path.Combine(Server.MapPath(filePath), obj.ITEM_ID + ".jpg");
                         obj.ITEMS_IMAGE.SaveAs(serverPath);
 
                         //return back to last pages
@@ -240,7 +240,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = $"File size must be less than {ApplData.ITM_IMG_SIZE}KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.ITM_IMG_SIZE/1024}KB and 80 x 80 pixel";
                 }
             }
             else

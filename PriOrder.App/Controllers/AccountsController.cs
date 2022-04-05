@@ -150,7 +150,7 @@ namespace PriOrder.App.Controllers
                     if (fileExtension == ".jpg")
                     {
                         string filePath = "~/Images/Distributor/Profile/";
-                        string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.USER_ID + "-.jpg");
+                        string serverPath = System.IO.Path.Combine(Server.MapPath(filePath), obj.USER_ID + ".jpg");
                         obj.USER_IMAGE.SaveAs(serverPath);
 
                         TempData["mesg"] = SweetMessages.SuccessPop("Picture successfully updated");
@@ -163,7 +163,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = $"File size must be less than {ApplData.PRO_IMG_SIZE}KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.PRO_IMG_SIZE/1024}KB and 80 x 80 pixel";
                 }
             }
             else
@@ -172,7 +172,7 @@ namespace PriOrder.App.Controllers
             }
             ModelState.AddModelError("", errorMessage: err);
             TempData["mesg"] = SweetMessages.Failed(err);
-            return View();
+            return View(obj);
         }
     }
 }
