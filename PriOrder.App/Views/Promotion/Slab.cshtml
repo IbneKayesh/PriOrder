@@ -5,33 +5,39 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<section class="p-1">
+@if (Model.Count() > 0)
+{
     <ul class="row">
-        @if (Model.Count() > 0)
-        {
-            foreach (var item in Model)
-            {
-                <li class="col-12 col-sm-12 col-md-6 card shadow-sm mb-1">
-                    <article class="product-list mb-1">
-                        <div>
-                            <a href="#" class="img-wrap">
-                                <img src="~/Images/Products/@(item.SMPL_ITEM).jpg" alt="@item.SMPL_ITEM" />
-                            </a>
-                        </div>
-                        <div class="info-wrap">
-                            <p class="title text-primary"> @item.ITEM_NAME </p>
-                            <p class="title">Quantity: @item.SPGM_GQTY</p>
-                            <p class="title">Slab: @item.SPMS_NSLB</p>
-                            <p class="title">Group: @item.ITEM_GROUP</p>
-                            <p class="title">Validity: @item.SPMS_FDAT.ToString("dd-MMM-yyyy") - @item.SPMS_TDAT.ToString("dd-MMM-yyyy")</p>
-                        </div>
-                    </article>
-                </li>
-            }
-        }
-        else
-        {
-            <li class="text">No Slab Promo found</li>
+
+        @foreach (var item in Model)
+                {
+            <li class="col-12 col-sm-12 col-md-6 card shadow-sm mb-1">
+                <article class="product-list mb-1">
+                    <div>
+                        <a href="#" class="img-wrap">
+                            <img src="~/Images/Products/@(item.SMPL_ITEM).jpg" alt="@item.SMPL_ITEM" />
+                        </a>
+                    </div>
+                    <div class="info-wrap">
+                        <p class="title text-primary"> @item.ITEM_NAME </p>
+                        <p class="title">Quantity: @item.SPGM_GQTY</p>
+                        <p class="title">Slab: @item.SPMS_NSLB</p>
+                        <p class="title">Group: @item.ITEM_GROUP</p>
+                        <p class="title">Validity: @item.SPMS_FDAT.ToString("dd-MMM-yyyy") - @item.SPMS_TDAT.ToString("dd-MMM-yyyy")</p>
+                    </div>
+                </article>
+            </li>
         }
     </ul>
-</section>
+
+}
+else
+{
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">Not Found!</h5>
+            <p class="card-text">Currently, you've not Slab Promo.</p>
+            <a href="@Url.Action("Favorite","Products")" c class="btn btn-primary">Favorite Products</a>
+        </div>
+    </div>
+}

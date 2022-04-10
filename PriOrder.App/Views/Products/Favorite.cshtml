@@ -10,49 +10,57 @@
 </p>
 
 <section class="p-1">
-    <ul class="row">
-        @if (Model != null)
-        {
-            foreach (var item in Model)
+
+    @if (Model.Count() > 0)
+    {
+        <ul class="row">
+            @foreach (var item in Model)
             {
-                <li class="col-12 col-sm-12 col-md-6 card shadow-sm mb-1">
-                    <article class="product-list mb-1">
-                        <div>
-                            <a href="#" class="img-wrap"> <img src="~/Images/Products/@(item.ITEM_ID).jpg" alt="@item.ITEM_ID"> </a>
-                        </div>
-                        <div class="info-wrap">
-                            <a href="#" class="btn btn-icon btn-sm btn-light float-end favorite-item">
-                                <i class="material-icons md-favorite"></i>
-                            </a>
-                            <input class="item-code" type="hidden" value="@item.ITEM_ID" />
-                            <p class="title text-primary"> @item.ITEM_ID </p>
-                            <p class="title"> @item.ITEM_NAME</p>
-                            <div class="price mb-1">
-                                <div class="input-group input-group-sm">
-                                        @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
-                                        <input class="item-note form-control form-control-sm" type="text" value="">
-                                    </div>
+            <li class="col-12 col-sm-12 col-md-6 card shadow-sm mb-1">
+                <article class="product-list mb-1">
+                    <div>
+                        <a href="#" class="img-wrap"> <img src="~/Images/Products/@(item.ITEM_ID).jpg" alt="@item.ITEM_ID"> </a>
+                    </div>
+                    <div class="info-wrap">
+                        <a href="#" class="btn btn-icon btn-sm btn-light float-end favorite-item">
+                            <i class="material-icons md-favorite"></i>
+                        </a>
+                        <input class="item-code" type="hidden" value="@item.ITEM_ID" />
+                        <p class="title text-primary"> @item.ITEM_ID </p>
+                        <p class="title"> @item.ITEM_NAME</p>
+                        <div class="price mb-1">
+                            <div class="input-group input-group-sm">
+                                @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
+                                <input class="item-note form-control form-control-sm" type="text" value="">
                             </div>
                         </div>
-                    </article>
-                    <div class="price mb-1">
-                        <span class="badge bg-secondary">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
-                        <span class="badge bg-secondary">Stk: @item.NEW_STOCK, Inc: 0.0%</span>
                     </div>
-                    <div class="input-group input-group-sm">
-                        <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
-                        <input type="number" name="quantity" class="form-control" value="10" min="1">
-                        <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
-                        <button class="btn btn-light add_to_cart" type="button"> <i class="material-icons md-shopping_cart"></i> </button>
-                    </div>
-                </li>
+                </article>
+                <div class="price mb-1">
+                    <span class="badge bg-secondary">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
+                    <span class="badge bg-secondary">Stk: @item.NEW_STOCK, Inc: 0.0%</span>
+                </div>
+                <div class="input-group input-group-sm">
+                    <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
+                    <input type="number" name="quantity" class="form-control" value="10" min="1">
+                    <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
+                    <button class="btn btn-light add_to_cart" type="button"> <i class="material-icons md-shopping_cart"></i> </button>
+                </div>
+            </li>
             }
-        }
-        else
-        {
-            <li class="title-sm text-white">No Favorite item found</li>
-        }
-    </ul>
+        </ul>
+    }
+    else
+    {
+        <div class="card text-center">
+            <div class="card-body">
+                <h5 class="card-title">Not Found!</h5>
+                <p class="card-text">No Favorite item found.</p>
+                <a href="@Url.Action("Categories","Products")" c class="btn btn-primary">Browse Products</a>
+            </div>
+        </div>
+    }
+
 </section>
 
 

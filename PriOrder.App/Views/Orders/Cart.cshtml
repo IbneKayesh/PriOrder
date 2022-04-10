@@ -44,12 +44,13 @@
 
 
 <section class="p-0 cart-items">
-    <ul class="row">
-        @if (Model != null)
-        {
+
+    @if (Model.Count() > 0)
+    {
+        <ul class="row">
             @Html.AntiForgeryToken()
 
-            foreach (var item in Model)
+            @foreach (var item in Model)
             {
                 <li class="col-12 col-sm-12 col-md-6 item-cart card shadow-sm p-1 mb-1">
                     <article class="product-list mb-0">
@@ -66,7 +67,7 @@
                         <span class="badge bg-secondary" style="display:none">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
                         @if (!string.IsNullOrEmpty(item.NOTE_TEXT))
                         {
-                            <span class='badge bg-warning'>@item.NOTE_TEXT=@item.NOTE_VALUE</span>
+                        <span class='badge bg-warning'>@item.NOTE_TEXT=@item.NOTE_VALUE</span>
                         }
                     </div>
                     @{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; }
@@ -84,13 +85,20 @@
                         <button type="button" class="form-control">x @item.ITEM_RATE = <span>@st.ToString("0.##")</span></button>
                     </div>
                 </li>
-                            }
-                        }
-                        else
-                        {
-                            <li class="title-sm text-white">No Cart item found</li>
-                        }
-    </ul>
+            }
+        </ul>
+
+     }
+     else
+     {
+    <div class="card text-center">
+        <div class="card-body">
+            <h5 class="card-title">Empty!</h5>
+            <p class="card-text">Your cart is empty.</p>
+            <a href="@Url.Action("Categories","Products")" c class="btn btn-primary">Browse Products</a>
+        </div>
+    </div>
+     }
 </section>
 
 <section class="padding-around card shadow-sm bg-light">
@@ -189,6 +197,7 @@
                                 if (response.success) {
                                     thisObj.parent('div.input-group').parent('li.item-cart').remove();
                                     Swal.fire({ title: "Success!", text: response.messages, icon: "success", button: "Ok!" });
+                                    getCartSum();
                                 } else {
                                     Swal.fire({ title: "Failed!", text: response.messages, icon: "error", button: "Ok!" });
                                 }
@@ -202,7 +211,6 @@
                         });
                     }
                 });
-                getCartSum();
             });
 
             getCartSum();
@@ -241,7 +249,7 @@
                .find('input.item-note-id').val();
                 if (noteId == "200") {
                     var noteVal = $(this).children('article.product-list').children('div.info-wrap').find('input.item-note-val').val();
-                    totalDiscounts += (parseFloat(subTotal) * parseFloat(noteVal))/100;
+                    totalDiscounts += (parseFloat(subTotal) * parseFloat(noteVal)) / 100;
                 }
             });
 
@@ -277,7 +285,7 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
                 success: function (response) {
-                    Swal.fire({ title: "Succeeded!", text:response.messages, icon: "success" });
+                    Swal.fire({ title: "Succeeded!", text: response.messages, icon: "success" });
                 },
                 failure: function (response) {
                     Swal.fire("Error", response.messages);
