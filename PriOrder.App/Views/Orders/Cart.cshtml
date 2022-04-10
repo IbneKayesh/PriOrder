@@ -14,7 +14,7 @@
 <section class="p-0">
     <div class="row">
         <div class="col">
-            <button class="btn btn-primary btn-sm w-100 mb-2" type="button" id="btnReload">Refresh Cart</button>
+            <button class="btn btn-primary btn-sm w-100 mb-2 btn-reload" type="button">Refresh Cart</button>
         </div>
         <div class="col">
             <a href="@Url.Action("Categories","Products")" class="btn btn-success btn-sm w-100">Back to shop</a>
@@ -118,7 +118,7 @@
     <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Confirm Order</button>
     <div class="row">
         <div class="col">
-            <button class="btn btn-primary btn-sm w-100 mb-2" type="button" id="btnReload">Refresh Cart</button>
+            <button class="btn btn-primary btn-sm w-100 mb-2 btn-reload" type="button">Refresh Cart</button>
         </div>
         <div class="col">
             <a href="@Url.Action("Categories","Products")" class="btn btn-success btn-sm w-100">Back to shop</a>
@@ -129,7 +129,7 @@
 @section scripts{
     <script>
         $(document).ready(function () {
-            $('#btnReload').click(function () {
+            $('.btn-reload').click(function () {
                 location.href = location.href;
             });
 
@@ -277,13 +277,13 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
                 success: function (response) {
-                    Swal.fire("messages", response.messages);
+                    Swal.fire({ title: "Succeeded!", text:response.messages, icon: "success" });
                 },
                 failure: function (response) {
-                    Swal.fire("messages", response.messages);
+                    Swal.fire("Error", response.messages);
                 },
                 error: function (response) {
-                    Swal.fire("messages", response.responseText);
+                    Swal.fire("Error", response.responseText);
                 }
             });
         });
@@ -292,14 +292,19 @@
         $("#btnNoteApply").click(function (e) {
             e.preventDefault();
             var itemCode = $("select#CART_ITEMS option").filter(":selected").val();
-            console.log(itemCode);
             var itemNote = $("select#WO_NOTE option").filter(":selected").val();
-            console.log(itemNote);
             var itemNoteVal = $("#WO_NOTE_VALUE").val();
-            console.log(itemNoteVal);
             if (itemNote == "0" || itemNote == "" || itemNoteVal == "0" || itemNoteVal == "") {
                 Swal.fire({ title: "Unable to Change!", text: "Enter Note and Value", icon: "warning" });
                 return;
+            }
+            if (itemNote == "200") {
+                var noteLim = parseFloat(itemNoteVal);
+                if (noteLim > 50) {
+                    Swal.fire({ title: "Unable to Change!", text: "Enter Note Value below 50", icon: "error" });
+                    $("#WO_NOTE_VALUE").val('')
+                    return;
+                }
             }
 
             if (itemCode == "") {
@@ -337,7 +342,7 @@
                     Swal.fire({ title: "Error!", text: response.responseText, icon: "error" });
                 }
             });
-        }
+        };
 
     </script>
 

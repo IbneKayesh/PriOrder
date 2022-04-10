@@ -67,18 +67,50 @@ namespace PriOrder.App.Controllers
         {
             string distId = Session["userId"].ToString();
 
-            string Order = "OR#" + new Random().Next(100, 9999999) + " Placed successfully. please deposit your payment (Test)";
-            var obj = MessageService.AddNewSMS("Order", "0", "0", "0", distId, Order);
-            string result = "Order succeed! But this is test Only";// OrderService.OrderSubmit(distId,objList);
+            try
+            {
+                foreach (WO_ORDER_CART item in objList)
+                {
+                    if (item.NOTE_ID == "200" && Convert.ToInt32(item.NOTE_VALUE) > 50)
+                    {
+                        var note200 = new ALERT_MESG
+                        {
+                            messages = "Enter Note Value below 50",
+                            success = false
+                        };
+                        return Json(note200);
+                    }
+                }
+
+                EQResult result = OrderService.UpdateCart(distId, objList);
+                var rslt = new ALERT_MESG
+                {
+                    messages = "Order Placed successfully. (Test)",
+                    success = true
+                };
+                return Json(rslt);
+            }
+            catch (Exception ex)
+            {
+                var rslt = new ALERT_MESG
+                {
+                    messages = "Somthing went wrong",
+                    success = false
+                };
+                return Json(rslt);
+            }
+
+
+
+
+            //string Order = "OR#" + new Random().Next(100, 9999999) + " Placed successfully. please deposit your payment (Test)";
+            //var obj = MessageService.AddNewSMS("Order", "0", "0", "0", distId, Order);
+
 
             //reset cart count
             //HttpContext.Cache.Insert(distId + ApplData.CART_COUNT_CACHE, 0, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
 
-            var rslt = new ALERT_MESG
-            {
-                messages = result
-            };
-            return Json(rslt);
+
         }
 
         [HttpPost]

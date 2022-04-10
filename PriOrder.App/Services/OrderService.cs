@@ -83,7 +83,7 @@ namespace PriOrder.App.Services
             string sql = string.Empty;
             if (_itemCode == "0")
             {
-                sql = $"UPDATE WO_ORDER_CART SET NOTE_ID='{_noteId}',NOTE_VALUE='{_noteValue.Replace("'","")}' WHERE DSMA_DSID='{_distId}'";
+                sql = $"UPDATE WO_ORDER_CART SET NOTE_ID='{_noteId}',NOTE_VALUE='{_noteValue.Replace("'", "")}' WHERE DSMA_DSID='{_distId}'";
             }
             else
             {
@@ -92,5 +92,19 @@ namespace PriOrder.App.Services
             return DatabaseOracleClient.PostSql(sql);
         }
 
+
+        public static EQResult UpdateCart(string distId, List<WO_ORDER_CART> cartItems)
+        {
+            if (cartItems.Count > 0)
+            {
+                List<string> sqlList = new List<string>();
+                foreach (WO_ORDER_CART item in cartItems)
+                {
+                    sqlList.Add($"UPDATE WO_ORDER_CART SET ITEM_QTY={item.ITEM_QTY} WHERE DSMA_DSID='{distId}' AND ITEM_ID='{item.ITEM_ID}'");
+                }
+                return DatabaseOracleClient.PostSqlList(sqlList);
+            }
+            return new EQResult();
+        }
     }
 }
