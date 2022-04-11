@@ -38,7 +38,8 @@ namespace PriOrder.App.Controllers
                         HttpContext.Cache.Insert(distId + "chProfile", obj, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
                     }
                     //Get Balance
-                    Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance(distId);
+                    //Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance(distId);
+                    Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance("WAUTO", distId, "GET_BALANCE", distId, "", "");
                     if (_tpl_bal.Item2.SUCCESS && _tpl_bal.Item2.ROWS == 1)
                     {
                         obj.T_DSMA_BAL = _tpl_bal.Item1.FirstOrDefault();
@@ -163,7 +164,7 @@ namespace PriOrder.App.Controllers
                 }
                 else
                 {
-                    err = $"File size must be less than {ApplData.PRO_IMG_SIZE/1024}KB and 80 x 80 pixel";
+                    err = $"File size must be less than {ApplData.PRO_IMG_SIZE / 1024}KB and 80 x 80 pixel";
                 }
             }
             else

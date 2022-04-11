@@ -1,0 +1,78 @@
+﻿@model PriOrder.App.Models.WO_ORDER_CART_PAYMENT
+@{
+    ViewBag.Title = "Confirm Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb steps">
+        <li class="breadcrumb-item done">Cart</li>
+        <li class="breadcrumb-item current">Payment</li>
+    </ol>
+</nav>
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped table-sm">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Line</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Factor</th>
+                    <th>Qty</th>
+                    <th>Total</th>
+                    <th>ProRate</th>
+                    <th>SP%</th>
+                    <th>NP%</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.T_MBDO)
+            {
+                <tr>
+                    <td>@item.ORDATE</td>
+                    <td>@item.LINE</td>
+                    <td>@item.CODE</td>
+                    <td>@item.NAME</td>
+                    <td>@item.PRICE</td>
+                    <td>@item.FACTOR</td>
+                    <td>@item.QTY</td>
+                    <td>@item.TOTAL</td>
+                    <td>@item.PRO_RATE</td>
+                    <td>@item.SP_RATE</td>
+                    <td>@item.INCP</td>
+                    <td>@item.MBDO_NOTE</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="box bg-light">
+    <div class="row">
+        <div class="col">
+            Balance: @Model.T_DSMA_BAL.DBAL_ABAL <br />
+            MR: @Model.T_DSMA_BAL.MRDO_AMNT <br />
+            Credit: @Model.T_DSMA_BAL.DBAL_CBAL <br />
+            Total: @Model.TOTAL <br />
+        </div>
+        <div class="col">
+            Npv: @Model.T_MBDO_INCV.INCV <br />
+            Spv: @Model.T_MBDO_INCV.SPV <br />
+            Net: @Model.T_MBDO_INCV.NET <br />
+            SE: @Model.T_MBDO_INCV.SE <br />
+        </div>
+        <div class="col">
+            @if (Model.IS_VALID)
+            {
+                <form method="post">
+                    <input type="submit" class="btn btn-danger" value="Active All Order" />
+                </form>
+            }
+            
+        </div>
+    </div>
+</div>

@@ -159,6 +159,7 @@
     <Compile Include="Controllers\AccountsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
+    <Compile Include="Controllers\NFController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\PromotionController.cs" />
@@ -173,10 +174,14 @@
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
     <Compile Include="ModelsView\USER_PASSWORD.cs" />
+    <Compile Include="Models\T_MBDO_INCV.cs" />
+    <Compile Include="Models\MiniAge.cs" />
+    <Compile Include="Models\NIF_APPL.cs" />
     <Compile Include="Models\NIF_DIST.cs" />
     <Compile Include="Models\SUP_MSG_REPL.cs" />
     <Compile Include="Models\T_DSMA.cs" />
     <Compile Include="Models\T_DSMA_BAL.cs" />
+    <Compile Include="Models\T_MBDO.cs" />
     <Compile Include="Models\T_UNDELIVERED.cs" />
     <Compile Include="Models\V_CHOITALY.cs" />
     <Compile Include="Models\WO_COUNT.cs" />
@@ -185,6 +190,7 @@
     <Compile Include="Models\T_BANKCOL.cs" />
     <Compile Include="Models\WO_ITEM_CLASS.cs" />
     <Compile Include="Models\MR_STATUS.cs" />
+    <Compile Include="Models\WO_ORDER_CART_PAYMENT.cs" />
     <Compile Include="Models\WO_SUP_CAT.cs" />
     <Compile Include="Models\WO_SUP_MSG.cs" />
     <Compile Include="Models\WO_PUSH_MSG.cs" />
@@ -196,6 +202,7 @@
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\MessageService.cs" />
+    <Compile Include="Services\NFService.cs" />
     <Compile Include="Services\OrderService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\PromotionService.cs" />
@@ -308,7 +315,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -349,6 +358,8 @@
     <Content Include="Views\Orders\Cart.cshtml" />
     <Content Include="Views\Shared\_LeftMenu.cshtml" />
     <Content Include="Views\Promotion\Slab.cshtml" />
+    <Content Include="Views\NF\Apply.cshtml" />
+    <Content Include="Views\Orders\ConfirmOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

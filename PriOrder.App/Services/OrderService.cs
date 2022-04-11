@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PriOrder.App.Services
 {
@@ -105,6 +106,55 @@ namespace PriOrder.App.Services
                 return DatabaseOracleClient.PostSqlList(sqlList);
             }
             return new EQResult();
+        }
+
+
+
+        public static Tuple<List<T_MBDO>, EQResult> getPendingActiveOrderByDistId(string distId)
+        {
+            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "GET_MBDO_PEND_ACT", direction: ParameterDirection.Input);
+            OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            object[] inParams = new object[] { inp_menu, inp_dist };
+            OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
+            object[] outParams = new object[] { out_cur };
+            string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
+            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+            EQResult rslt = new EQResult();
+            rslt.SUCCESS = false;
+            rslt.ROWS = 0;
+            if (procData.Result.SUCCESS && procData.Result.ROWS == 1)
+            {
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_MBDO>(procData.Set.Tables[0]);
+                if (objList.Count > 0)
+                {
+                    rslt.SUCCESS = true;
+                    rslt.ROWS = objList.Count;
+                    return new Tuple<List<T_MBDO>, EQResult>(objList, rslt);
+                }
+            }
+            return new Tuple<List<T_MBDO>, EQResult>(new List<T_MBDO>(), rslt);
+        }
+
+        public static Tuple<T_MBDO_INCV, EQResult> getIncentive(string menuId, string userId, string p1, string p2, string p3, string p4)
+        {
+
+            DataTable procData = DatabaseOracleClientLegacy.WebAutoCommon(menuId, userId, p1, p2, p3, p4);
+
+            EQResult rslt = new EQResult();
+            rslt.SUCCESS = false;
+            rslt.ROWS = 0;
+            if (procData.Rows.Count == 1)
+            {
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_MBDO_INCV>(procData);
+                if (objList.Count > 0)
+                {
+                    rslt.SUCCESS = true;
+                    rslt.ROWS = objList.Count;
+                    T_MBDO_INCV obj = objList.FirstOrDefault();
+                    return new Tuple<T_MBDO_INCV, EQResult>(obj, rslt);
+                }
+            }
+            return new Tuple<T_MBDO_INCV, EQResult>(new T_MBDO_INCV(), rslt);
         }
     }
 }

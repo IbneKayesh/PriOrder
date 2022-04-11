@@ -85,7 +85,7 @@ namespace PriOrder.App.Controllers
                 EQResult result = OrderService.UpdateCart(distId, objList);
                 var rslt = new ALERT_MESG
                 {
-                    messages = "Order Placed successfully. (Test)",
+                    messages = "Order processed, Confirm your order",
                     success = true
                 };
                 return Json(rslt);
@@ -134,7 +134,7 @@ namespace PriOrder.App.Controllers
             {
                 //Get Balance
                 var obj = new T_DSMA();
-                Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance(distId);
+                Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance("WAUTO", distId, "GET_BALANCE", distId, "", "");
                 if (_tpl_bal.Item2.SUCCESS && _tpl_bal.Item2.ROWS == 1)
                 {
                     obj.T_DSMA_BAL = _tpl_bal.Item1.FirstOrDefault();
@@ -142,6 +142,46 @@ namespace PriOrder.App.Controllers
                 }
                 //End Get Balance 
             }
+        }
+
+
+
+        public ActionResult ConfirmOrder()
+        {
+            string distId = Session["userId"].ToString();
+            WO_ORDER_CART_PAYMENT obj = new WO_ORDER_CART_PAYMENT();
+            //Check Direct Delivery Amount >> no active button
+
+
+            //get Balance
+            Tuple<List<T_DSMA_BAL>, EQResult> _tpl_Bal = AccountService.getDistBalance("WAUTO", distId, "GET_BALANCE", distId, "", "1");
+            obj.T_DSMA_BAL = _tpl_Bal.Item1.FirstOrDefault();
+
+            //get Incentive
+            Tuple<T_MBDO_INCV, EQResult> _tpl_Inc = OrderService.getIncentive("WAUTO", distId, "GET_INCV", distId, "", "");
+            obj.T_MBDO_INCV = _tpl_Inc.Item1;
+
+            //No rows no active button
+            //Current Order
+            Tuple<List<T_MBDO>, EQResult> _tpl_Curr = OrderService.getPendingActiveOrderByDistId(distId);
+            if (_tpl_Curr.Item2.ROWS == 0)
+            {
+                //obj.IS_VALID = false;
+            }
+            obj.T_MBDO = _tpl_Curr.Item1;
+
+            //Total
+            obj.TOTAL = _tpl_Curr.Item1.Sum(x => x.TOTAL);
+
+            //Inc Total Calculation
+            obj.T_MBDO_INCV.NET = obj.TOTAL - obj.T_MBDO_INCV.SPV - obj.T_MBDO_INCV.INCV;
+
+            return View(obj);
+        }
+        [HttpPost]
+        public ActionResult ConfirmOrder(WO_ORDER_CART_PAYMENT obj)
+        {
+            return RedirectToAction("ConfirmOrder");
         }
     }
 }

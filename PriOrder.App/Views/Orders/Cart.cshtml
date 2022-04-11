@@ -123,7 +123,7 @@
         <dd class="text-end" id="total-sum-new-balance"><strong>0.00</strong></dd>
     </dl>
     <br>
-    <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Confirm Order</button>
+    <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Process Order</button>
     <div class="row">
         <div class="col">
             <button class="btn btn-primary btn-sm w-100 mb-2 btn-reload" type="button">Refresh Cart</button>
@@ -285,7 +285,8 @@
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
                 success: function (response) {
-                    Swal.fire({ title: "Succeeded!", text: response.messages, icon: "success" });
+                    //Swal.fire({ title: "Succeeded!", text: response.messages, icon: "success" });
+                    window.location.href = '/Orders/ConfirmOrder';
                 },
                 failure: function (response) {
                     Swal.fire("Error", response.messages);

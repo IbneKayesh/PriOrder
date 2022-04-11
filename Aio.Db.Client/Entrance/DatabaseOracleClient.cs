@@ -3,7 +3,6 @@ using Aio.Db.ConnectionString;
 using Aio.Db.Oracle;
 using Aio.Db.OracleEF;
 using Aio.Model;
-using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -142,14 +141,17 @@ namespace Aio.Db.Client.Entrance
 
 
         #region Oracle_DB_Method_SP
-        public static EQResultSet GetDataSetSP(string sql, object[] _in_param, object[] _out_param, string _con="")
+        public static EQResultSet GetDataSetSP(string sql, object[] _in_param, object[] _out_param, string _con = "")
         {
             return DatabaseOracle.ExecuteSPQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _in_parameters: _in_param, _out_parameters: _out_param);
         }
-        public static EQResult PostSP(string sql, object[] _in_param, string _con="")
+        public static EQResult PostSP(string sql, object[] _in_param, string _con = "")
         {
             return DatabaseOracle.ExecuteSPNonQuery(DbLink.GET(_con == string.Empty ? AppsData.ORACLE_CON_STR : _con), _command: sql, _in_parameters: _in_param);
         }
+
+
         #endregion
+
     }
 }

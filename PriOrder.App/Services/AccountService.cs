@@ -89,29 +89,35 @@ namespace PriOrder.App.Services
         }
 
 
-
-
-        public static Tuple<List<T_DSMA_BAL>, EQResult> getDistBalance(string distId)
+        public static DataTable pro_legacy_do_wa(string menuId, string userId, string p1, string p2, string p3, string p4)
         {
-            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "WAUTO", direction: ParameterDirection.Input);
-            OracleParameter inp_dist = new OracleParameter(parameterName: "VUSER", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
-            OracleParameter inp_par1 = new OracleParameter(parameterName: "VPARA1", type: OracleDbType.Varchar2, obj: "GET_BALANCE", direction: ParameterDirection.Input);
-            OracleParameter inp_par2 = new OracleParameter(parameterName: "VPARA2", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
-            OracleParameter inp_par3 = new OracleParameter(parameterName: "VPARA3", type: OracleDbType.Varchar2, obj: "", direction: ParameterDirection.Input);
-            OracleParameter inp_par4 = new OracleParameter(parameterName: "VPARA4", type: OracleDbType.Varchar2, obj: "", direction: ParameterDirection.Input);
-            object[] inParams = new object[] { inp_menu, inp_dist, inp_par1, inp_par2, inp_par3, inp_par4 };
+            //OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: menuId, direction: ParameterDirection.Input);
+            //OracleParameter inp_dist = new OracleParameter(parameterName: "VUSER", type: OracleDbType.Varchar2, obj: userId, direction: ParameterDirection.Input);
+            //OracleParameter inp_par1 = new OracleParameter(parameterName: "VPARA1", type: OracleDbType.Varchar2, obj: p1, direction: ParameterDirection.Input);
+            //OracleParameter inp_par2 = new OracleParameter(parameterName: "VPARA2", type: OracleDbType.Varchar2, obj: p2, direction: ParameterDirection.Input);
+            //OracleParameter inp_par3 = new OracleParameter(parameterName: "VPARA3", type: OracleDbType.Varchar2, obj: p3, direction: ParameterDirection.Input);
+            //OracleParameter inp_par4 = new OracleParameter(parameterName: "VPARA4", type: OracleDbType.Varchar2, obj: p4, direction: ParameterDirection.Input);
+            //object[] inParams = new object[] { inp_menu, inp_dist, inp_par1, inp_par2, inp_par3, inp_par4 };
 
-            OracleParameter out_cur = new OracleParameter("P_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
-            object[] outParams = new object[] { out_cur };
-            string sql = @"BEGIN RFL.PRO_LEGACY_DO_WA(:VMENU,:VUSER,:VPARA1,:VPARA2,:VPARA3,:VPARA4,:P_CURSOR); END;";
-            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+            //OracleParameter out_cur = new OracleParameter("P_CURSOR", OracleDbType.RefCursor, ParameterDirection.Output);
+            //object[] outParams = new object[] { out_cur };
+            //string sql = @"BEGIN RFL.PRO_LEGACY_DO_WA(:VMENU,:VUSER,:VPARA1,:VPARA2,:VPARA3,:VPARA4,:P_CURSOR); END;";
+            //return DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+            return DatabaseOracleClientLegacy.WebAutoCommon(menuId, userId, p1, p2, p3, p4);
+        }
+
+
+        public static Tuple<List<T_DSMA_BAL>, EQResult> getDistBalance(string menuId, string userId, string p1, string p2, string p3, string p4)
+        {
+            var procData = pro_legacy_do_wa(menuId, userId, p1, p2, p3, p4);
 
             EQResult rslt = new EQResult();
             rslt.SUCCESS = false;
             rslt.ROWS = 0;
-            if (procData.Result.SUCCESS && procData.Result.ROWS == 1)
+            if (procData.Rows.Count == 1)
             {
-                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_DSMA_BAL>(procData.Set.Tables[0]);
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_DSMA_BAL>(procData);
                 if (objList.Count > 0)
                 {
                     rslt.SUCCESS = true;
@@ -120,7 +126,6 @@ namespace PriOrder.App.Services
                 }
             }
             return new Tuple<List<T_DSMA_BAL>, EQResult>(new List<T_DSMA_BAL>(), rslt);
-
         }
     }
 }
