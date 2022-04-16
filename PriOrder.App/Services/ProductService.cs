@@ -13,13 +13,15 @@ namespace PriOrder.App.Services
     {
         public static Tuple<List<WO_ITEM_TYPE>, EQResult> getCategoryListByDistId(string distId)
         {
-            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "ITMTYPE", direction: ParameterDirection.Input);
-            OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
-            object[] inParams = new object[] { inp_menu, inp_dist };
-            OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
-            object[] outParams = new object[] { out_cur };
-            string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
-            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+            //OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "ITMTYPE", direction: ParameterDirection.Input);
+            //OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            //object[] inParams = new object[] { inp_menu, inp_dist };
+            //OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
+            //object[] outParams = new object[] { out_cur };
+            //string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
+            //var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+            var procData = SpService.PRO_WO_GET_ALL("ITMTYPE", distId);
 
             EQResult rslt = new EQResult();
             rslt.SUCCESS = false;
@@ -64,6 +66,7 @@ namespace PriOrder.App.Services
         //    Items.Item1.ForEach(x => x.WO_NOTE = getItemNotes());
         //    return Items;
         //}
+
         public static Tuple<List<WO_ITEMS>, EQResult> getProductsByClassId(string classId, string categoryId, string distId)
         {
             string sql = $@"SELECT IM.ITEM_ID,ROUND(IM.D_SALE_PRICE*IM.D_U_FACT,2)ITEM_RATE,IM.ITEM_NAME,DU.ITEM_D_UNITS_NAME ITEM_UNIT,IM.D_U_FACT ITEM_FACTOR,
@@ -82,6 +85,30 @@ namespace PriOrder.App.Services
             Items.Item1.ForEach(x => x.WO_NOTE = getItemNotes());
             return Items;
         }
+
+        public static Tuple<List<WO_ITEMS>, EQResult> getProductsByItemId(string distId, string itemId)
+        {
+            var procData = SpService.PRO_WO_GET_ALL("GET_ITEM_BYID", distId, _item: itemId);
+
+            EQResult rslt = new EQResult();
+            rslt.SUCCESS = false;
+            rslt.ROWS = 0;
+            if (procData.Result.SUCCESS && procData.Result.ROWS == 1)
+            {
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<WO_ITEMS>(procData.Set.Tables[0]);
+                if (objList.Count > 0)
+                {
+                    rslt.SUCCESS = true;
+                    rslt.ROWS = objList.Count;
+                    objList.ForEach(x => x.WO_NOTE = getItemNotes());
+                    return new Tuple<List<WO_ITEMS>, EQResult>(objList, rslt);
+                }
+            }
+            return new Tuple<List<WO_ITEMS>, EQResult>(new List<WO_ITEMS>(), rslt);
+        }
+
+
+
 
         public static List<SelectListItem> getItemNotes(string id = "0")
         {

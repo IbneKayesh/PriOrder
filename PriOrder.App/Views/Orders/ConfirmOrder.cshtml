@@ -11,9 +11,10 @@
 </nav>
 <div class="card">
     <div class="table-responsive">
-        <table class="table table-bordered table-hover table-striped table-sm">
+        <table id="order_list" class="table table-bordered table-hover table-striped table-sm">
             <thead>
                 <tr>
+                    <th>#</th>
                     <th>Date</th>
                     <th>Line</th>
                     <th>Code</th>
@@ -31,20 +32,25 @@
             <tbody>
                 @foreach (var item in Model.T_MBDO)
             {
-                <tr>
-                    <td>@item.ORDATE</td>
-                    <td>@item.LINE</td>
-                    <td>@item.CODE</td>
-                    <td>@item.NAME</td>
-                    <td>@item.PRICE</td>
-                    <td>@item.FACTOR</td>
-                    <td>@item.QTY</td>
-                    <td>@item.TOTAL</td>
-                    <td>@item.PRO_RATE</td>
-                    <td>@item.SP_RATE</td>
-                    <td>@item.INCP</td>
-                    <td>@item.MBDO_NOTE</td>
-                </tr>
+                    <tr>
+                        <td>
+                            <button class="btn btn-danger btn-sm" data-item="@item.CODE" data-order="@item.ORDERID" onclick="DeleteThis(this); return false;">
+                                <i class="material-icons md-delete"></i>
+                            </button>
+                        </td>
+                        <td>@item.ORDATE</td>
+                        <td>@item.LINE</td>
+                        <td>@item.CODE</td>
+                        <td>@item.NAME</td>
+                        <td>@item.PRICE</td>
+                        <td>@item.FACTOR</td>
+                        <td>@item.QTY</td>
+                        <td>@item.TOTAL</td>
+                        <td>@item.PRO_RATE</td>
+                        <td>@item.SP_RATE</td>
+                        <td>@item.INCP</td>
+                        <td>@item.MBDO_NOTE</td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -68,11 +74,54 @@
         <div class="col">
             @if (Model.IS_VALID)
             {
-                <form method="post">
-                    <input type="submit" class="btn btn-danger" value="Active All Order" />
-                </form>
+                <a href="@Url.Action("ActiveOrder")" class="btn btn-danger">Active all</a>
             }
-            
+            <span class="badge bg-danger">@Model.IS_VALID_MSG</span>
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script>
+
+        function DeleteThis(e) {
+            var itemId = $(e).attr('data-item');
+            var orderId = $(e).attr('data-order');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "DeleteOrderItem",
+                        data: { itm: itemId, ord: orderId },
+                        success: function (response) {
+                            if (response.success) {
+                                $(this).remove();
+                                Swal.fire({ title: "Success!", text: response.messages, icon: "success", button: "Ok!" });
+                                location.reload();
+                            } else {
+                                Swal.fire({ title: "Failed!", text: response.messages, icon: "error", button: "Ok!" });
+                            }
+                        },
+                        failure: function (response) {
+                            Swal.fire({ title: "Failed!", text: response.messages, icon: "error", button: "Ok!" });
+                        },
+                        error: function (response) {
+                            Swal.fire({ title: "Failed!", text: response.messages, icon: "error", button: "Ok!" });
+                        }
+                    });
+                }
+            });
+
+
+        };
+    </script>
+}

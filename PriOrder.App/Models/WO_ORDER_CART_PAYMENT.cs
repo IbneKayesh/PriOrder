@@ -8,6 +8,8 @@ namespace PriOrder.App.Models
     {
         [Display(Name = "Status")]
         public bool IS_VALID { get; set; } = true;
+        [Display(Name = "Status Messages")]
+        public string IS_VALID_MSG { get; set; }
 
         [Display(Name = "Total")]
         public decimal TOTAL { get; set; } = 0;

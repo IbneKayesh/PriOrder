@@ -19,13 +19,15 @@ namespace PriOrder.App.Services
             //            WHERE T.SPMS_APOV='Y' AND T.SPMS_CNCL='N' AND TRUNC(T.SPMS_TDAT) >= TRUNC(SYSDATE)
             //            ORDER BY TRUNC(T.SPMS_TDAT)";
 
-            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "GET_SLAB_PROMO", direction: ParameterDirection.Input);
-            OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
-            object[] inParams = new object[] { inp_menu, inp_dist };
-            OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
-            object[] outParams = new object[] { out_cur };
-            string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
-            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+            //OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "GET_SLAB_PROMO", direction: ParameterDirection.Input);
+            //OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            //object[] inParams = new object[] { inp_menu, inp_dist };
+            //OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
+            //object[] outParams = new object[] { out_cur };
+            //string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
+            //var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+            var procData = SpService.PRO_WO_GET_ALL("GET_SLAB_PROMO", distId);
             EQResult rslt = new EQResult();
             rslt.SUCCESS = false;
             rslt.ROWS = 0;

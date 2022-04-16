@@ -156,7 +156,7 @@ namespace PriOrder.App.Controllers
         }
 
 
-        public ActionResult AddToCart(string id, string qt,string noId, string noVal)
+        public ActionResult AddToCart(string id, string qt, string noId, string noVal)
         {
             if (Request.UrlReferrer == null)
             {
@@ -207,6 +207,30 @@ namespace PriOrder.App.Controllers
                 messages = result.ROWS == 1 ? $"Product: {id} removed from Favorite" : "Product is already removed!"
             };
             return Json(rslt);
+        }
+
+
+
+        public ActionResult ProductSearch(string search)
+        {
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                if (search.Length > 3)
+                {
+                    string distId = Session["userId"].ToString();
+                    Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getProductsByItemId(distId, search);
+                    if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+                    {
+                        @TempData["tsms"] = _tpl.Item2.ROWS + " Products found";
+                        return View(_tpl.Item1);
+                    }
+                }
+                else
+                {
+                    @TempData["tsms"] = "Enter at least 4 char";
+                }
+            }
+            return View(new List<WO_ITEMS>());
         }
     }
 }

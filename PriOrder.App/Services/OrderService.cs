@@ -31,13 +31,15 @@ namespace PriOrder.App.Services
 
 
 
-            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "GET_CART_ITEM", direction: ParameterDirection.Input);
-            OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
-            object[] inParams = new object[] { inp_menu, inp_dist };
-            OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
-            object[] outParams = new object[] { out_cur };
-            string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
-            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+            //OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "GET_CART_ITEM", direction: ParameterDirection.Input);
+            //OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            //object[] inParams = new object[] { inp_menu, inp_dist };
+            //OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
+            //object[] outParams = new object[] { out_cur };
+            //string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
+            //var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+            var procData = SpService.PRO_WO_GET_ALL("GET_CART_ITEM", distId);
             EQResult rslt = new EQResult();
             rslt.SUCCESS = false;
             rslt.ROWS = 0;
@@ -103,7 +105,13 @@ namespace PriOrder.App.Services
                 {
                     sqlList.Add($"UPDATE WO_ORDER_CART SET ITEM_QTY={item.ITEM_QTY} WHERE DSMA_DSID='{distId}' AND ITEM_ID='{item.ITEM_ID}'");
                 }
-                return DatabaseOracleClient.PostSqlList(sqlList);
+                EQResult r = DatabaseOracleClient.PostSqlList(sqlList);
+                //Create Order
+                OracleParameter ip_did = new OracleParameter(parameterName: "DISTID", type: OracleDbType.Int32, obj: distId, direction: ParameterDirection.Input);
+                object[] inParams = new object[] { ip_did };
+                string sql = @"BEGIN RPGL.PRO_WO_CREATE_ORDER(:DISTID); END;";
+                DatabaseOracleClient.PostSP(sql, inParams);
+                return r;
             }
             return new EQResult();
         }
@@ -112,13 +120,8 @@ namespace PriOrder.App.Services
 
         public static Tuple<List<T_MBDO>, EQResult> getPendingActiveOrderByDistId(string distId)
         {
-            OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "GET_MBDO_PEND_ACT", direction: ParameterDirection.Input);
-            OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
-            object[] inParams = new object[] { inp_menu, inp_dist };
-            OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
-            object[] outParams = new object[] { out_cur };
-            string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
-            var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+            var procData = SpService.PRO_WO_GET_ALL("GET_MBDO_PEND_ACT", distId);
+
             EQResult rslt = new EQResult();
             rslt.SUCCESS = false;
             rslt.ROWS = 0;
@@ -137,7 +140,6 @@ namespace PriOrder.App.Services
 
         public static Tuple<T_MBDO_INCV, EQResult> getIncentive(string menuId, string userId, string p1, string p2, string p3, string p4)
         {
-
             DataTable procData = DatabaseOracleClientLegacy.WebAutoCommon(menuId, userId, p1, p2, p3, p4);
 
             EQResult rslt = new EQResult();
@@ -155,6 +157,52 @@ namespace PriOrder.App.Services
                 }
             }
             return new Tuple<T_MBDO_INCV, EQResult>(new T_MBDO_INCV(), rslt);
+        }
+
+
+        public static Tuple<List<T_ITMA_FD>, EQResult> getDirectDeliveryAmount(string distId)
+        {
+            //OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "GET_CART_DIRECT_DELV", direction: ParameterDirection.Input);
+            //OracleParameter inp_dist = new OracleParameter(parameterName: "VDISTID", type: OracleDbType.Varchar2, obj: distId, direction: ParameterDirection.Input);
+            //object[] inParams = new object[] { inp_menu, inp_dist };
+            //OracleParameter out_cur = new OracleParameter("OUTCURSPARM", OracleDbType.RefCursor, ParameterDirection.Output);
+            //object[] outParams = new object[] { out_cur };
+            //string sql = @"BEGIN RPGL.PRO_WO_GET_ALL(:VMENU,:VDISTID,:OUTCURSPARM); END;";
+            //var procData = DatabaseOracleClient.GetDataSetSP(sql, inParams, outParams);
+
+
+            var procData = SpService.PRO_WO_GET_ALL("GET_CART_DIRECT_DELV", distId);
+            EQResult rslt = new EQResult();
+            rslt.SUCCESS = false;
+            rslt.ROWS = 0;
+            if (procData.Result.SUCCESS && procData.Result.ROWS == 1)
+            {
+                var objList = DatabaseOracleClient.DataTableToListObjectBind<T_ITMA_FD>(procData.Set.Tables[0]);
+                if (objList.Count > 0)
+                {
+                    rslt.SUCCESS = true;
+                    rslt.ROWS = objList.Count;
+                    return new Tuple<List<T_ITMA_FD>, EQResult>(objList, rslt);
+                }
+            }
+            return new Tuple<List<T_ITMA_FD>, EQResult>(new List<T_ITMA_FD>(), rslt);
+        }
+
+        public static EQResult DeleteOrderItem(string orderId, string itemId, string distId)
+        {
+            List<string> sqlList = new List<string>();
+            sqlList.Add($"UPDATE RPGL.T_MBDO SET MBDO_CANL='Y' WHERE MBDO_DONO='{orderId}' AND MBDO_ITID='{itemId}'");
+            sqlList.Add($"DELETE FROM WO_ORDER_CART WHERE DSMA_DSID='{distId}' AND ITEM_ID='{itemId}'");
+            return DatabaseOracleClient.PostSqlList(sqlList);
+        }
+
+        public static EQResult ActiveOrder(string distId)
+        {
+            List<string> sqlList = new List<string>();
+            string sql = $"UPDATE rpgl.T_MBDO SET MBDO_ACTV='Y' where MBDO_CANL='N' and to_char(MBDO_DODT,'dd-mm-yyyy')=to_char(SYSDATE,'dd-mm-yyyy') AND MBDO_ACTV='N' and MBDO_DSID='{distId}'";
+            sqlList.Add(sql);
+            sqlList.Add($"UPDATE WO_ORDER_CART SET IS_ACTIVE=0 WHERE DSMA_DSID='{distId}'");
+            return DatabaseOracleClient.PostSqlList(sqlList);
         }
     }
 }

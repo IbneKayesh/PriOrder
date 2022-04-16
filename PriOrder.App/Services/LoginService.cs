@@ -35,7 +35,7 @@ namespace PriOrder.App.Services
                 FROM WO_APP_MENU M
                 JOIN WO_APP_MENU PA ON PA.PARENT_ID=M.MENU_ID AND PA.IS_ACTIVE=1 AND PA.PARENT_ID!=0 AND PA.CONTROLLER_NAME='PARENT'
                 JOIN WO_APP_MENU ME ON PA.MENU_ID=ME.PARENT_ID AND ME.IS_ACTIVE=1 
-                WHERE M.IS_ACTIVE=1 AND M.PARENT_ID=0 AND M.CONTROLLER_NAME='MODULE' " + criteria;
+                WHERE M.IS_ACTIVE=1 AND M.PARENT_ID=0 AND M.CONTROLLER_NAME='MODULE' " + criteria + " ORDER BY ME.VIEW_ORDER";
 
             //--JOIN ZTN_USER_MENU UP ON ME.MENU_ID=UP.CHILD_MENU_ID AND UP.IS_ACTIVE=1 AND UP.USER_ID='" + _userId + "'
             return DatabaseOracleClient.SqlToListObjectBind<WO_APP_MENU>(sql);

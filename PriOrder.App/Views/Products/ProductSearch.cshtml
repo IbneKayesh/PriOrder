@@ -1,29 +1,32 @@
 ﻿@model IEnumerable<PriOrder.App.Models.WO_ITEMS>
-
 @{
-    ViewBag.Title = "Favorite Products";
+    ViewBag.Title = "Product Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<p class="text-center mx-1">
-    <a href="@Url.Action("Categories","Products")" class="btn btn-outline-primary w-100">  Back to shop</a>
-</p>
-
+<form method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="Enter Item Code">
+        <button type="submit" class="btn btn-secondary"><i class="material-icons md-search"></i></button>
+    </div>
+</form>
+@if (@TempData["tsms"] != null)
+{
+    <p class="alert alert-warning">@TempData["tsms"]</p>
+}
 <section class="p-1">
-
-    @if (Model.Count() > 0)
-    {
-        <ul class="row">
-            @foreach (var item in Model)
-            {
+    <ul class="row">
+        @foreach (var item in Model)
+        {
             <li class="col-12 col-sm-12 col-md-6 card shadow-sm mb-1">
                 <article class="product-list mb-1">
                     <div>
-                        <a href="#" class="img-wrap"> <img src="~/Images/Products/@(item.ITEM_ID).jpg" alt="@item.ITEM_ID"> </a>
+                        <a href="#" class="img-wrap">
+                            <img src="~/Images/Products/@(item.ITEM_ID).jpg" alt="@item.ITEM_ID" />
+                        </a>
                     </div>
                     <div class="info-wrap">
                         <a href="#" class="btn btn-icon btn-sm btn-light float-end favorite-item">
-                            <i class="material-icons md-favorite"></i>
+                            <i class="material-icons md-favorite_border"></i>
                         </a>
                         <input class="item-code" type="hidden" value="@item.ITEM_ID" />
                         <p class="title text-primary"> @item.ITEM_ID </p>
@@ -31,56 +34,38 @@
                         <div class="price mb-1">
                             <div class="input-group input-group-sm">
                                 @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
-                                <input class="item-note form-control form-control-sm" type="text" value="">
+                                <input class="item-note form-control form-control-sm" type="text" value="" max="20">
                             </div>
                         </div>
                     </div>
                 </article>
                 <div class="price mb-1">
                     <span class="badge bg-secondary">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
-                    <span class="badge bg-secondary">Stk: @item.NEW_STOCK, Inc: 0.0%</span>
+                    <span class="badge bg-secondary">Stk: @item.NEW_STOCK</span>
                 </div>
                 <div class="input-group input-group-sm">
                     <button class="btn btn-light minus" type="button"> <i class="material-icons md-minus"></i> </button>
-                    <input type="number" name="quantity" class="form-control" value="10" min="1">
+                    <input type="number" name="quantity" class="form-control" value="@(item.NEW_STOCK >= 10 ? 10 : (item.NEW_STOCK == 0 ? 1 : item.NEW_STOCK ))" min="1">
                     <button class="btn btn-light plus" type="button"> <i class="material-icons md-plus"></i> </button>
                     <button class="btn btn-light add_to_cart" type="button"> <i class="material-icons md-shopping_cart"></i> </button>
                 </div>
             </li>
-            }
-        </ul>
-    }
-    else
-    {
-        <div class="card text-center">
-            <div class="card-body">
-                <h5 class="card-title">Not Found!</h5>
-                <p class="card-text">No Favorite item found.</p>
-                <a href="@Url.Action("Categories","Products")" c class="btn btn-primary">Browse Products</a>
-            </div>
-        </div>
-    }
-
+        }
+    </ul>
 </section>
 
-
-<p class="text-center mx-1">
-    <a href="@Url.Action("Categories","Products")" class="btn btn-outline-primary w-100">  Back to shop</a>
-</p>
 
 @section scripts{
 
     <script>
         $(document).on('click', '.add_to_cart', function (e) {
             e.preventDefault();
-            var itemcode = $(this).parent('div.input-group').siblings('article.product-list').children('div.info-wrap').children("input.item-code").val();
-            var quantity = $(this).siblings("input:first").val();
-
+            var itemcode = $(this).parent('div.input-group').siblings('article.product-list').children("div.info-wrap").find('input.item-code').val();
+            var quantity = $(this).parent().children("input:first").val();
             var notId = $(this).parent('div.input-group').siblings('article.product-list').children("div.info-wrap")
-            .children("div.price").children('div.input-group').find("select#WO_NOTE option").filter(":selected").val()
+                        .children("div.price").children('div.input-group').find("select#WO_NOTE option").filter(":selected").val()
             var notVal = $(this).parent('div.input-group').siblings('article.product-list').children("div.info-wrap")
                         .children("div.price").children('div.input-group').find('input.item-note').val();
-
 
             if (quantity != '' && parseInt(quantity) != '0' && itemcode != '') {
                 $.post("AddToCart", { "id": itemcode, "qt": quantity, "noId": notId, "noVal": notVal },
@@ -99,10 +84,10 @@
 
         $(document).on('click', '.favorite-item', function (e) {
             e.preventDefault();
-            $(this).children('i.material-icons').toggleClass('md-favorite md-favorite_border');
+            $(this).children('i.material-icons').toggleClass('md-favorite_border md-favorite');
             var itemcode = $(this).siblings("input.item-code").val();
             if (itemcode != '') {
-                $.post("DelFromFav", { "id": itemcode },
+                $.post("AddToFav", { "id": itemcode },
                     function (data) {
                         if (data.success) {
                             Swal.fire({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
@@ -112,8 +97,5 @@
                     });
             };
         });
-
-        //var xxx = $(this).parent().find('input:first').val();
-        //console.log("Code:" + $(this).parent().parent().parent().find("input.item-code").attr('id'));
     </script>
 }

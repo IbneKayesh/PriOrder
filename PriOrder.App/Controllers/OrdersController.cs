@@ -152,6 +152,15 @@ namespace PriOrder.App.Controllers
             WO_ORDER_CART_PAYMENT obj = new WO_ORDER_CART_PAYMENT();
             //Check Direct Delivery Amount >> no active button
 
+            Tuple<List<T_ITMA_FD>, EQResult> _tpl_Direct = OrderService.getDirectDeliveryAmount(distId);
+            if (_tpl_Direct.Item2.SUCCESS)
+            {
+                if (_tpl_Direct.Item1.First().DO_AMOUNT != 400000)
+                {
+                    obj.IS_VALID = false;
+                    obj.IS_VALID_MSG = "Direct delivery amount minimum 4L";
+                }
+            }
 
             //get Balance
             Tuple<List<T_DSMA_BAL>, EQResult> _tpl_Bal = AccountService.getDistBalance("WAUTO", distId, "GET_BALANCE", distId, "", "1");
@@ -161,12 +170,14 @@ namespace PriOrder.App.Controllers
             Tuple<T_MBDO_INCV, EQResult> _tpl_Inc = OrderService.getIncentive("WAUTO", distId, "GET_INCV", distId, "", "");
             obj.T_MBDO_INCV = _tpl_Inc.Item1;
 
-            //No rows no active button
+
             //Current Order
             Tuple<List<T_MBDO>, EQResult> _tpl_Curr = OrderService.getPendingActiveOrderByDistId(distId);
             if (_tpl_Curr.Item2.ROWS == 0)
             {
-                //obj.IS_VALID = false;
+                //No rows no active button
+                obj.IS_VALID = false;
+                obj.IS_VALID_MSG = "No Order Items found";
             }
             obj.T_MBDO = _tpl_Curr.Item1;
 
@@ -179,8 +190,42 @@ namespace PriOrder.App.Controllers
             return View(obj);
         }
         [HttpPost]
-        public ActionResult ConfirmOrder(WO_ORDER_CART_PAYMENT obj)
+        public ActionResult DeleteOrderItem(string itm, string ord)
         {
+            if (!string.IsNullOrWhiteSpace(itm) && !string.IsNullOrWhiteSpace(ord))
+            {
+                string distId = Session["userId"].ToString();
+                EQResult result = OrderService.DeleteOrderItem(ord, itm, distId);
+                if (result.SUCCESS)
+                {
+                    TempData["mesg"] = SweetMessages.Info("Item Deleted");
+                }
+                var rslt = new ALERT_MESG
+                {
+                    success = result.SUCCESS,
+                    messages = result.SUCCESS ? itm + " Item deleted" : "Item delete failed"
+                };
+                return Json(rslt);
+            }
+            var rsltE = new ALERT_MESG
+            {
+                success = false,
+                messages = "Item delete failed"
+            };
+            return Json(rsltE);
+        }
+        public ActionResult ActiveOrder()
+        {
+            string distId = Session["userId"].ToString();
+            EQResult result = OrderService.ActiveOrder(distId);
+            if (result.SUCCESS)
+            {
+                TempData["mesg"] = SweetMessages.Info("Order Activated Successfully");
+            }
+            else
+            {
+                TempData["mesg"] = SweetMessages.Failed("Order Activation Failed");
+            }
             return RedirectToAction("ConfirmOrder");
         }
     }
