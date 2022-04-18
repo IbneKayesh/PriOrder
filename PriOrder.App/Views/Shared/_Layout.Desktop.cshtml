@@ -44,13 +44,13 @@
                     <div class="col-1">
                         <a href="/" class="navbar-brand">
                             @*@if (Session["userId"] != null)
-                            {
-                                <img src="~/Images/Distributor/Profile/@(Session["userId"]).jpg" class="icon avatar-sm" alt="@Session["userId"]" onerror="this.onerror = null; this.src = '~/Assets/images/favicon.ico'">
-                            }
-                            else
-                            {
-                                <img class="logo" height="40" src="~/Assets/images/favicon.ico">
-                            }*@
+                                {
+                                    <img src="~/Images/Distributor/Profile/@(Session["userId"]).jpg" class="icon avatar-sm" alt="@Session["userId"]" onerror="this.onerror = null; this.src = '~/Assets/images/favicon.ico'">
+                                }
+                                else
+                                {
+                                    <img class="logo" height="40" src="~/Assets/images/favicon.ico">
+                                }*@
                             <img class="logo" height="40" src="~/Assets/images/favicon.ico">
                         </a>
                     </div>
@@ -71,10 +71,21 @@
         </section> <!-- header-main end.// -->
     </header>
     <hr />
-    <main class="container padding-y">
-        @RenderBody()
+    <section class="padding-y">
+        <div class="container">
+            <div class="row">
+                <aside class="col-3">
+                    <nav class="nav flex-lg-column nav-pills mb-4">
+                        @Html.Action("LeftMenu", "Home")
+                    </nav>
+                </aside>
+                <main class="col-9">
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
         <br>
-    </main> <!-- app-content.// -->
+    </section> <!-- app-content.// -->
 
 
 

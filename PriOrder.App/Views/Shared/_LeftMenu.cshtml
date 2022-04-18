@@ -13,7 +13,7 @@
     {
         foreach (var _menu in Model)
         {
-            <li> <a href="@Url.Action(_menu.ACTION_NAME, _menu.CONTROLLER_NAME)">@_menu.MENU_NAME_EN</a></li>
+            <a class="nav-link" href="@Url.Action(_menu.ACTION_NAME, _menu.CONTROLLER_NAME)"><i class="material-icons @_menu.MENU_ICON"></i>@_menu.MENU_NAME_EN</a>
         }
     }
 }
