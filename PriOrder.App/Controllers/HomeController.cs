@@ -144,7 +144,6 @@ namespace PriOrder.App.Controllers
                 }
                 objList.Where(x => x.MENU_ID == 20010003).First().MODULE_ID = CartCount;
             }
-
             return PartialView("_BottomMenu", objList);
         }
 

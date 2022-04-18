@@ -123,7 +123,15 @@
         <dd class="text-end" id="total-sum-new-balance"><strong>0.00</strong></dd>
     </dl>
     <br>
-    <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Process Order</button>
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-secondary w-100 mb-2" type="button" id="btnPending">Pending Confirm</button>
+        </div>
+        <div class="col">
+            <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Process Order</button>
+        </div>
+    </div>
+    
     <div class="row">
         <div class="col">
             <button class="btn btn-primary btn-sm w-100 mb-2 btn-reload" type="button">Refresh Cart</button>
@@ -335,6 +343,7 @@
                 change_order_note(itemCode, itemNote, itemNoteVal);
             }
         });
+
         function change_order_note(itmCode, notId, notVal) {
             $.ajax({
                 type: "POST",
@@ -353,6 +362,10 @@
             });
         };
 
+        $("#btnPending").click(function (e) {
+            e.preventDefault();
+            window.location.href = 'ConfirmOrder';
+        });
     </script>
 
 }

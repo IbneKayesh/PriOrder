@@ -36,7 +36,7 @@
             {
                 <li class="nav-item card shadow-sm">
                     <a href="@Url.Action("Products", "Products", new { className = item.ITEM_CLASS_ID, catName = item.ITEM_TYPE_ID })" class="icontext">
-                        <span class="icon icon-sm rounded"> <img src="~/Images/ItemClass/@(item.ITEM_CLASS_ID).jpg" alt="@item.ITEM_CLASS_ID"> </span>
+                        <span class="icon rounded"> <img src="~/Images/ItemClass/@(item.ITEM_CLASS_ID).jpg" alt="@item.ITEM_CLASS_ID"> </span>
                         <div class="text"> <h6 class="title">@item.ITEM_CLASS_NAME</h6> <span class="text-muted">@item.ITEMS_COUNT items</span></div>
                     </a>
                 </li>
