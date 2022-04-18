@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Products";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <p class="text-center mx-1">
     <a href="@ViewBag.BackPages" class="btn w-100 btn-outline-success">
@@ -74,6 +74,7 @@
                     function (data) {
                         if (data.success) {
                             //Swal.fire({ title: "Success!", text: data.messages, icon: "success", button: "Ok!" });
+                            Swal.fire({ position: 'top-end', icon: 'success', title: data.messages, showConfirmButton: false, timer: 500 });
                         } else {
                             Swal.fire({ title: "Failed!", text: data.messages, icon: "error", button: "Ok!" });
                         }

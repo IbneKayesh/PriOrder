@@ -211,6 +211,7 @@
     <Compile Include="Services\SetupService.cs" />
     <Compile Include="Services\SpService.cs" />
     <Compile Include="Utility\AioAuthorization.cs" />
+    <Compile Include="Utility\CustomViewEngine.cs" />
     <Compile Include="Utility\SweetMessages.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -363,6 +364,7 @@
     <Content Include="Views\NF\Apply.cshtml" />
     <Content Include="Views\Orders\ConfirmOrder.cshtml" />
     <Content Include="Views\Products\ProductSearch.cshtml" />
+    <Content Include="Views\Shared\_Layout.Desktop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

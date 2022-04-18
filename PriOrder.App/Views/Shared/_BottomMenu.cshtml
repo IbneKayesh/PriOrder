@@ -4,20 +4,28 @@
 {
     foreach (var item in Model)
     {
-        <a href="@Url.Action(item.ACTION_NAME, item.CONTROLLER_NAME)" class="nav-link">
-            <i class="icon material-icons @item.MENU_ICON"></i>
-
-
-
-            @if (item.MENU_ID == 20010003)
-            {
-                <span class='badge bg-warning'>@item.MODULE_ID</span>
-            }
-
-
-
-            <span class="text">@item.MENU_NAME_EN</span>
-        </a>
+        if (Request.Browser.IsMobileDevice)
+        {
+            <a href="@Url.Action(item.ACTION_NAME, item.CONTROLLER_NAME)" class="nav-link">
+                <i class="icon material-icons @item.MENU_ICON"></i>
+                @if (item.MENU_ID == 20010003)
+                {
+                    <span class='badge bg-warning'>@item.MODULE_ID</span>
+                }
+                <span class="text">@item.MENU_NAME_EN</span>
+            </a>
+        }
+        else
+        {
+            <a href="@Url.Action(item.ACTION_NAME, item.CONTROLLER_NAME)" class="btn btn-primary btn-sm d-inline-block">
+                <i class="material-icons @item.MENU_ICON"></i>
+                @item.MENU_NAME_EN
+                @if (item.MENU_ID == 20010003)
+                {
+                    <span class='badge bg-warning'>@item.MODULE_ID</span>
+                }
+            </a>
+        }
     }
 }
 

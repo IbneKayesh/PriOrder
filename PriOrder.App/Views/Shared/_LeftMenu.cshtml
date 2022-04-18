@@ -2,8 +2,18 @@
 
 @if (Model != null || Model.Count() > 0)
 {
-    foreach (var _menu in Model)
+    if (Request.Browser.IsMobileDevice)
     {
-        <a href="@Url.Action(_menu.ACTION_NAME, _menu.CONTROLLER_NAME)"> <i class="material-icons @_menu.MENU_ICON"></i> @_menu.MENU_NAME_EN</a>
+        foreach (var _menu in Model)
+        {
+            <a href="@Url.Action(_menu.ACTION_NAME, _menu.CONTROLLER_NAME)"> <i class="material-icons @_menu.MENU_ICON"></i> @_menu.MENU_NAME_EN</a>
+        }
+    }
+    else
+    {
+        foreach (var _menu in Model)
+        {
+            <li> <a href="@Url.Action(_menu.ACTION_NAME, _menu.CONTROLLER_NAME)">@_menu.MENU_NAME_EN</a></li>
+        }
     }
 }
