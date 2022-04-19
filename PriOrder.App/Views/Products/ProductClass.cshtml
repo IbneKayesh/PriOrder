@@ -15,7 +15,7 @@
             {
                 <div class="item-xs">
                     <a href="@Url.Action("ProductClass", "Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap">
-                        <img class="rounded-circle" src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID">
+                        <img class="rounded-circle" src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID" onerror="this.onerror=null;this.src='/Images/noimg.jpg'">
                         <small class="text-white"> @item.ITEM_TYPE_NAME </small>
                     </a>
                 </div>
@@ -29,17 +29,27 @@
 </section>
 
 <section>
-    <ul class="p-3 list-menu">
+    <ul class="row">
         @if (Model.CLASS != null)
         {
             foreach (var item in Model.CLASS)
             {
-                <li class="nav-item card shadow-sm">
-                    <a href="@Url.Action("Products", "Products", new { className = item.ITEM_CLASS_ID, catName = item.ITEM_TYPE_ID })" class="icontext">
-                        <span class="icon rounded"> <img src="~/Images/ItemClass/@(item.ITEM_CLASS_ID).jpg" alt="@item.ITEM_CLASS_ID"> </span>
-                        <div class="text"> <h6 class="title">@item.ITEM_CLASS_NAME</h6> <span class="text-muted">@item.ITEMS_COUNT items</span></div>
-                    </a>
-                </li>
+                <li class="col-12 col-sm-12 col-md-4 card shadow-sm m-1">
+                    <article class="product-list p-1">
+                        <div>
+                            <a href="@Url.Action("Products","Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap"> <img src="~/Images/ItemClass/@(item.ITEM_CLASS_ID).jpg" alt="@item.ITEM_CLASS_ID" onerror="this.onerror=null;this.src='/Images/noimg.jpg'"> </a>
+                        </div>
+                        <div class="info-wrap">
+                            <p class="title"> @item.ITEM_CLASS_NAME </p>
+                            <div class="price mb-2">@item.ITEMS_COUNT Products</div>
+                            <div>
+                                <a href="@Url.Action("Products","Products", new { id = item.ITEM_TYPE_ID })" class="btn btn-icon btn-sm btn-light">
+                                    <i class="material-icons md-list_alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </li> <!-- col.// -->
             }
         }
         else
@@ -48,5 +58,5 @@
                 <p class="text">No Product Class found</p>
             </li>
         }
-    </ul>
+    </ul> <!-- row.// -->
 </section>
