@@ -67,7 +67,7 @@
                         <span class="badge bg-secondary" style="display:none">Tk: @item.ITEM_RATE, Fact: @item.ITEM_FACTOR, UOM: @item.ITEM_UNIT</span>
                         @if (!string.IsNullOrEmpty(item.NOTE_TEXT))
                         {
-                        <span class='badge bg-warning'>@item.NOTE_TEXT=@item.NOTE_VALUE</span>
+                            <span class='badge bg-warning'>@item.NOTE_TEXT=@item.NOTE_VALUE</span>
                         }
                     </div>
                     @{  var st = item.ITEM_RATE * item.ITEM_QTY; TotalSum += st; }
@@ -85,20 +85,20 @@
                         <button type="button" class="form-control">x @item.ITEM_RATE = <span>@st.ToString("0.##")</span></button>
                     </div>
                 </li>
-            }
+                        }
         </ul>
 
-     }
-     else
-     {
-    <div class="card text-center">
-        <div class="card-body">
-            <h5 class="card-title">Empty!</h5>
-            <p class="card-text">Your cart is empty.</p>
-            <a href="@Url.Action("Categories","Products")" c class="btn btn-primary">Browse Products</a>
-        </div>
-    </div>
-     }
+                        }
+                        else
+                        {
+                            <div class="card text-center">
+                                <div class="card-body">
+                                    <h5 class="card-title">Empty!</h5>
+                                    <p class="card-text">Your cart is empty.</p>
+                                    <a href="@Url.Action("Categories","Products")" c class="btn btn-primary">Browse Products</a>
+                                </div>
+                            </div>
+                        }
 </section>
 
 <section class="padding-around card shadow-sm bg-light">
@@ -131,7 +131,7 @@
             <button class="btn btn-danger w-100 mb-2" type="button" id="btnConfirm">Process Order</button>
         </div>
     </div>
-    
+
     <div class="row">
         <div class="col">
             <button class="btn btn-primary btn-sm w-100 mb-2 btn-reload" type="button">Refresh Cart</button>
@@ -366,6 +366,17 @@
             e.preventDefault();
             window.location.href = 'ConfirmOrder';
         });
+
+        $("#WO_NOTE").change(function () {
+            e.preventDefault();
+            var noteVal = this.value;
+            if (noteVal == "0") {
+                $("#WO_NOTE_VALUE").attr('type', 'text');
+            } else {
+                $("#WO_NOTE_VALUE").attr('type', 'number');
+            }
+        });
+
     </script>
 
 }
