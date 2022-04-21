@@ -15,7 +15,7 @@
             {
                 <div class="item-xs">
                     <a href="@Url.Action("ProductClass", "Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap">
-                        <img class="rounded-circle" src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID" onerror="this.onerror=null;this.src='/Images/noimg.jpg'">
+                        <img class="rounded-circle" src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID" onerror="this.onerror = null; this.src = '../../Images/noimg.jpg'">
                         <small class="text-white"> @item.ITEM_TYPE_NAME </small>
                     </a>
                 </div>
@@ -37,13 +37,13 @@
                 <li class="col-12 col-sm-12 col-md-4 card shadow-sm m-1">
                     <article class="product-list p-1">
                         <div>
-                            <a href="@Url.Action("Products","Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap"> <img src="~/Images/ItemClass/@(item.ITEM_CLASS_ID).jpg" alt="@item.ITEM_CLASS_ID" onerror="this.onerror=null;this.src='/Images/noimg.jpg'"> </a>
+                            <a href="@Url.Action("Products", "Products", new { className = item.ITEM_CLASS_ID, catName = item.ITEM_TYPE_ID })" class="img-wrap"> <img src="~/Images/ItemClass/@(item.ITEM_CLASS_ID).jpg" alt="@item.ITEM_CLASS_ID" onerror="this.onerror = null; this.src = '../../Images/noimg.jpg'"> </a>
                         </div>
                         <div class="info-wrap">
                             <p class="title"> @item.ITEM_CLASS_NAME </p>
                             <div class="price mb-2">@item.ITEMS_COUNT Products</div>
                             <div>
-                                <a href="@Url.Action("Products","Products", new { id = item.ITEM_TYPE_ID })" class="btn btn-icon btn-sm btn-light">
+                                <a href="@Url.Action("Products","Products", new { id = item.ITEM_CLASS_ID })" class="btn btn-icon btn-sm btn-light">
                                     <i class="material-icons md-list_alt"></i>
                                 </a>
                             </div>

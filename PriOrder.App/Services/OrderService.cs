@@ -201,7 +201,7 @@ namespace PriOrder.App.Services
             List<string> sqlList = new List<string>();
             string sql = $"UPDATE rpgl.T_MBDO SET MBDO_ACTV='Y' where MBDO_CANL='N' and to_char(MBDO_DODT,'dd-mm-yyyy')=to_char(SYSDATE,'dd-mm-yyyy') AND MBDO_ACTV='N' and MBDO_DSID='{distId}'";
             sqlList.Add(sql);
-            sqlList.Add($"UPDATE WO_ORDER_CART SET IS_ACTIVE=0 WHERE DSMA_DSID='{distId}'");
+            sqlList.Add($"UPDATE WO_ORDER_CART SET IS_ACTIVE=0,UPDATE_DATE=SYSDATE,UPDATE_USER='ACT' WHERE DSMA_DSID='{distId}'");
             return DatabaseOracleClient.PostSqlList(sqlList);
         }
     }

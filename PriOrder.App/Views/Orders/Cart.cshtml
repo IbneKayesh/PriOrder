@@ -367,10 +367,10 @@
             window.location.href = 'ConfirmOrder';
         });
 
-        $("#WO_NOTE").change(function () {
+        $("#WO_NOTE").change(function (e) {
             e.preventDefault();
             var noteVal = this.value;
-            if (noteVal == "0") {
+            if (noteVal == "0" || noteVal == "1") {
                 $("#WO_NOTE_VALUE").attr('type', 'text');
             } else {
                 $("#WO_NOTE_VALUE").attr('type', 'number');

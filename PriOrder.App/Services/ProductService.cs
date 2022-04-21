@@ -181,7 +181,13 @@ namespace PriOrder.App.Services
         }
 
 
-
+        public static EQResult CreateAutoFav(string distId)
+        {
+            OracleParameter ip_did = new OracleParameter(parameterName: "DISTID", type: OracleDbType.Int32, obj: distId, direction: ParameterDirection.Input);
+            object[] inParams = new object[] { ip_did };
+            string sql = @"BEGIN RPGL.PRO_WO_CREATE_FAV(:DISTID); END;";
+            return DatabaseOracleClient.PostSP(sql, inParams);
+        }
 
         //SELECT distinct TYP.ITEM_TYPE_ID,INITCAP(TYP.ITEM_TYPE_NAME)ITEM_TYPE_NAME,IM.ITEM_CLASS_ID
         //FROM RFL.ITEM_TYPE TYP

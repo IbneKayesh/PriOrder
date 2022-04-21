@@ -232,6 +232,21 @@ namespace PriOrder.App.Controllers
             }
             return View(new List<WO_ITEMS>());
         }
+
+
+        public ActionResult AutoFavorite()
+        {
+            string distId = Session["userId"].ToString();
+            EQResult result = ProductService.CreateAutoFav(distId);
+
+            var rslt = new ALERT_MESG
+            {
+                success = result.SUCCESS,
+                messages = result.ROWS == -1 ? $"Favorite Listing Successfully" : "Failed, try again!"
+            };
+            TempData["mesg"] = SweetMessages.Info(rslt.messages);
+            return RedirectToAction("Favorite");
+        }
     }
 }
 
