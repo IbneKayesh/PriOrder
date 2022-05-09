@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Caching;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace PriOrder.App.Controllers
 {
@@ -45,6 +46,7 @@ namespace PriOrder.App.Controllers
             return View(objList);
         }
         //Cache supported
+        [OutputCache(Duration = 300, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Categories()
         {
             string distId = Session["userId"].ToString();
@@ -73,6 +75,7 @@ namespace PriOrder.App.Controllers
             return View(objList);
         }
         //Cache supported
+        [OutputCache(Duration = 300, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult ProductClass(string id)
         {
             if (Request.UrlReferrer == null)
@@ -131,6 +134,7 @@ namespace PriOrder.App.Controllers
             return View(objList);
         }
         //Cache not supported
+        [OutputCache(Duration = 300, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
         public ActionResult Products(string className, string catName)
         {
             if (Request.UrlReferrer == null)
