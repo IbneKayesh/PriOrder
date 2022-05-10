@@ -5,6 +5,7 @@ using PriOrder.App.ModelsView;
 using PriOrder.App.Services;
 using PriOrder.App.Utility;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Caching;
@@ -55,6 +56,12 @@ namespace PriOrder.App.Controllers
                 Session["menuLeft"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 10).ToList();
                 Session["menuBottom"] = _tplMenu.Item1.Where(x => x.MODULE_ID == 20).ToList();
 
+
+                //Clear Cache
+                foreach (DictionaryEntry entry in HttpContext.Cache)
+                {
+                    HttpContext.Cache.Remove((string)entry.Key);
+                }
 
                 if (Url.IsLocalUrl(next_url) && next_url.Length > 1 && next_url.StartsWith("/") && !next_url.StartsWith("//") && !next_url.StartsWith("/\\"))
                 {

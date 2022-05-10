@@ -43,7 +43,7 @@ namespace PriOrder.App.Controllers
                     TempData["mesg"] = SweetMessages.Info("No Favorite products found");
                 }
             }
-            return PartialView(objList);
+            return View(objList);
         }
         //Cache supported
         public ActionResult Categories()
@@ -144,16 +144,29 @@ namespace PriOrder.App.Controllers
 
             string distId = Session["userId"].ToString();
 
-            Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getProductsByClassId(className, catName, distId);
-            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+            List<WO_ITEMS> objList = new List<WO_ITEMS>();
+            if (ApplData.CHACHE_ENABLED)
             {
-                return View(_tpl.Item1);
+                objList = HttpContext.Cache.Get(distId + className + catName) as List<WO_ITEMS>;
             }
-            else
+            if (objList == null || objList.Count == 0)
             {
-                TempData["mesg"] = SweetMessages.Info("No Products found");
-                return View(new List<WO_ITEMS>());
+                Tuple<List<WO_ITEMS>, EQResult> _tpl = ProductService.getProductsByClassId(className, catName, distId);
+                if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
+                {
+                    objList = _tpl.Item1;
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert(distId + className + catName, objList, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
+                }
+                else
+                {
+                    TempData["mesg"] = SweetMessages.Info("No Products found");
+                    objList = new List<WO_ITEMS>();
+                }
             }
+            return View(objList);
         }
 
 
