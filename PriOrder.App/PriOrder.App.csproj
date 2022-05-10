@@ -215,8 +215,10 @@
     <Compile Include="Utility\SweetMessages.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\js\lazyImg.js" />
     <Content Include="Assets\plugins\swal2\sweetalert2.min.css" />
     <Content Include="Assets\plugins\swal2\sweetalert2.min.js" />
+    <Content Include="OaOa\img lazy load.txt" />
     <Content Include="Views\Setup\Categories.cshtml" />
     <Content Include="Views\Setup\Category.cshtml" />
     <Content Include="Views\Setup\ProductClass.cshtml" />

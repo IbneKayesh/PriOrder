@@ -34,7 +34,7 @@
                         <p class="title"> @item.ITEM_NAME</p>
                         <div class="price mb-1">
                             <div class="input-group input-group-sm">
-                                @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select" })
+                                @Html.DropDownList("WO_NOTE", item.WO_NOTE as List<SelectListItem>, new { @class = "form-select wo-note" })
                                 <input class="item-note form-control form-control-sm" type="text" value="">
                             </div>
                         </div>
@@ -120,6 +120,16 @@
                         }
                     });
             };
+        });
+
+        $(".wo-note").change(function (e) {
+            e.preventDefault();
+            var noteVal = this.value;
+            if (noteVal == "0" || noteVal == "1") {
+                $(this).siblings("input.item-note").attr('type', 'text');
+            } else {
+                $(this).siblings("input.item-note").attr('type', 'number');
+            }
         });
 
         //var xxx = $(this).parent().find('input:first').val();

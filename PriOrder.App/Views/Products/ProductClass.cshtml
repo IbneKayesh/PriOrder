@@ -15,7 +15,7 @@
             {
                 <div class="item-xs">
                     <a href="@Url.Action("ProductClass", "Products", new { id = item.ITEM_TYPE_ID })" class="img-wrap">
-                        <img class="rounded-circle" src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID" onerror="this.onerror = null; this.src = '../../Images/noimg.jpg'">
+                        <img loading="lazy" class="rounded-circle" src="~/Images/Category/@(item.ITEM_TYPE_ID).jpg" alt="@item.ITEM_TYPE_ID" onerror="this.onerror = null; this.src = '../../Images/noimg.jpg'" width="128" height="128" >
                         <small class="text-white"> @item.ITEM_TYPE_NAME </small>
                     </a>
                 </div>

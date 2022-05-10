@@ -1,0 +1,62 @@
+﻿lazy loading
+----------------
+        //$(function () {
+        //    $('.async').on('load', function () {
+        //        $(this).unbind('load');
+        //        this.src = $(this).attr('data-img-url');
+        //        console.log(this.src);
+        //    });
+        //});
+
+        //$(function () {
+        //    $('.async').load(function () {
+        //        $(this).unbind('load');
+        //        this.src = $(this).attr('data-img-url');
+        //        console.log(this.src);
+        //    });
+        //});
+
+        //$(document).ready(function () {
+
+        //    document.addEventListener('load', function (e) {
+        //        if ((!e.target.tagName) || (e.target.tagName.toLowerCase() != 'img')) return;
+        //        // do stuff here
+        //    }, true);
+
+        //});
+
+<script>
+  const hasSupport = 'loading' in HTMLImageElement.prototype;
+  console.log(hasSupport);
+  Object.defineProperty(HTMLImageElement.prototype, 'onload', {
+      configurable: true,
+      enumerable: true,
+      value: function () {
+          console.log(this, "loaded");
+      }
+  });
+  var img = new Image();
+  img.onload();
+</script>
+
+
+
+
+
+                            @*<img src="~/Images/Products/@(item.ITEM_ID).jpg" alt="@item.ITEM_ID" 
+                                 onerror="this.onerror=null;this.src='../Images/noimg.png'"/>*@
+
+                            @*<img src="../Images/ajax-loader.gif" onload="this.onload=null;this.src='../Images/Products/@(item.ITEM_ID).jpg';" alt="@item.ITEM_ID" 
+                                 onerror="this.onerror = null; this.src = '../Images/ajax-loader.gif'"/>*@
+
+                            @*<img src="../Images/ajax-loader.gif"
+                                 class="async"
+                                 data-img-url="../Images/Products/@(item.ITEM_ID).jpg"
+                            />*@
+
+
+
+
+
+
+        // [OutputCache(Duration = 300, VaryByParam = "none", Location = OutputCacheLocation.Client, NoStore = true)]
