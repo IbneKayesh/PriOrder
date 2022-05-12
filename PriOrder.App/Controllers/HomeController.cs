@@ -160,5 +160,13 @@ namespace PriOrder.App.Controllers
             return PartialView("_LeftMenu", objList);
         }
 
+
+
+
+        public ActionResult UserGuide()
+        {
+            return View();
+        }
+
     }
 }

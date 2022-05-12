@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "User Guide";
+}
+<section class="m-3">
+    <h5>অর্ডার তৈরির পদ্ধতিঃ</h5>
+    <b>১ম ধাপঃ</b>
+    <p>১। ছবি দেখে কার্টে পণ্য যুক্ত করুন</p>
+    <ul>
+        <li>মেনু থেকে <a href="@Url.Action("Categories","Products")" class=""><i class="material-icons md-apps"></i>ক্যাটাগরি </a> ছবিতে ট্যাপ করুন, নির্বাচিত ক্যাটাগরির সকল ক্লাস দেখা যাবে।</li>
+        <li>আপনার পছন্দের ক্লাস-এর ছবিতে ট্যাপ করুন, নির্বাচিত ক্লাস এর সকল পণ্য দেখা যাবে।</li>
+        <li>যে পণ্যটি কার্টে যুক্ত করতে চান, তার পরিমাণ লিখে এখানে (<i class="text-primary material-icons md-shopping_cart"></i>) ট্যাপ করুন।</li>
+        <li>যে সকল পণ্য পরবর্তীতে দ্রুত খুঁজে পেতে চান, সেটি  <a href="@Url.Action("Favorite","Products")" class=""><i class="material-icons md-favorite"></i>পছন্দের তালিকা</a>য় যুক্ত করে রাখুন।</li>
+    </ul>
+    <p>২। কোডের সাহায্য কার্টে পণ্য যুক্ত করুন</p>
+    <ul>
+        <li>মেনু থেকে <a href="@Url.Action("ProductSearch","Products")" class=""><i class="material-icons md-search"></i>সার্চ</a> ট্যাপ করুন।</li>
+        <li>সরাসরি পণ্যর কোড লিখে <i class="material-icons md-search"></i> ট্যাপ করুন।</li>
+        <li>অর্ডার এর পরিমাণ লিখে এখানে (<i class="material-icons md-shopping_cart"></i>) ট্যাপ করুন।</li>
+    </ul>
+    <p>৩। পছন্দের তালিকা থেকে কার্টে পণ্য যুক্ত করুন</p>
+    <ul>
+        <li>মেনু থেকে <a href="@Url.Action("Favorite","Products")" class=""><i class="material-icons md-favorite"></i>ফেভারিট</a> ট্যাপ করুন, আপনার পছন্দের তালিকার সকল পণ্য দেখা যাবে।</li>
+        <li>অর্ডার এর পরিমাণ লিখে এখানে (<i class="material-icons md-shopping_cart"></i>) ট্যাপ করুন।</li>
+        <li>পছন্দের তালিকা হতে পণ্যটি সরিয়ে ফেলতে <i class="material-icons md-favorite"></i> ট্যাপ করুন।</li>
+        <li>স্বয়ংক্রিয় পছন্দের তালিকা তৈরি করতে <b class="text-success">Auto Listing</b> ট্যাপ করুন।</li>
+    </ul>
+    <b>২য় ধাপঃ</b>
+    <ul>
+        <li>মেনু থেকে <a href="@Url.Action("Cart", "Orders")" class=""><i class="material-icons md-shopping_cart"></i>কার্ট</a> ট্যাপ করুন।</li>
+        <li>অর্ডার এর পরিমাণ কমাতে বা বাড়াতে চাইলে তার পরিমাণ লিখুন।</li>
+        <li>কার্ট হতে পণ্যটি সরিয়ে ফেলতে <i class="text-danger material-icons md-delete"></i> ট্যাপ করুন।</li>
+        <li>অর্ডার প্রসেস করার জন্য <b class="text-danger">Process Order</b> ট্যাপ করুন।</li>
+    </ul>
+    <b>৩য় ধাপঃ</b>
+    <ul>
+        <li>মেনু থেকে <a href="@Url.Action("Cart", "Orders")" class=""><i class="material-icons md-shopping_cart"></i>কার্ট</a> ট্যাপ করুন।</li>
+        <li>অর্ডার একটিভ করার জন্য <b class="text-secondary">Pending Confirm</b> ট্যাপ করুন।</li>
+        <li>একটিভ তালিকা হতে পণ্যটি সরিয়ে ফেলতে <i class="text-danger material-icons md-delete"></i> ট্যাপ করুন।</li>
+        <li>অর্ডার একটিভ করার জন্য <b class="text-danger">Active all</b> ট্যাপ করুন।</li>
+    </ul>
+</section>

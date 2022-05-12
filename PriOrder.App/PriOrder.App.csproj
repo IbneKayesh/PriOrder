@@ -367,6 +367,7 @@
     <Content Include="Views\Orders\ConfirmOrder.cshtml" />
     <Content Include="Views\Products\ProductSearch.cshtml" />
     <Content Include="Views\Shared\_Layout.Desktop.cshtml" />
+    <Content Include="Views\Home\UserGuide.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

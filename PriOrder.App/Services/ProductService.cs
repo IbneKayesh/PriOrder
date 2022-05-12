@@ -138,7 +138,7 @@ namespace PriOrder.App.Services
                 noteId = "";
             }
 
-            string sql = $"UPDATE WO_ORDER_CART SET ITEM_QTY=ITEM_QTY+{qty} WHERE DSMA_DSID='{distId}' AND ITEM_ID='{itemId}'";
+            string sql = $"UPDATE WO_ORDER_CART SET ITEM_QTY=ITEM_QTY+{qty},IS_ACTIVE=1 WHERE DSMA_DSID='{distId}' AND ITEM_ID='{itemId}'";
             EQResult result = DatabaseOracleClient.PostSql(sql);
             if (result.SUCCESS && result.ROWS == 0)
             {
