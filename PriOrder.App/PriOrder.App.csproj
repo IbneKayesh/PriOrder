@@ -45,10 +45,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Aio.Model, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Aio.Model.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.1\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
       <Private>True</Private>
@@ -389,6 +385,10 @@
     <ProjectReference Include="..\Aio.Db.Client\Aio.Db.Client.csproj">
       <Project>{92b048ad-6b15-4b4e-866d-6646a4301e5a}</Project>
       <Name>Aio.Db.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aio.Model\Aio.Model.csproj">
+      <Project>{A2A9A582-6F11-4FA5-8AEE-1BF1433498D2}</Project>
+      <Name>Aio.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
