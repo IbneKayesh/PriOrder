@@ -85,21 +85,7 @@ namespace PriOrder.App.Controllers
         }
 
 
-        public ActionResult MyDistributors()
-        {
-            string distId = Session["userId"].ToString();
-            var obj = new List<NIF_DIST>();
-            Tuple<List<NIF_DIST>, EQResult> _tpl = AccountService.getMyBusiness(distId);
-            if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
-            {
-                obj = _tpl.Item1;
-            }
-            else
-            {
-                TempData["mesg"] = SweetMessages.Info("No Partner information found");
-            }
-            return View(obj);
-        }
+
 
 
         public ActionResult ChangePassword()

@@ -170,6 +170,11 @@
     <Compile Include="ModelsView\USER_LOGIN_INFO.cs" />
     <Compile Include="ModelsView\USER_LOGIN.cs" />
     <Compile Include="ModelsView\USER_PASSWORD.cs" />
+    <Compile Include="Models\DISTRIBUTOR_MASTER.cs" />
+    <Compile Include="Models\NIF_NOMI.cs" />
+    <Compile Include="Models\T_DITHUN.cs" />
+    <Compile Include="Models\T_DTDM.cs" />
+    <Compile Include="Models\T_DTNM.cs" />
     <Compile Include="Models\T_ITMA_FD.cs" />
     <Compile Include="Models\T_MBDO_INCV.cs" />
     <Compile Include="Models\MiniAge.cs" />
@@ -353,7 +358,7 @@
     <Content Include="Views\Messages\SupportRequest.cshtml" />
     <Content Include="Views\Messages\Feedback.cshtml" />
     <Content Include="Views\Messages\FeedbackReply.cshtml" />
-    <Content Include="Views\Accounts\MyDistributors.cshtml" />
+    <Content Include="Views\NF\MyDistributors.cshtml" />
     <Content Include="Views\Shared\_BottomMenu.cshtml" />
     <Content Include="Views\Accounts\ChangeProfilePicture.cshtml" />
     <Content Include="Views\Orders\Cart.cshtml" />
@@ -364,6 +369,9 @@
     <Content Include="Views\Products\ProductSearch.cshtml" />
     <Content Include="Views\Shared\_Layout.Desktop.cshtml" />
     <Content Include="Views\Home\UserGuide.cshtml" />
+    <Content Include="Views\NF\Index.cshtml" />
+    <Content Include="Views\NF\TandC.cshtml" />
+    <Content Include="Views\NF\MyNominee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -15,5 +15,6 @@ namespace PriOrder.App.Models
         public string CLDATE { get; set; }
         public string STATUS { get; set; }
         public string APPROVAL { get; set; }
+        public string APPL_NID { get; set; }
     }
 }

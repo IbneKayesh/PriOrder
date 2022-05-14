@@ -4,14 +4,14 @@
     ViewBag.Title = "Apply";
 }
 
-<section class="py-3 px-4">
+<section class="p-3">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="mb-3">
             @Html.LabelFor(model => model.APPL_NID, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.APPL_NID, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder="Enter your NID number" } })
+            @Html.EditorFor(model => model.APPL_NID, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter your NID number" } })
             @Html.ValidationMessageFor(model => model.APPL_NID, "", new { @class = "text-danger" })
         </div>
 
@@ -58,12 +58,6 @@
         </div>
 
         <div class="mb-3">
-            @Html.LabelFor(model => model.PARENTS_MOBILE, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.PARENTS_MOBILE, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Parents Mobile" } })
-            @Html.ValidationMessageFor(model => model.PARENTS_MOBILE, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="mb-3">
             @Html.LabelFor(model => model.SPOUSE_NAME, htmlAttributes: new { @class = "form-label" })
             @Html.EditorFor(model => model.SPOUSE_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Your Husband/Wife Name" } })
             @Html.ValidationMessageFor(model => model.SPOUSE_NAME, "", new { @class = "text-danger" })
@@ -74,11 +68,35 @@
             @Html.EditorFor(model => model.SPOUSE_MOBILE, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Your Husband/Wife Mobile Number" } })
             @Html.ValidationMessageFor(model => model.SPOUSE_MOBILE, "", new { @class = "text-danger" })
         </div>
-        
+
         <div class="mb-3" style="width: 100%; height: 20px; border-bottom: 0.5px dashed #808080; text-align: center">
             <span style="font-size: 16px; background-color: #F3F5F6; padding:initial">
                 Present Address
             </span>
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DISTRICT, htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("DISTRICT", ViewBag.DISTRICT as List<SelectListItem>, "--Select--", new { @class = "form-select form-select-sm", onchange = "getThanaList();" })
+            @Html.ValidationMessageFor(model => model.DISTRICT, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.POLICE_STATION, htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("POLICE_STATION", ViewBag.POLICE_STATION as List<SelectListItem>, "--Select--", new { @class = "form-select form-select-sm", onchange = "getUnionList();" })
+            @Html.ValidationMessageFor(model => model.POLICE_STATION, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.UNION_NAME, htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("UNION_NAME", ViewBag.UNION_NAME as List<SelectListItem>, "--Select--", new { @class = "form-select form-select-sm" })
+            @Html.ValidationMessageFor(model => model.UNION_NAME, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.VILLAGE_NAME, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.VILLAGE_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Village Name" } })
+            @Html.ValidationMessageFor(model => model.VILLAGE_NAME, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
@@ -87,132 +105,155 @@
             @Html.ValidationMessageFor(model => model.HOUSE_ROAD, "", new { @class = "text-danger" })
         </div>
 
+        <div class="mb-3" style="width: 100%; height: 20px; border-bottom: 0.5px dashed #808080; text-align: center">
+            <span style="font-size: 16px; background-color: #F3F5F6; padding:initial">
+                Permanent Address
+            </span>
+        </div>
+
         <div class="mb-3">
-            @Html.LabelFor(model => model.VILLAGE_NAME, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.VILLAGE_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Village Number" } })
-            @Html.ValidationMessageFor(model => model.VILLAGE_NAME, "", new { @class = "text-danger" })
+            <input class="form-check-input" type="checkbox" id="AS_PRESENT" name="AS_PRESENT" value="0" onchange="CheckBoxVal();">
+            <label>Same as Present</label>
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DISTRICT2, htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("DISTRICT2", ViewBag.DISTRICT2 as List<SelectListItem>, "--Select--", new { @class = "form-select form-select-sm", onchange = "getThanaList2();" })
+            @Html.ValidationMessageFor(model => model.DISTRICT2, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.POLICE_STATION2, htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("POLICE_STATION2", ViewBag.POLICE_STATION2 as List<SelectListItem>, "--Select--", new { @class = "form-select form-select-sm", onchange = "getUnionList2();" })
+            @Html.ValidationMessageFor(model => model.POLICE_STATION2, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.UNION_NAME2, htmlAttributes: new { @class = "form-label" })
+            @Html.DropDownList("UNION_NAME2", ViewBag.UNION_NAME2 as List<SelectListItem>, "--Select--", new { @class = "form-select form-select-sm" })
+            @Html.ValidationMessageFor(model => model.UNION_NAME2, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.VILLAGE_NAME2, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.VILLAGE_NAME2, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Village Name" } })
+            @Html.ValidationMessageFor(model => model.VILLAGE_NAME2, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.HOUSE_ROAD2, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.HOUSE_ROAD2, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "House/Road Number" } })
+            @Html.ValidationMessageFor(model => model.HOUSE_ROAD2, "", new { @class = "text-danger" })
+        </div>
+
+
+        <div class="mb-3" style="width: 100%; height: 20px; border-bottom: 0.5px dashed #808080; text-align: center">
+            <span style="font-size: 16px; background-color: #F3F5F6; padding:initial">
+                Bank Information
+            </span>
+        </div>
+
+        <div class="mb-3">
+            @Html.LabelFor(model => model.ACCOUNT_NAME, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.ACCOUNT_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Account Name" } })
+            @Html.ValidationMessageFor(model => model.ACCOUNT_NAME, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.ACCOUNT_NO, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.ACCOUNT_NO, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Account Number" } })
+            @Html.ValidationMessageFor(model => model.ACCOUNT_NO, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.BANK_NAME, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.BANK_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Bank Name" } })
+            @Html.ValidationMessageFor(model => model.BANK_NAME, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.BRANCH_NAME, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.BRANCH_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Branch Name" } })
+            @Html.ValidationMessageFor(model => model.BRANCH_NAME, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="mb-3" style="width: 100%; height: 20px; border-bottom: 0.5px dashed #808080; text-align: center">
+            <span style="font-size: 16px; background-color: #F3F5F6; padding:initial">
+                Business Information
+            </span>
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DIST_TIN, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.DIST_TIN, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter TIN Number" } })
+            @Html.ValidationMessageFor(model => model.DIST_TIN, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DIST_BIN, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.DIST_BIN, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter BIN Number" } })
+            @Html.ValidationMessageFor(model => model.DIST_BIN, "", new { @class = "text-danger" })
+        </div>
+        <div class="mb-3">
+            @Html.LabelFor(model => model.DIST_TRADE, htmlAttributes: new { @class = "form-label" })
+            @Html.EditorFor(model => model.DIST_TRADE, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter Trader Number" } })
+            @Html.ValidationMessageFor(model => model.DIST_TRADE, "", new { @class = "text-danger" })
         </div>
         <button type="submit" class="btn w-100 btn-primary"> Save and continue </button>
     }
 </section>
+@section scripts{
+    <script>
+        function getThanaList() {
+            var url = 'DropDownFor_Thana';
+            var DISTRICT = $('#DISTRICT').val();
+            var POLICE_STATION = $('#POLICE_STATION');
+            POLICE_STATION.empty();
+            POLICE_STATION.append($("<option></option>").attr("value", '').text('--Select--'));
+            $.getJSON(url, { district: DISTRICT }, function (response) {
+                $.each(response, function (index, item) {
+                    POLICE_STATION.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+        };
+        function getUnionList() {
+            var url = 'DropDownFor_Union';
+            var POLICE_STATION = $('#POLICE_STATION').val();
+            var UNION_NAME = $('#UNION_NAME');
+            UNION_NAME.empty();
+            UNION_NAME.append($("<option></option>").attr("value", '').text('--Select--'));
+            $.getJSON(url, { thana: POLICE_STATION }, function (response) {
+                $.each(response, function (index, item) {
+                    UNION_NAME.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+        };
+        function getThanaList2() {
+            var url = 'DropDownFor_Thana';
+            var DISTRICT = $('#DISTRICT2').val();
+            var POLICE_STATION = $('#POLICE_STATION2');
+            POLICE_STATION.empty();
+            POLICE_STATION.append($("<option></option>").attr("value", '').text('--Select--'));
+            $.getJSON(url, { district: DISTRICT }, function (response) {
+                $.each(response, function (index, item) {
+                    POLICE_STATION.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+        };
+        function getUnionList2() {
+            var url = 'DropDownFor_Union';
+            var POLICE_STATION = $('#POLICE_STATION2').val();
+            var UNION_NAME = $('#UNION_NAME2');
+            UNION_NAME.empty();
+            UNION_NAME.append($("<option></option>").attr("value", '').text('--Select--'));
+            $.getJSON(url, { thana: POLICE_STATION }, function (response) {
+                $.each(response, function (index, item) {
+                    UNION_NAME.append($("<option></option>").attr("value", item.Value).text(item.Text));
+                });
+            });
+        };
 
-
-
-
-
-
-
-<div class="form-horizontal">
-
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.UNION_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UNION_NAME, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UNION_NAME, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.POLICE_STATION, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.POLICE_STATION, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.POLICE_STATION, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DISTRICT, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DISTRICT, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DISTRICT, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.HOUSE_ROAD2, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.HOUSE_ROAD2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.HOUSE_ROAD2, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.VILLAGE_NAME2, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.VILLAGE_NAME2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.VILLAGE_NAME2, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.UNION_NAME2, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UNION_NAME2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.UNION_NAME2, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.POLICE_STATION2, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.POLICE_STATION2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.POLICE_STATION2, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.DISTRICT2, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.DISTRICT2, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.DISTRICT2, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.AS_PRESENT, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.AS_PRESENT, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.AS_PRESENT, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ACCOUNT_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ACCOUNT_NAME, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ACCOUNT_NAME, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.ACCOUNT_NO, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ACCOUNT_NO, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ACCOUNT_NO, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.BANK_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.BANK_NAME, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BANK_NAME, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.BRANCH_NAME, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.BRANCH_NAME, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BRANCH_NAME, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
+        function CheckBoxVal() {
+            if ($("#AS_PRESENT").prop('checked') == true) {
+                $('#AS_PRESENT').val(1);
+            } else {
+                $('#AS_PRESENT').val(0);
+            };
+        }
+    </script>
+}
