@@ -84,10 +84,7 @@ namespace PriOrder.App.Controllers
             }
         }
 
-
-
-
-
+        
         public ActionResult ChangePassword()
         {
             return View(new USER_PASSWORD());

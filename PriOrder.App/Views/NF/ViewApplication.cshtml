@@ -1,0 +1,251 @@
+﻿@model PriOrder.App.Models.NIF_APPL_VIEW
+
+@{
+    ViewBag.Title = "NF View";
+}
+<section>
+    <h5 class="title-section pb-2">NF Information</h5>
+    <nav class="nav-list">
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.APPL_NID</span>
+            <span class="text">Master Id</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.FULL_NAME</span>
+            <span class="text">Name of Applicant</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.BIRTH_DATE.ToString("dd-MMM-yyyy")</span>
+            <span class="text">Date of Birth</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.MOBILE_NUMBER</span>
+            <span class="text">Mobile Number</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.EMAIL_ADDRESS</span>
+            <span class="text">Email Address</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.FATHER_NAME</span>
+            <span class="text">Father Name</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.MOTHER_NAME</span>
+            <span class="text">Mother Name</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.PARENTS_MOBILE</span>
+            <span class="text">Parents Mobile</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.SPOUSE_NAME</span>
+            <span class="text">Husband/Wife Name</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-success">@Model.NIF_APPL.SPOUSE_MOBILE</span>
+            <span class="text">Husband/Wife Mobile</span>
+        </div>
+    </nav>
+</section>
+<hr class="divider">
+<section>
+    <h5 class="title-section pb-2">Present Address</h5>
+    <nav class="nav-list">
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.NIF_APPL.HOUSE_ROAD</span>
+            <span class="text">House/Road</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.NIF_APPL.VILLAGE_NAME</span>
+            <span class="text">Village</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.NIF_APPL.UNION_NAME</span>
+            <span class="text">Union</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.NIF_APPL.POLICE_STATION</span>
+            <span class="text">PS</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-warning">@Model.NIF_APPL.DISTRICT</span>
+            <span class="text">District</span>
+        </div>
+    </nav>
+</section>
+<hr class="divider">
+<section>
+    <h5 class="title-section pb-2">Permanent Address</h5>
+    <nav class="nav-list">
+        <div class="btn-list">
+            <span class="float-end badge bg-primary">@Model.NIF_APPL.HOUSE_ROAD2</span>
+            <span class="text">House/Road</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-primary">@Model.NIF_APPL.VILLAGE_NAME2</span>
+            <span class="text">Village</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-primary">@Model.NIF_APPL.UNION_NAME2</span>
+            <span class="text">Union</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-primary">@Model.NIF_APPL.POLICE_STATION2</span>
+            <span class="text">PS</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-primary">@Model.NIF_APPL.DISTRICT2</span>
+            <span class="text">District</span>
+        </div>
+    </nav>
+</section>
+<hr class="divider">
+<section>
+    <h5 class="title-section pb-2">Account</h5>
+    <nav class="nav-list">
+        <div class="btn-list">
+            <span class="float-end badge bg-danger">@Model.NIF_APPL.ACCOUNT_NAME</span>
+            <span class="text">Account Name</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-danger">@Model.NIF_APPL.ACCOUNT_NO</span>
+            <span class="text">Account No</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-danger">@Model.NIF_APPL.BANK_NAME</span>
+            <span class="text">Bank Name</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-danger">@Model.NIF_APPL.BRANCH_NAME</span>
+            <span class="text">Branch Name</span>
+        </div>
+    </nav>
+</section>
+<hr class="divider">
+<section>
+    <h5 class="title-section pb-2">Business</h5>
+    <nav class="nav-list">
+        <div class="btn-list">
+            <span class="float-end badge bg-secondary">@Model.NIF_APPL.DIST_TIN</span>
+            <span class="text">TIN</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-secondary">@Model.NIF_APPL.DIST_BIN</span>
+            <span class="text">BIN</span>
+        </div>
+        <div class="btn-list">
+            <span class="float-end badge bg-secondary">@Model.NIF_APPL.DIST_TRADE</span>
+            <span class="text">Trade</span>
+        </div>
+    </nav>
+</section>
+
+@foreach (var item in Model.NIF_NOMI)
+{
+    <section>
+        <h5 class="title-section pb-2">Nominee (@item.NOMI_ID)</h5>
+        <nav class="nav-list">
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.NOMI_NID</span>
+                <span class="text">NID</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.FULL_NAME</span>
+                <span class="text">Name</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.BIRTH_DATE.ToString("dd-MMM-yyyy")</span>
+                <span class="text">Date of Birth</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.MOBILE_NUMBER</span>
+                <span class="text">Mobile Number</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.EMAIL_ADDRESS</span>
+                <span class="text">Email Address</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.FATHER_NAME</span>
+                <span class="text">Father Name</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.MOTHER_NAME</span>
+                <span class="text">Mother Name</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.PARENTS_MOBILE</span>
+                <span class="text">Parents Mobile</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.SPOUSE_NAME</span>
+                <span class="text">Husband/Wife Name</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-secondary">@item.SPOUSE_MOBILE</span>
+                <span class="text">Husband/Wife Mobile</span>
+            </div>
+        </nav>
+
+    </section>
+    <hr class="divider">
+    <section>
+        <h5 class="title-section pb-2">Address</h5>
+        <nav class="nav-list">
+            <div class="btn-list">
+                <span class="float-end badge bg-warning">@item.HOUSE_ROAD</span>
+                <span class="text">House/Road</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-warning">@item.VILLAGE_NAME</span>
+                <span class="text">Village</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-warning">@item.UNION_NAME</span>
+                <span class="text">Union</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-warning">@item.POLICE_STATION</span>
+                <span class="text">PS</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-warning">@item.DISTRICT</span>
+                <span class="text">District</span>
+            </div>
+        </nav>
+    </section>
+    <hr class="divider">
+    <section>
+        <h5 class="title-section pb-2">Share</h5>
+        <nav class="nav-list">
+            <div class="btn-list">
+                <span class="float-end badge bg-danger">@item.RELATION_APPL</span>
+                <span class="text">Relation</span>
+            </div>
+            <div class="btn-list">
+                <span class="float-end badge bg-danger">@item.CONTRIBUTION %</span>
+                <span class="text">Contribution</span>
+            </div>
+        </nav>
+    </section>
+}
+@if (Model.NIF_APPL.NID_IMG == "Y")
+{
+    <img src="~/Images/Distributor/NFNID/@(Model.NIF_APPL.APPL_NID)_APPNID.jpg" alt="NID" onerror="this.onerror=null;this.src='../Images/noimg.jpg'" width="320" height="180">
+}
+@if (Model.NIF_APPL.APPL_IMG == "Y")
+{
+    <img src="~/Images/Distributor/NFPIC/@(Model.NIF_APPL.APPL_NID)_APPPIC.jpg" alt="NID" onerror="this.onerror=null;this.src='../Images/noimg.jpg'" width="320" height="180">
+}
+@foreach (var item in Model.NIF_NOMI)
+{
+    if (item.NID_IMG == "Y")
+    {
+        <img src="~/Images/Distributor/NFNID/@(item.APPL_NID)_NOM@(item.NOMI_ID)NID.jpg" alt="NID" onerror="this.onerror=null;this.src='../Images/noimg.jpg'" width="320" height="180">
+    }
+    if (item.NOM_IMG == "Y")
+    {
+        <img src="~/Images/Distributor/NFPIC/@(item.APPL_NID)_NOM@(item.NOMI_ID)PIC.jpg" alt="NID" onerror="this.onerror=null;this.src='../Images/noimg.jpg'" width="320" height="180">
+    }
+}

@@ -9,13 +9,13 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model=>model.APPL_NID)
+        @Html.HiddenFor(model => model.APPL_NID)
         <div class="mb-3">
             @Html.LabelFor(model => model.NOMI_ID, htmlAttributes: new { @class = "form-label" })
             @Html.DropDownList("NOMI_ID", ViewBag.NOMI_ID as List<SelectListItem>, "--Select--", new { @class = "form-select form-select-sm" })
             @Html.ValidationMessageFor(model => model.NOMI_ID, "", new { @class = "text-danger" })
         </div>
-        
+
         <div class="mb-3">
             @Html.LabelFor(model => model.NOMI_NID, htmlAttributes: new { @class = "form-label" })
             @Html.EditorFor(model => model.NOMI_NID, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter Nominee NID number" } })
@@ -24,7 +24,7 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.FULL_NAME, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Full Name(English)" } })
+            @Html.EditorFor(model => model.FULL_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Full Name(English)" } })
             @Html.ValidationMessageFor(model => model.FULL_NAME, "", new { @class = "text-danger" })
         </div>
 
@@ -36,43 +36,43 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.MOBILE_NUMBER, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.MOBILE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Mobile Number" } })
+            @Html.EditorFor(model => model.MOBILE_NUMBER, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Mobile Number" } })
             @Html.ValidationMessageFor(model => model.MOBILE_NUMBER, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             @Html.LabelFor(model => model.EMAIL_ADDRESS, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Email Address" } })
+            @Html.EditorFor(model => model.EMAIL_ADDRESS, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Email Address" } })
             @Html.ValidationMessageFor(model => model.EMAIL_ADDRESS, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             @Html.LabelFor(model => model.FATHER_NAME, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.FATHER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Father Name" } })
+            @Html.EditorFor(model => model.FATHER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Father Name" } })
             @Html.ValidationMessageFor(model => model.FATHER_NAME, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             @Html.LabelFor(model => model.MOTHER_NAME, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.MOTHER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Father Name" } })
+            @Html.EditorFor(model => model.MOTHER_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Monther Name" } })
             @Html.ValidationMessageFor(model => model.MOTHER_NAME, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             @Html.LabelFor(model => model.PARENTS_MOBILE, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.PARENTS_MOBILE, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Parents Mobile" } })
+            @Html.EditorFor(model => model.PARENTS_MOBILE, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Parents Mobile" } })
             @Html.ValidationMessageFor(model => model.PARENTS_MOBILE, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             @Html.LabelFor(model => model.SPOUSE_NAME, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.SPOUSE_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Your Husband/Wife Name" } })
+            @Html.EditorFor(model => model.SPOUSE_NAME, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Husband/Wife Name" } })
             @Html.ValidationMessageFor(model => model.SPOUSE_NAME, "", new { @class = "text-danger" })
         </div>
 
         <div class="mb-3">
             @Html.LabelFor(model => model.SPOUSE_MOBILE, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.SPOUSE_MOBILE, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Your Husband/Wife Mobile Number" } })
+            @Html.EditorFor(model => model.SPOUSE_MOBILE, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Nominee's Husband/Wife Mobile Number" } })
             @Html.ValidationMessageFor(model => model.SPOUSE_MOBILE, "", new { @class = "text-danger" })
         </div>
 
@@ -114,17 +114,23 @@
 
         <div class="mb-3">
             @Html.LabelFor(model => model.RELATION_APPL, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.RELATION_APPL, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter Relation" } })
+            @Html.EditorFor(model => model.RELATION_APPL, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter Relation Name, Ex: Father/Mother/Sister/Brother/Son" } })
             @Html.ValidationMessageFor(model => model.RELATION_APPL, "", new { @class = "text-danger" })
         </div>
         <div class="mb-3">
             @Html.LabelFor(model => model.CONTRIBUTION, htmlAttributes: new { @class = "form-label" })
-            @Html.EditorFor(model => model.CONTRIBUTION, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter %" } })
+            @Html.EditorFor(model => model.CONTRIBUTION, new { htmlAttributes = new { @class = "form-control form-control-sm bg-light", placeholder = "Enter % (1 to 100)" } })
             @Html.ValidationMessageFor(model => model.CONTRIBUTION, "", new { @class = "text-danger" })
         </div>
 
         <button type="submit" class="btn w-100 btn-primary"> Save and continue </button>
-    }
+
+    }       
+    <br />
+    <a href="@Url.Action("Index","NF")" class="btn w-100 btn-outline-success">
+        <i class="material-icons md-arrow_back"></i>
+        Go My NF
+    </a>
 </section>
 @section scripts{
     <script>

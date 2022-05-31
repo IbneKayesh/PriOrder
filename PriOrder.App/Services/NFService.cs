@@ -82,7 +82,7 @@ namespace PriOrder.App.Services
             string sql_1 = $@"SELECT * FROM NIF_NOMI WHERE APPL_NID='{obj.APPL_NID}'";
             Tuple<List<NIF_NOMI>, EQResult> Obj = DatabaseOracleClient.SqlToListObjectBind<NIF_NOMI>(sql_1);
             //2 nominee added
-            if (Obj.Item2.ROWS == 2 )
+            if (Obj.Item2.ROWS == 2)
             {
                 return new EQResult() { ROWS = 0, MESSAGES = "Already Applied", SUCCESS = false };
             }
@@ -105,6 +105,108 @@ namespace PriOrder.App.Services
             string sql = $@"INSERT INTO RPGL.NIF_NOMI(NOMI_ID,APPL_NID,NOMI_NID,NID_IMG,NOM_IMG,FULL_NAME,BIRTH_DATE,MOBILE_NUMBER,EMAIL_ADDRESS,FATHER_NAME,MOTHER_NAME,PARENTS_MOBILE,SPOUSE_NAME,SPOUSE_MOBILE,HOUSE_ROAD,VILLAGE_NAME,UNION_NAME,POLICE_STATION,DISTRICT,RELATION_APPL,CONTRIBUTION,CREATE_USER) VALUES({obj.NOMI_ID},'{obj.APPL_NID}','{obj.NOMI_NID.Trim().Replace("'", "")}','0','0','{obj.FULL_NAME.Trim().Replace("'", "")}',TO_DATE('{obj.BIRTH_DATE.ToString("dd/MMM/yyyy")}','dd/MON/yyyy'),'{obj.MOBILE_NUMBER.Trim().Replace("'", "")}','{obj.EMAIL_ADDRESS.Trim().Replace("'", "")}','{obj.FATHER_NAME.Trim().Replace("'", "")}','{obj.MOTHER_NAME.Trim().Replace("'", "")}','{obj.PARENTS_MOBILE.Trim().Replace("'", "")}','{obj.SPOUSE_NAME.Trim().Replace("'", "")}','{obj.SPOUSE_MOBILE.Trim().Replace("'", "")}','{obj.HOUSE_ROAD.Trim().Replace("'", "")}','{obj.VILLAGE_NAME.Trim().Replace("'", "")}','{obj.UNION_NAME.Trim().Replace("'", "")}','{obj.POLICE_STATION.Trim().Replace("'", "")}','{obj.DISTRICT.Trim().Replace("'", "")}','{obj.RELATION_APPL.Trim().Replace("'", "")}','{obj.CONTRIBUTION}','" + distId + "')";
             sqlList.Add(sql);
             return DatabaseOracleClient.PostSqlList(sqlList);
+        }
+
+        public static NIF_APPL_VIEW ViewAppl(string distId)
+        {
+            var obj = new NIF_APPL_VIEW();
+            string sql = $@"select na.appl_nid,na.nid_img,na.appl_img,na.full_name,na.birth_date,na.mobile_number,
+                        na.email_address,na.father_name,na.mother_name,na.parents_mobile,na.spouse_name,na.spouse_mobile,
+                        na.house_road,na.village_name,un1.union_name union_name,ps1.dtnm_name police_station,ds1.dtdm_name district,
+                        na.house_road2,na.village_name2,un2.union_name union_name2,ps2.dtnm_name police_station2,ds2.dtdm_name district2,
+                        na.account_name,na.account_no,na.bank_name,na.branch_name,na.appl_date,
+                        na.dist_tin,na.dist_bin,na.dist_trade
+                        from nif_appl na
+                        join rfl.t_dithun un1 on na.union_name=un1.union_text
+                        join rfl.t_dtnm ps1 on na.police_station= ps1.dtnm_text
+                        join rfl.t_dtdm ds1 on na.district= ds1.dtdm_text
+                        join rfl.t_dithun un2 on na.union_name2=un2.union_text
+                        join rfl.t_dtnm ps2 on na.police_station2= ps2.dtnm_text
+                        join rfl.t_dtdm ds2 on na.district2= ds2.dtdm_text
+                        where na.appl_nid=(select appl_nid from nif_dist where dist_id='{distId}')";
+            var _appl = DatabaseOracleClient.SqlToListObjectBind<NIF_APPL>(sql);
+            if (_appl.Item2.ROWS == 1)
+            {
+                obj.NIF_APPL = _appl.Item1.First();
+
+                sql = $@"select na.nomi_id,na.appl_nid,na.nomi_nid,na.nid_img,na.nom_img,
+                        na.full_name,na.birth_date,na.mobile_number,
+                        na.email_address,na.father_name,na.mother_name,na.parents_mobile,na.spouse_name,na.spouse_mobile,
+                        na.house_road,na.village_name,na.union_name,na.police_station,na.district,
+                        na.relation_appl,na.contribution
+                        from nif_nomi na where na.APPL_NID='{obj.NIF_APPL.APPL_NID}' order by na.nomi_id";
+                var _nom = DatabaseOracleClient.SqlToListObjectBind<NIF_NOMI>(sql);
+                if (_appl.Item2.ROWS == 1)
+                {
+                    obj.NIF_NOMI = _nom.Item1;
+                }
+                else
+                {
+                    obj.NIF_NOMI = new List<NIF_NOMI>();
+                }
+            }
+            else
+            {
+                obj = new NIF_APPL_VIEW();
+            }
+            return obj;
+        }
+
+
+        public static EQResult UpdatePicture(NIF_IMGS obj, string distId)
+        {
+
+            List<string> sqlList = new List<string>();
+            string sql = "";
+            if (obj.ITEM_IMAGE_TYPE == 1)
+            {
+                sql = $@"UPDATE RPGL.NIF_APPL SET NID_IMG='Y' WHERE APPL_NID='{obj.APPL_NID}'";
+            }
+            else if (obj.ITEM_IMAGE_TYPE == 2)
+            {
+                sql = $@"UPDATE RPGL.NIF_APPL SET APPL_IMG='Y' WHERE APPL_NID='{obj.APPL_NID}'";
+            }
+            else if (obj.ITEM_IMAGE_TYPE == 3)
+            {
+                sql = $@"UPDATE RPGL.NIF_NOMI SET NID_IMG='Y' WHERE IS_ACTIVE=1 AND NOMI_ID=1 AND APPL_NID=(SELECT APPL_NID FROM RPGL.NIF_APPL WHERE APPL_NID='{obj.APPL_NID}')";
+            }
+            else if (obj.ITEM_IMAGE_TYPE == 4)
+            {
+                sql = $@"UPDATE RPGL.NIF_NOMI SET NOM_IMG='Y' WHERE IS_ACTIVE=1 AND NOMI_ID=1 AND APPL_NID=(SELECT APPL_NID FROM RPGL.NIF_APPL WHERE APPL_NID='{obj.APPL_NID}')";
+            }
+            else if (obj.ITEM_IMAGE_TYPE == 5)
+            {
+                sql = $@"UPDATE RPGL.NIF_NOMI SET NID_IMG='Y' WHERE IS_ACTIVE=1 AND NOMI_ID=2 AND APPL_NID=(SELECT APPL_NID FROM RPGL.NIF_APPL WHERE APPL_NID='{obj.APPL_NID}')";
+            }
+            else if (obj.ITEM_IMAGE_TYPE == 6)
+            {
+                sql = $@"UPDATE RPGL.NIF_NOMI SET NOM_IMG='Y' WHERE IS_ACTIVE=1 AND NOMI_ID=2 AND APPL_NID=(SELECT APPL_NID FROM RPGL.NIF_APPL WHERE APPL_NID='{obj.APPL_NID}')";
+            }
+            sqlList.Add(sql);
+
+            return DatabaseOracleClient.PostSqlList(sqlList);
+        }
+
+
+        public static Tuple<List<NIF_NOMI>, EQResult> getNomineeNumber(string distId)
+        {
+            string sql = $@"select nomi_id
+                            from nif_nomi where appl_nid 
+                            in (
+                            select appl_nid
+                            from nif_dist where dist_id='{distId}')";
+            return DatabaseOracleClient.SqlToListObjectBind<NIF_NOMI>(sql);
+        }
+
+        public static EQResultTable ViewAllAppl()
+        {
+            string sql = $@"select na.appl_nid master_id,na.full_name applicant_name,na.birth_date dob,na.mobile_number mobile,na.email_address email,na.father_name,na.mother_name,na.parents_mobile,na.spouse_name,na.spouse_mobile,
+                        na.house_road present_road,na.village_name present_village,na.union_name present_union,na.police_station present_ps,na.district present_district,
+                        na.house_road2 permanent_road,na.village_name2 permanent_village,na.union_name2 permanent_union,na.police_station2 permanent_ps,na.district2 permanent_district,
+                        na.account_name,na.account_no,na.bank_name,na.branch_name,na.appl_date application_date,
+                        na.dist_tin tin_no,na.dist_bin bin_no,na.dist_trade trade_lic_no
+                        from nif_appl na order by na.appl_nid";
+         return DatabaseOracleClient.GetDataTable(sql);
         }
     }
 }

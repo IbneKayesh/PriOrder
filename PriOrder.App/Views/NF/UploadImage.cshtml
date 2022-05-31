@@ -1,0 +1,50 @@
+﻿@model  PriOrder.App.Models.NIF_IMGS
+@{
+    ViewBag.Title = "Upload Picture";
+}
+
+
+<section class="p-3">
+    @using (Html.BeginForm("UploadImage", "NF", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.APPL_NID)
+        <div class="mb-3">
+            @Html.DropDownList("ITEM_IMAGE_TYPE", ViewBag.ITEM_IMAGE_TYPE as List<SelectListItem>, "--Select Image Type--", new { @class = "form-select form-select-sm", required= "required" })
+        </div>
+        <div class="mb-3">
+            <div class="icontext">
+                <div class="icon">
+                    <img id="cat-images" src="@Model.ITEM_IMAGE" class="avatar-lg">
+                </div>
+                <div class="text">
+                    <label for="formFile" class="form-label">Change Picture</label>
+                    <input class="form-control" type="file" name="ITEM_IMAGE" onchange="viewImage(this);" accept="image/jpeg" required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-danger w-100"> Upload Picture </button>
+    }
+</section>
+
+
+<p class="text-center mx-3">
+    <a href="@Url.Action("Index","NF")" class="btn w-100 btn-outline-success">
+        <i class="material-icons md-arrow_back"></i>
+        Go My NF
+    </a>
+</p>
+
+@section scripts{
+    <script>
+        function viewImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#cat-images').attr('src', e.target.result).width(80).height(80);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

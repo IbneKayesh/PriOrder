@@ -171,6 +171,8 @@
     <Compile Include="ModelsView\USER_LOGIN.cs" />
     <Compile Include="ModelsView\USER_PASSWORD.cs" />
     <Compile Include="Models\DISTRIBUTOR_MASTER.cs" />
+    <Compile Include="Models\NIF_APPL_VIEW.cs" />
+    <Compile Include="Models\NIF_IMGS.cs" />
     <Compile Include="Models\NIF_NOMI.cs" />
     <Compile Include="Models\T_DITHUN.cs" />
     <Compile Include="Models\T_DTDM.cs" />
@@ -371,7 +373,9 @@
     <Content Include="Views\Home\UserGuide.cshtml" />
     <Content Include="Views\NF\Index.cshtml" />
     <Content Include="Views\NF\TandC.cshtml" />
-    <Content Include="Views\NF\MyNominee.cshtml" />
+    <Content Include="Views\NF\AddNominee.cshtml" />
+    <Content Include="Views\NF\ViewApplication.cshtml" />
+    <Content Include="Views\NF\UploadImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

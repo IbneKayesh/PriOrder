@@ -13,6 +13,8 @@ namespace PriOrder.App.DataModels
 
         public const int PRO_IMG_SIZE = 512000; //1024 * 500 KB
 
+        public const int NF_IMG_SIZE = 5242880; //1024 * 10 MB
+
         public const string CART_COUNT_CACHE = "ChCartItemCount";
     }
 }
