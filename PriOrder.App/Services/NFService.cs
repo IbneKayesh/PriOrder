@@ -117,12 +117,12 @@ namespace PriOrder.App.Services
                         na.account_name,na.account_no,na.bank_name,na.branch_name,na.appl_date,
                         na.dist_tin,na.dist_bin,na.dist_trade
                         from nif_appl na
-                        join rfl.t_dithun un1 on na.union_name=un1.union_text
-                        join rfl.t_dtnm ps1 on na.police_station= ps1.dtnm_text
-                        join rfl.t_dtdm ds1 on na.district= ds1.dtdm_text
-                        join rfl.t_dithun un2 on na.union_name2=un2.union_text
-                        join rfl.t_dtnm ps2 on na.police_station2= ps2.dtnm_text
-                        join rfl.t_dtdm ds2 on na.district2= ds2.dtdm_text
+                        left join rfl.t_dithun un1 on na.union_name=un1.union_text
+                        left join rfl.t_dtnm ps1 on na.police_station= ps1.dtnm_text
+                        left join rfl.t_dtdm ds1 on na.district= ds1.dtdm_text
+                        left join rfl.t_dithun un2 on na.union_name2=un2.union_text
+                        left join rfl.t_dtnm ps2 on na.police_station2= ps2.dtnm_text
+                        left join rfl.t_dtdm ds2 on na.district2= ds2.dtdm_text
                         where na.appl_nid=(select appl_nid from nif_dist where dist_id='{distId}')";
             var _appl = DatabaseOracleClient.SqlToListObjectBind<NIF_APPL>(sql);
             if (_appl.Item2.ROWS == 1)

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aio.Model", "Aio.Model\Aio.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aio.Db.Oracle", "Aio.Db.Oracle\Aio.Db.Oracle.csproj", "{BDD4E5F1-1FED-4AE6-8AC2-DB88527764FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageDownloader", "ImageDownloader\ImageDownloader.csproj", "{3B76730D-42E1-490B-9B23-E2EC6F31632B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{BDD4E5F1-1FED-4AE6-8AC2-DB88527764FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDD4E5F1-1FED-4AE6-8AC2-DB88527764FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDD4E5F1-1FED-4AE6-8AC2-DB88527764FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B76730D-42E1-490B-9B23-E2EC6F31632B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B76730D-42E1-490B-9B23-E2EC6F31632B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B76730D-42E1-490B-9B23-E2EC6F31632B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B76730D-42E1-490B-9B23-E2EC6F31632B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

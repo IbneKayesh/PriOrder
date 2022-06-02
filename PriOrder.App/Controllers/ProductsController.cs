@@ -41,6 +41,7 @@ namespace PriOrder.App.Controllers
                 else
                 {
                     TempData["mesg"] = SweetMessages.Info("No Favorite products found");
+                    objList = new List<WO_ITEMS>();
                 }
             }
             return View(objList);
@@ -69,6 +70,7 @@ namespace PriOrder.App.Controllers
                 else
                 {
                     TempData["mesg"] = SweetMessages.Info("No Products Category found");
+                    objList = new List<WO_ITEM_TYPE>();
                 }
             }
             return View(objList);
@@ -106,6 +108,7 @@ namespace PriOrder.App.Controllers
                 else
                 {
                     TempData["mesg"] = SweetMessages.Info("No Products Category found");
+                    catList = new List<WO_ITEM_TYPE>();
                 }
             }
             if (clsList == null || clsList.Count == 0)
@@ -123,6 +126,7 @@ namespace PriOrder.App.Controllers
                 else
                 {
                     TempData["mesg"] = SweetMessages.Info("No Products Class found");
+                    clsList = new List<WO_ITEM_CLASS>();
                 }
             }
 
