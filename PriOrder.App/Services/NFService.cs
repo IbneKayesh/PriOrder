@@ -200,13 +200,24 @@ namespace PriOrder.App.Services
 
         public static EQResultTable ViewAllAppl()
         {
-            string sql = $@"select na.appl_nid master_id,na.full_name applicant_name,na.birth_date dob,na.mobile_number mobile,na.email_address email,na.father_name,na.mother_name,na.parents_mobile,na.spouse_name,na.spouse_mobile,
-                        na.house_road present_road,na.village_name present_village,na.union_name present_union,na.police_station present_ps,na.district present_district,
-                        na.house_road2 permanent_road,na.village_name2 permanent_village,na.union_name2 permanent_union,na.police_station2 permanent_ps,na.district2 permanent_district,
-                        na.account_name,na.account_no,na.bank_name,na.branch_name,na.appl_date application_date,
-                        na.dist_tin tin_no,na.dist_bin bin_no,na.dist_trade trade_lic_no
-                        from nif_appl na order by na.appl_nid";
-         return DatabaseOracleClient.GetDataTable(sql);
+            //string sql = $@"select na.appl_nid master_id,na.full_name applicant_name,na.birth_date dob,na.mobile_number mobile,na.email_address email,na.father_name,na.mother_name,na.parents_mobile,na.spouse_name,na.spouse_mobile,
+            //            na.house_road present_road,na.village_name present_village,na.union_name present_union,na.police_station present_ps,na.district present_district,
+            //            na.house_road2 permanent_road,na.village_name2 permanent_village,na.union_name2 permanent_union,na.police_station2 permanent_ps,na.district2 permanent_district,
+            //            na.account_name,na.account_no,na.bank_name,na.branch_name,na.appl_date application_date,
+            //            na.dist_tin tin_no,na.dist_bin bin_no,na.dist_trade trade_lic_no
+            //            from nif_appl na order by na.appl_nid";
+            string sql = @"select a.appl_nid master_id,a.full_name owner_name,u1.union_name,t1.dtnm_name thana,d1.dtdm_name district,a.mobile_number,ad.dist_id id,ad.dist_name,ag.digr_name group_name,adm.addr2 ||', '|| adm.addr3 address,adz.dist_zone_id zone_id,adz.dist_zone zone,at1.dtnm_text thana_id,at1.dtnm_name thana_name,adc.contacts dist_contact
+                    from nif_appl a
+                    join rfl.t_dithun u1 on a.union_name=u1.union_text
+                    join rfl.t_dtnm t1 on a.police_station=t1.dtnm_text
+                    join rfl.t_dtdm d1 on a.district=d1.dtdm_text
+                    join nif_dist ad on a.appl_nid=ad.appl_nid
+                    join rfl.t_digr ag on ad.digr_text=ag.digr_text
+                    join rfl.distributor_master adm on ad.dist_id=adm.dist_id
+                    join rfl.distributor_zone adz on adm.dist_zone_id=adz.dist_zone_id
+                    join rfl.t_dtnm at1 on adm.domo_dtnm=at1.oid
+                    join rfl.distributor_contacts adc on adm.dist_id=adc.dist_id and adc.seqn=101";
+            return DatabaseOracleClient.GetDataTable(sql);
         }
     }
 }
