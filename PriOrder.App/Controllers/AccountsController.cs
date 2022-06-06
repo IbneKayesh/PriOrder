@@ -50,6 +50,8 @@ namespace PriOrder.App.Controllers
                 else
                 {
                     TempData["mesg"] = SweetMessages.Failed("No Profile information found");
+                    obj = new T_DSMA();
+                    obj.T_DSMA_BAL = new T_DSMA_BAL();
                 }
             }
             return View(obj);
@@ -84,7 +86,7 @@ namespace PriOrder.App.Controllers
             }
         }
 
-        
+
         public ActionResult ChangePassword()
         {
             return View(new USER_PASSWORD());

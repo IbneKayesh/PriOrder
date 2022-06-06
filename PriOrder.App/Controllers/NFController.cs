@@ -1,4 +1,5 @@
 ﻿using Aio.Model;
+using ClosedXML.Excel;
 using PriOrder.App.DataModels;
 using PriOrder.App.Models;
 using PriOrder.App.Services;
@@ -392,21 +393,42 @@ namespace PriOrder.App.Controllers
         public ActionResult DownloadAll()
         {
             var objList = NFService.ViewAllAppl();
-            var gv = new GridView();
-            gv.DataSource = objList.Table;
-            gv.DataBind();
-            Response.ClearContent();
-            Response.Buffer = true;
-            Response.AddHeader("content-disposition", "attachment; filename=NFApplicationListAll.xls");
-            Response.ContentType = "application/ms-excel";
-            Response.Charset = "";
-            StringWriter objStringWriter = new StringWriter();
-            HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
-            gv.RenderControl(objHtmlTextWriter);
-            Response.Output.Write(objStringWriter.ToString());
-            Response.Flush();
-            Response.End();
+            using (XLWorkbook wb = new XLWorkbook())
+            {
+                wb.Worksheets.Add(objList.Table);
+                wb.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                wb.Style.Font.Bold = true;
+
+                Response.Clear();
+                Response.Buffer = true;
+                Response.Charset = "";
+                Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                Response.AddHeader("content-disposition", "attachment;filename= NFAll.xlsx");
+
+                using (MemoryStream MyMemoryStream = new MemoryStream())
+                {
+                    wb.SaveAs(MyMemoryStream);
+                    MyMemoryStream.WriteTo(Response.OutputStream);
+                    Response.Flush();
+                    Response.End();
+                }
+            }
             return RedirectToAction("Index");
+            //var gv = new GridView();
+            //gv.DataSource = objList.Table;
+            //gv.DataBind();
+            //Response.ClearContent();
+            //Response.Buffer = true;
+            //Response.AddHeader("content-disposition", "attachment; filename=NFApplicationListAll.xlsx");
+            //Response.ContentType = "application/ms-excel";
+            //Response.Charset = "";
+            //StringWriter objStringWriter = new StringWriter();
+            //HtmlTextWriter objHtmlTextWriter = new HtmlTextWriter(objStringWriter);
+            //gv.RenderControl(objHtmlTextWriter);
+            //Response.Output.Write(objStringWriter.ToString());
+            //Response.Flush();
+            //Response.End();
+
         }
     }
 }
