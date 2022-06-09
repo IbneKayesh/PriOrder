@@ -62,12 +62,12 @@ namespace PriOrder.App.Models
 
 
         [Display(Name = "House/Road")]
-        [StringLength(maximumLength: 25, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 0)]
+        [StringLength(maximumLength: 30, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 0)]
         public string HOUSE_ROAD { get; set; }
 
         [Display(Name = "Village Name")]
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 25, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 30, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string VILLAGE_NAME { get; set; }
         
         [Display(Name = "Union Name")]
@@ -88,12 +88,12 @@ namespace PriOrder.App.Models
 
         
         [Display(Name = "House/Road")]
-        [StringLength(maximumLength: 25, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 0)]
+        [StringLength(maximumLength: 30, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 0)]
         public string HOUSE_ROAD2 { get; set; }
 
         [Display(Name = "Village Name")]
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 25, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 30, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string VILLAGE_NAME2 { get; set; }
 
         [Display(Name = "Union Name")]
@@ -119,12 +119,12 @@ namespace PriOrder.App.Models
 
         [Display(Name = "Account Name")]
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 25, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
+        [StringLength(maximumLength: 50, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 3)]
         public string ACCOUNT_NAME { get; set; }
 
         [Display(Name = "Account Number")]
         [Required(ErrorMessage = "{0} is required")]
-        [StringLength(maximumLength: 25, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
+        [StringLength(maximumLength: 30, ErrorMessage = "{0} length is between {2} and {1}", MinimumLength = 5)]
         public string ACCOUNT_NO { get; set; }
 
         [Display(Name = "Bank Name")]

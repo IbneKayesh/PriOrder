@@ -50,7 +50,7 @@ namespace PriOrder.App.Controllers
                 obj.DISTRICT2 = obj.DISTRICT;
 
                 //Re-IsValid
-                ModelState.Clear();
+               // ModelState.Clear();
             }
             //ModelState["obj.HOUSE_ROAD2"].Errors.Clear();
             //ModelState["obj.VILLAGE_NAME2"].Errors.Clear();
