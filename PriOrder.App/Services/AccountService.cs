@@ -51,6 +51,13 @@ namespace PriOrder.App.Services
         }
 
 
+        public static Tuple<List<T_TARGETT>, EQResult> getDistTarget(string distId)
+        {
+            string sql = $@"SELECT TT.TARGET,TT.DSMA_ACHV FROM T_TARGETT  TT
+                            WHERE TT.DSMA_DSID='{distId}' AND TRUNC(TO_DATE(SYSDATE,'DD/MM/YY')) BETWEEN TRUNC(TO_DATE(TT.S_DATE, 'DD/MM/YY')) AND TRUNC(TO_DATE(TT.E_DATE , 'DD/MM/YY'))";
+            return DatabaseOracleClient.SqlToListObjectBind<T_TARGETT>(sql);
+        }
+
         public static EQResult changePassword(USER_PASSWORD obj, string distId)
         {
             EQResult rslt = new EQResult();

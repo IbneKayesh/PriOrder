@@ -12,10 +12,10 @@
             <figcaption class="text text-white">
                 <p class="h5 title mb-1">@Session["userId"]</p>
                 <p>@Session["userName"]</p>
-                <p class="text-white-50 lh-sm">MR: @Model.T_DSMA_BAL.MRDO_AMNT, Balance: @Model.T_DSMA_BAL.DBAL_ABAL, Credit: @Model.T_DSMA_BAL.DBAL_CBAL</p>
+                <p class="text-white-50 lh-sm">MR: @Model.T_DSMA_BAL.MRDO_AMNT, Balance: @Model.T_DSMA_BAL.DBAL_ABAL, Credit: @Model.T_DSMA_BAL.DBAL_CBAL, Target : @Model.T_TARGETT.TARGET, Achv : @Model.T_TARGETT.DSMA_ACHV</p>
             </figcaption>
-            }
-    </figure>
+        }
+</figure>
 </section>
 
 <section class="p-3">
@@ -104,7 +104,7 @@
 <section>
     <h5 class="title-section pb-2">Business</h5>
     <nav class="nav-list">
-        <a class="btn-list" href="@Url.Action("MyDistributors","Accounts")">
+        <a class="btn-list" href="@Url.Action("MyDistributors","NF")">
             <i class="icon-control material-icons md-keyboard_arrow_right"></i>
             <span class="text">My Distributors</span>
         </a>

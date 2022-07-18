@@ -27,5 +27,7 @@ namespace PriOrder.App.Models
         public string ZCONTACTS { get; set; }
 
         public virtual T_DSMA_BAL T_DSMA_BAL { get; set; }
+
+        public T_TARGETT T_TARGETT { get; set; }
     }
 }

@@ -46,6 +46,16 @@ namespace PriOrder.App.Controllers
                         Session["userBalnace"] = obj.T_DSMA_BAL.DBAL_ABAL;
                     }
                     //End Get Balance
+
+
+
+                    //get Target
+                    Tuple<List<T_TARGETT>, EQResult> _tpl_target = AccountService.getDistTarget(distId);
+                    if (_tpl_target.Item2.SUCCESS && _tpl_target.Item2.ROWS == 1)
+                    {
+                        obj.T_TARGETT = _tpl_target.Item1.First();
+                    }
+                    //End Target
                 }
                 else
                 {

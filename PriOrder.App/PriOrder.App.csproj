@@ -207,6 +207,7 @@
     <Compile Include="Models\T_DSMA.cs" />
     <Compile Include="Models\T_DSMA_BAL.cs" />
     <Compile Include="Models\T_MBDO.cs" />
+    <Compile Include="Models\T_TARGETT.cs" />
     <Compile Include="Models\T_UNDELIVERED.cs" />
     <Compile Include="Models\V_CHOITALY.cs" />
     <Compile Include="Models\WO_COUNT.cs" />
