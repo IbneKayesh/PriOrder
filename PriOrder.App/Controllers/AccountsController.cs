@@ -33,10 +33,6 @@ namespace PriOrder.App.Controllers
                 if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
                 {
                     obj = _tpl.Item1.FirstOrDefault();
-                    if (ApplData.CHACHE_ENABLED)
-                    {
-                        HttpContext.Cache.Insert(distId + "chProfile", obj, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
-                    }
                     //Get Balance
                     //Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance(distId);
                     Tuple<List<T_DSMA_BAL>, EQResult> _tpl_bal = AccountService.getDistBalance("WAUTO", distId, "GET_BALANCE", distId, "", "");
@@ -55,7 +51,16 @@ namespace PriOrder.App.Controllers
                     {
                         obj.T_TARGETT = _tpl_target.Item1.First();
                     }
+		else
+                    {
+                        obj.T_TARGETT = new T_TARGETT();
+                    }
                     //End Target
+
+                    if (ApplData.CHACHE_ENABLED)
+                    {
+                        HttpContext.Cache.Insert(distId + "chProfile", obj, null, DateTime.Now.AddMinutes(ApplData.CHACHE_TIME), Cache.NoSlidingExpiration);
+                    }
                 }
                 else
                 {

@@ -11,6 +11,7 @@ namespace PriOrder.App.Services
 {
     public class ProductService
     {
+        static List<WO_NOTE> LoadedNotes = new List<WO_NOTE>();
         public static Tuple<List<WO_ITEM_TYPE>, EQResult> getCategoryListByDistId(string distId)
         {
             //OracleParameter inp_menu = new OracleParameter(parameterName: "VMENU", type: OracleDbType.Varchar2, obj: "ITMTYPE", direction: ParameterDirection.Input);
@@ -112,10 +113,26 @@ namespace PriOrder.App.Services
 
         public static List<SelectListItem> getItemNotes(string id = "0")
         {
+            //Load faster
+            if (LoadedNotes != null && LoadedNotes.Count > 0)
+            {
+                return LoadedNotes.ConvertAll(a =>
+                {
+                    return new SelectListItem()
+                    {
+                        Text = a.NOTE_TEXT,
+                        Value = a.NOTE_ID,
+                        Selected = (a.NOTE_ID == id)
+                    };
+                });
+            }
+            //END Load faster
             string sql_1 = @"SELECT T.NOTE_ID,T.NOTE_TEXT FROM RPGL.WO_NOTE T WHERE T.IS_ACTIVE=1";
             Tuple<List<WO_NOTE>, EQResult> _tpl = DatabaseOracleClient.SqlToListObjectBind<WO_NOTE>(sql_1);
             if (_tpl.Item2.SUCCESS && _tpl.Item2.ROWS > 0)
             {
+                LoadedNotes = _tpl.Item1;
+
                 return _tpl.Item1.ConvertAll(a =>
                 {
                     return new SelectListItem()

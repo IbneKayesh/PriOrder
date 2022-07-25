@@ -43,7 +43,7 @@
                             <p class="title"> @item.ITEM_CLASS_NAME </p>
                             <div class="price mb-2">@item.ITEMS_COUNT Products</div>
                             <div>
-                                <a href="@Url.Action("Products","Products", new { id = item.ITEM_CLASS_ID })" class="btn btn-icon btn-sm btn-light">
+                                <a href="@Url.Action("Products","Products", new { className = item.ITEM_CLASS_ID, catName = item.ITEM_TYPE_ID})" class="btn btn-icon btn-sm btn-light">
                                     <i class="material-icons md-list_alt"></i>
                                 </a>
                             </div>
